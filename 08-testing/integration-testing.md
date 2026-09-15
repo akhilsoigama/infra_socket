@@ -14,7 +14,7 @@ flowchart LR
 1. Power on the system
 2. Verify sensor readings appear in the raw data store
 3. Verify signal processing produces filtered data and features
-4. Verify AI produces anomaly scores
+4. Verify AI produces Normalized Anomaly Indices
 5. Verify data appears on the dashboard
 6. Apply a controlled test signal
 7. Verify the dashboard shows the signal in the waveform

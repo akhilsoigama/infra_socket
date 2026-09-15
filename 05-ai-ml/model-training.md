@@ -69,7 +69,7 @@ After training, save:
 
 After training, validate the model by:
 
-1. **Score the validation set** — check that normal validation data receives low anomaly scores
+1. **Score the validation set** — check that normal validation data receives low Normalized Anomaly Indices
 2. **Score known test anomalies** (Level 2 data) — check that controlled anomalies receive high scores
 3. **Plot score distribution** — normal data should cluster at low scores; anomalies should be clearly separated
 

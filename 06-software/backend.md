@@ -22,7 +22,7 @@ Reads raw samples from the ADC hardware (via serial/USB/SPI). Buffers samples an
 Applies the signal-processing pipeline (DC removal, filtering, windowing, FFT, feature extraction) to each analysis window.
 
 ### 3. AI Module
-Loads the trained Isolation Forest model, normalizes features, computes anomaly scores, and makes threshold decisions.
+Loads the trained Isolation Forest model, normalizes features, computes normalized anomaly indexs, and makes threshold decisions.
 
 ### 4. Storage Module
 Writes data to the database (raw measurements, processed features, anomaly records). Handles write buffering and error recovery.

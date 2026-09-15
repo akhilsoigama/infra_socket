@@ -3,8 +3,8 @@
 ## Tests
 
 ### PERF-01: Processing Latency
-**Objective:** Measure time from window completion to anomaly score output.
-**Procedure:** Timestamp window end and anomaly score generation; compute difference.
+**Objective:** Measure time from window completion to normalized anomaly index output.
+**Procedure:** Timestamp window end and normalized anomaly index generation; compute difference.
 **Target:** < 2 seconds.
 
 ### PERF-02: Memory Usage

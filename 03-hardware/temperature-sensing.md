@@ -19,7 +19,7 @@ For P_atm ≈ 101,325 Pa and ΔT = 1°C (1 K) at T = 293 K:
 ΔP_ref ≈ 101,325 × (1/293) ≈ 346 Pa
 ```
 
-This 346 Pa change from just 1°C is enormous compared to infrasound signals (0.01–10 Pa). However, most of this change is very slow (thermal time constants are long), so the capillary leak should allow equalization. Rapid temperature changes, or thermally isolated chambers, can still cause problems.
+This 346 Pa change from just 1°C is enormous. Indicative/reference infrasound pressure amplitudes may span approximately 0.01–10 Pa, depending strongly on the source, propagation conditions, and distance. Actual sensitivity/noise-floor performance remains TBD and requires calibration and validation. However, most of this change is very slow (thermal time constants are long), so the capillary leak should allow equalization. Rapid temperature changes, or thermally isolated chambers, can still cause problems.
 
 ### Sensor Drift
 Pressure sensor offset and sensitivity change with temperature. This is typically specified in the sensor datasheet as offset temperature coefficient (µV/°C) and sensitivity temperature coefficient (%/°C).

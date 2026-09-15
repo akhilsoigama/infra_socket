@@ -32,7 +32,9 @@ Where:
 | 2048 | 40.96 sec | 0.024 Hz |
 | 4096 | 81.92 sec | 0.012 Hz |
 
-To resolve a 0.01 Hz signal, an FFT size of at least 4096 (at 50 Hz) is needed, requiring approximately 82 seconds of data per window.
+At a 50 Hz sampling rate, N=4096 gives approximately 0.0122 Hz FFT bin spacing and therefore provides coarse characterization near 0.01 Hz. Longer windows or larger FFT sizes are preferable when finer low-frequency resolution is required.
+
+> Frequency resolution depends on observation duration / FFT length, while the sampling rate primarily determines the upper usable frequency and anti-aliasing requirements.
 
 ## Spectral Features for Anomaly Detection
 

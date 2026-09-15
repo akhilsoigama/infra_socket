@@ -52,7 +52,7 @@ erDiagram
         string timestamp
         string sensor_id FK
         string window_id FK
-        float anomaly_score
+        float anomaly_index
         float threshold
         string status
         string severity
@@ -73,7 +73,7 @@ Individual raw pressure samples with timestamps. This is the highest-volume tabl
 Processed signal analysis windows with extracted features. One window typically contains 30–60 seconds of measurements.
 
 ### Anomaly
-Results of AI anomaly detection for each signal window. Contains the anomaly score, threshold used, and classification decision.
+Results of AI anomaly detection for each signal window. Contains the normalized anomaly index, threshold used, and classification decision.
 
 ## Relationships
 

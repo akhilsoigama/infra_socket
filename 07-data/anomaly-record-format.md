@@ -10,7 +10,7 @@ Anomaly records store the output of the AI anomaly detection system for each eva
   "timestamp": "2025-03-15T10:30:30Z",
   "sensor_id": "SENSOR-001",
   "window_id": "WIN-20250315-103000",
-  "anomaly_score": 0.82,
+  "anomaly_index": 0.82,
   "threshold": 0.70,
   "status": "ANOMALY",
   "severity": "HIGH",
@@ -28,7 +28,7 @@ Anomaly records store the output of the AI anomaly detection system for each eva
 | timestamp | ISO 8601 | Time of detection |
 | sensor_id | String | Source sensor |
 | window_id | String | Associated signal window |
-| anomaly_score | Float (0–1) | Isolation Forest anomaly score |
+| anomaly_index | Float (0–1) | Isolation Forest normalized anomaly index |
 | threshold | Float | Threshold used for classification |
 | status | String | NORMAL or ANOMALY |
 | severity | String | LOW, MEDIUM, HIGH (for anomalies) |

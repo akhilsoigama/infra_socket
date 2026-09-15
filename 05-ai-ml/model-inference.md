@@ -20,7 +20,7 @@ flowchart LR
 
 1. **Feature extraction:** Compute the same features as during training, in the same order
 2. **Normalization:** If feature scaling is applied, use the saved parameters from training (NOT recomputed). Feature scaling/normalization will be evaluated during experimentation. If applied, the transformation fitted on training data must be reused unchanged during inference.
-3. **Model prediction:** Call `model.decision_function()` or `model.score_samples()` to get the raw anomaly score
+3. **Model prediction:** Call `model.decision_function()` or `model.score_samples()` to get the raw normalized anomaly index
 4. **Project-defined normalization:** Transform the raw score into the normalized anomaly index
 5. **Threshold comparison:** Compare the normalized anomaly index against the configured threshold
 6. **Action:** Log result; if anomalous, trigger alert

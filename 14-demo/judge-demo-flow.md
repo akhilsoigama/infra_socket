@@ -35,7 +35,7 @@
 
 ### Minute 4:30 – 5:30 | Live Demo
 - "Watch the dashboard — the system is running live right now"
-- "Notice the low anomaly score — everything is normal"
+- "Notice the low normalized anomaly index — everything is normal"
 - *[Apply controlled test signal]*
 - "Now watch — the waveform changes, FFT shows the test frequency, and..."
 - "ANOMALY DETECTED — the AI flags the unusual signal"

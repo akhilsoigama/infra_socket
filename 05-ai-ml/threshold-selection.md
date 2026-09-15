@@ -2,7 +2,7 @@
 
 ## The Threshold Problem
 
-The Isolation Forest produces a continuous anomaly score. The threshold converts this continuous score into a binary decision: NORMAL or ANOMALY.
+The Isolation Forest produces a continuous normalized anomaly index. The threshold converts this continuous score into a binary decision: NORMAL or ANOMALY.
 
 **Setting the threshold is a trade-off:**
 - **Lower threshold** → more sensitive (catches more anomalies) but more false positives

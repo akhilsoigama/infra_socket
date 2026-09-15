@@ -9,7 +9,7 @@ See [Dashboard](../06-software/dashboard.md) for the full dashboard specificatio
 1. **Sensor Status Indicator:** ONLINE (green)
 2. **Live Pressure Waveform:** Updating in real-time (1–2 Hz refresh)
 3. **Frequency Spectrum:** Current FFT output (updating per window)
-4. **Anomaly Score Bar:** Visual indicator with threshold line
+4. **Normalized Anomaly Index Bar:** Visual indicator with threshold line
 5. **Status Badge:** NORMAL (green) or ANOMALY (red)
 6. **Alert Banner:** Appears when anomaly is detected
 

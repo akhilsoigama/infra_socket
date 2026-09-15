@@ -129,7 +129,7 @@ http://<host>:<port>/api/v1
       "anomaly_id": "ANOM-20250315-103030",
       "timestamp": "2025-03-15T10:30:30Z",
       "sensor_id": "SENSOR-001",
-      "anomaly_score": 0.82,
+      "anomaly_index": 0.82,
       "threshold": 0.70,
       "status": "ANOMALY",
       "severity": "HIGH",

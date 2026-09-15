@@ -23,8 +23,8 @@
 **Q: Why Isolation Forest?**
 **A:** "We chose Isolation Forest because it is an unsupervised anomaly detection algorithm. It learns the baseline environmental noise and flags deviations without needing a massive labeled dataset of rare infrasound events."
 
-**Q: How is the anomaly score calculated?**
-**A:** "The Isolation Forest generates a raw anomaly score based on path lengths in decision trees. This is then normalized into a project-defined visualization score (0-1). It must not be interpreted as a probability or confidence percentage."
+**Q: How is the normalized anomaly index calculated?**
+**A:** "The Isolation Forest generates a raw normalized anomaly index based on path lengths in decision trees. This is then normalized into a project-defined visualization score (0-1). It must not be interpreted as a probability or confidence percentage."
 
 **Q: How much training data is required?**
 **A:** "Initial experiments will determine the amount of baseline data required for stable anomaly detection. It depends heavily on the deployment environment's variability."
@@ -99,7 +99,7 @@
 **Q: How is InfraSocket different from commercial sensors?**
 **A:** "Commercial microbarometers are research-grade, expensive, and often proprietary. InfraSocket aims to be a modular, lower-cost platform where all components — hardware, signal processing, and AI — are integrated and documented for accessibility."
 
-**Q: Is the anomaly score a probability?**
+**Q: Is the normalized anomaly index a probability?**
 **A:** "No. The normalized anomaly index is a project-defined visualization/decision-support score derived from the Isolation Forest's path-length-based raw score. It must not be interpreted as a probability or confidence percentage."
 
 ### Robustness

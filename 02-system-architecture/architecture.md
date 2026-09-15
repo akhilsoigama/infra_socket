@@ -53,7 +53,7 @@ flowchart TD
 
     subgraph AI_SUB["AI Subsystem"]
         FEAT --> IFOREST["🤖 Isolation Forest\n(Anomaly Detection)"]
-        IFOREST --> RAWSCORE["Raw Anomaly Score"]
+        IFOREST --> RAWSCORE["Raw Normalized Anomaly Index"]
         RAWSCORE --> NORMSCORE["Project-defined\nNormalized Anomaly Index"]
         NORMSCORE --> THRESHOLD{"Index > Threshold?"}
         THRESHOLD -->|Yes| ANOMALY["🚨 POTENTIAL ANOMALY"]
@@ -102,7 +102,7 @@ Monitors ambient or enclosure temperature. Temperature data is logged alongside 
 Subtracts the mean value from the digital signal to centre it around zero. This removes any constant offset from the sensor or electronics.
 
 ### Band-Pass Filter (0.01–20 Hz)
-A digital filter that passes frequencies within the target infrasound range and attenuates frequencies outside it. The high-pass component (0.01 Hz) removes residual barometric drift. The low-pass component (20 Hz) removes higher-frequency noise and any signals above the infrasound range.
+A digital filter that passes frequencies within the target infrasound range and attenuates frequencies outside it. The high-pass component near 0.01 Hz attenuates residual barometric drift below the target band. The low-pass component (20 Hz) removes higher-frequency noise and any signals above the infrasound range.
 
 ### Windowing (Hanning Window)
 Before performing FFT, each data segment is multiplied by a window function (e.g., Hanning/Hann window) to reduce spectral leakage — artefacts caused by analyzing a finite-length signal segment.
@@ -126,12 +126,12 @@ Computes numerical characteristics of each signal window:
 ### Isolation Forest (Anomaly Detection)
 An unsupervised machine-learning algorithm that:
 1. Is trained on feature vectors from normal (baseline) atmospheric conditions
-2. Assigns a raw anomaly score to each new feature vector based on average path length in its decision trees
+2. Assigns a raw normalized anomaly index to each new feature vector based on average path length in its decision trees
 3. Anomalies are easier to "isolate" (separate) than normal points, resulting in shorter average path lengths
 
 > **Current AI scope = anomaly screening.** Event classification and multi-source event confirmation are future phases.
 
-### Anomaly Score Pipeline
+### Normalized Anomaly Index Pipeline
 
 The Isolation Forest raw output is processed through a project-defined normalization step:
 
@@ -140,7 +140,7 @@ Feature Vector
       ↓
 Isolation Forest
       ↓
-Raw Anomaly Score
+Raw Normalized Anomaly Index
       ↓
 Project-defined Normalization
       ↓
@@ -160,7 +160,7 @@ A configurable threshold determines the decision boundary:
 ### Alert System
 When an anomaly is detected, the alert system:
 - Generates a notification (e.g., email, webhook, dashboard alert)
-- Logs the alert with timestamp, anomaly score, and associated data
+- Logs the alert with timestamp, normalized anomaly index, and associated data
 - Displays the alert on the dashboard
 
 ### Database
@@ -174,7 +174,7 @@ Stores:
 Provides programmatic access to stored data and system status. Allows external applications to query measurements, anomalies, and sensor health.
 
 ### Dashboard (Web-Based)
-Real-time visualization interface showing live waveform, spectrum, spectrogram, anomaly score, alerts, and historical data.
+Real-time visualization interface showing live waveform, spectrum, spectrogram, normalized anomaly index, alerts, and historical data.
 
 ## Multi-Sensor Future Architecture
 
@@ -223,7 +223,7 @@ flowchart TD
     D[Frequency / Spectral Analysis]
     E[Feature Extraction]
     F[Isolation Forest]
-    G[Raw Anomaly Score]
+    G[Raw Normalized Anomaly Index]
     H[Project-defined Normalization]
     I[Normalized Anomaly Index]
     J[Threshold]

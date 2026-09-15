@@ -19,11 +19,19 @@ The dataset strategy must be realistic for a student/hackathon project.
 
 **How:**
 1. Deploy the sensor in a relatively quiet location
-2. Record continuously for 12–72 hours (longer is better)
-3. Process all recorded data through the signal-processing pipeline
+2. Initial prototype validation may begin with shorter controlled recordings, while longer baseline collection is planned to capture daily and environmental variability.
+3. A 12–72 hour continuous recording (or longer) is the recommended baseline collection target.
+4. Process all recorded data through the signal-processing pipeline
 4. Extract features from each analysis window
 5. Apply quality checks — retain only high-quality windows
 6. This "normal baseline" dataset is used to train the Isolation Forest
+
+| Data Collection                 | Status                        |
+| ------------------------------- | ----------------------------- |
+| Short controlled recordings     | Prototype validation          |
+| Extended environmental baseline | Proposed                      |
+| 12–72 hour baseline             | Recommended collection target |
+| Longer-term monitoring          | Future / To Be Validated      |
 
 **Volume estimate:**
 ```
@@ -59,19 +67,37 @@ Each window produces one feature vector (10–15 numbers). The amount and divers
 **What:** Generate known, controlled low-frequency pressure signals in a safe laboratory or test environment to verify that the system detects them as anomalies.
 
 **How:**
-1. Use a speaker, pneumatic pump, or sealed chamber with a controlled leak to produce known pressure variations
-2. Apply these signals to the sensor while the system is running
-3. Record the sensor data, features, and AI output
-4. Verify that the AI flags these controlled signals as anomalies
+### A. Synthetic signal injection
 
-**Purpose:**
-- Validates that the anomaly detection pipeline works end-to-end
-- Provides test data for evaluating precision and recall
-- Does NOT require dangerous or destructive demonstrations
+For validating:
+- filtering
+- FFT
+- feature extraction
+- AI pipeline
+- anomaly detection logic
 
-**Important:** These are controlled test signals, not real infrasound events. They validate the system's detection pipeline, not its ability to detect specific real-world events.
+> Synthetic signal injection validates the signal-processing and AI pipeline but does not by itself validate atmospheric sensing performance.
 
-> Synthetic signal injection validates the signal-processing and AI pipeline but does not by itself validate atmospheric sensing performance. An ordinary speaker cannot reliably generate/validate the complete 0.01–20 Hz atmospheric infrasound band.
+### B. Controlled pressure variation
+
+For validating:
+- pressure sensor
+- diaphragm
+- differential pressure measurement
+- reference chamber
+- analog electronics
+- ADC
+- calibration
+
+### C. Real environmental recordings
+
+For validating:
+- environmental noise
+- wind effects
+- urban interference
+- real-world anomaly screening
+
+> An ordinary speaker cannot reliably generate/validate the complete 0.01–20 Hz atmospheric infrasound band.
 
 ### Level 3: Public Research Datasets (Supplementary — Future Scope)
 
@@ -116,7 +142,7 @@ Prevention measures:
 In real deployment, anomalies are expected to be very rare (< 1% of all windows). This creates a class imbalance problem:
 
 - **For training:** Not a problem — Isolation Forest trains on normal data only
-- **For evaluation:** Must use appropriate metrics (precision, recall, F1) rather than simple accuracy, because a model that always says "normal" would have > experimentally measured precision/recall but be useless
+- **For evaluation:** A model that always predicts "normal" can achieve misleadingly high accuracy when anomalies are rare, while still being ineffective for anomaly detection. Therefore, precision, recall and F1-score should be evaluated alongside other appropriate metrics.
 
 ## Noise Contamination
 

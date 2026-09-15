@@ -31,7 +31,7 @@ For infrasound applications, **piezoresistive** and **capacitive** sensors are p
 
 | Requirement | Explanation |
 |---|---|
-| Low-frequency response | Must respond down to 0.01 Hz (100-second period) |
+| Low-frequency response | Target low-frequency response: approximately 0.01 Hz (100-second period) |
 | Differential measurement | Needed to reject barometric drift when used with reference chamber |
 | Low noise | Sensor self-noise must be below the expected signal level |
 | Linearity | Output should be proportional to pressure over the operating range |
@@ -102,7 +102,7 @@ Evaluate candidate sensors based on the following criteria before final selectio
 |---|---|---|
 | 1 | Pressure measurement range | Must accommodate expected differential pressures (fractions of Pa to a few Pa) |
 | 2 | Noise density / resolution | Determines the minimum detectable signal |
-| 3 | Low-frequency response | Must respond down to 0.01 Hz (100-second period) — To Be Validated |
+| 3 | Low-frequency response | Target low-frequency response: approximately 0.01 Hz (100-second period) — To Be Validated |
 | 4 | Temperature drift | Sensitivity and offset should change minimally with temperature |
 | 5 | Long-term stability | Sensor performance should not degrade significantly over weeks/months |
 | 6 | Output interface | Analog (voltage) or digital (I²C/SPI) — affects front-end design |

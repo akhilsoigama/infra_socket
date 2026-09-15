@@ -64,7 +64,21 @@ To achieve f_corner = 0.01 Hz:
 τ = 1 / (2π × 0.01) ≈ 16 seconds
 ```
 
-`Assumption`: For a target corner frequency of approximately 0.01 Hz, the time constant needs to be approximately 16 seconds. The specific capillary dimensions and chamber volume to achieve this will need to be determined experimentally, as the acoustic resistance of a capillary depends on its exact geometry and the viscosity of air.
+> The reference chamber time constant determines the transition between slow pressure equalization and differential-pressure response. A nominal corner near 0.01 Hz is an initial design assumption, not a validated requirement. The actual chamber volume, capillary geometry and resulting frequency response must be experimentally optimized.
+
+```text
+Slow pressure variation
+        ↓
+Reference chamber can follow gradually
+        ↓
+Reduced differential component
+
+Faster pressure variation
+        ↓
+Reference chamber cannot follow instantly
+        ↓
+Differential pressure becomes measurable
+```
 
 ## Frequency Response Effect
 

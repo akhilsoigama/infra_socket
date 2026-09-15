@@ -34,7 +34,7 @@ Monitoring infrasound requires specialized hardware, careful noise reduction (es
 | Differential pressure | Reference chamber suppresses slow atmospheric drift |
 | Digital signal processing | Filtering, FFT, spectrogram, feature extraction |
 | AI anomaly detection | Isolation Forest for unsupervised anomaly flagging |
-| Real-time dashboard | Live waveform, spectrum, anomaly score, alerts |
+| Real-time dashboard | Live waveform, spectrum, normalized anomaly index, alerts |
 | Modular design | Hardware and software components are independently upgradeable |
 
 ## System Architecture (Overview)
@@ -101,7 +101,7 @@ The AI component in InfraSocket is focused on **anomaly detection** — not even
 
 | Parameter           | Target / Candidate                      | Status               |
 | ------------------- | --------------------------------------- | -------------------- |
-| Frequency response  | 0.01–20 Hz                              | To Be Validated      |
+| Frequency response  | Approximately 0.01–20 Hz                | To Be Validated      |
 | Sampling rate       | ≥50 Hz candidate; higher rate preferred | To Be Validated      |
 | Noise floor         | TBD                                     | Not Measured         |
 | Sensitivity         | TBD                                     | Calibration Required |
@@ -285,7 +285,7 @@ gantt
 3. **Our Sensor** — Hardware design and wind-noise reduction
 4. **Signal Acquisition** — Live ADC data capture
 5. **Signal Processing** — Filtering, FFT, spectrogram
-6. **AI Anomaly Detection** — Isolation Forest scores
+6. **AI Anomaly Detection** — Normalized Anomaly Index
 7. **Dashboard** — Real-time visualization
 8. **Live Demo** — Normal signal → Controlled anomaly → Alert
 9. **Applications** — Atmospheric research, volcanic monitoring, education

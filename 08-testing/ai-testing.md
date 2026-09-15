@@ -3,18 +3,18 @@
 ## Tests
 
 ### AI-01: Normal Signal Classification
-**Objective:** Verify that normal baseline data receives low anomaly scores.
+**Objective:** Verify that normal baseline data receives low Normalized Anomaly Indices.
 **Procedure:** Feed normal (quiet) signal data through the trained model.
-**Pass criteria:** Anomaly scores are below the threshold for >95% of windows.
+**Pass criteria:** Normalized Anomaly Indices are below the threshold for >95% of windows.
 
 ### AI-02: Controlled Anomaly Detection
 **Objective:** Verify that a controlled test signal is detected as an anomaly.
 **Procedure:** Apply a controlled pressure signal; verify AI flags it.
-**Pass criteria:** Anomaly score exceeds the threshold.
+**Pass criteria:** normalized anomaly index exceeds the threshold.
 
 ### AI-03: Noise-Only Input
 **Objective:** Verify that pure noise is not flagged as an anomaly.
-**Procedure:** Record in a noisy (but normal) environment; check anomaly scores.
+**Procedure:** Record in a noisy (but normal) environment; check Normalized Anomaly Indices.
 **Pass criteria:** False positive rate is acceptable (documented).
 
 ### AI-04: Borderline Signal
@@ -42,7 +42,7 @@
 | Test ID | Date | Result | Measured Value | Notes |
 |---|---|---|---|---|
 | AI-01 | ___ | ___ | Normal score: ___ | |
-| AI-02 | ___ | ___ | Anomaly score: ___ | |
+| AI-02 | ___ | ___ | normalized anomaly index: ___ | |
 | AI-03 | ___ | ___ | Noise FPR: ___ | |
 | AI-04 | ___ | ___ | Min detectable: ___ | |
 | AI-05 | ___ | ___ | FPR: ___/24hr | |

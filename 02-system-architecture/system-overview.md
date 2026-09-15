@@ -75,7 +75,7 @@ User-facing components: data storage, REST API, real-time dashboard, and alert s
 | Analog signal digitized | Analog → Digital | ADC |
 | Digital signal filtered and transformed | Digital signal processing | Band-pass filter, FFT |
 | Features extracted from signal windows | Digital signal processing | RMS, energy, spectral features |
-| Anomaly score computed | Machine learning | Isolation Forest |
+| normalized anomaly index computed | Machine learning | Isolation Forest |
 | Results stored and displayed | Software | Database, dashboard, API |
 
 ---

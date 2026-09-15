@@ -17,7 +17,7 @@ The system does not define what specific events constitute anomalies. Instead, i
 > - **Normal points** are similar to many other points, so they require many splits (deep tree paths) to become isolated.
 > - **Anomalous points** are few and different, so they require fewer splits (shorter tree paths) to become isolated.
 >
-> The **anomaly score** is derived from the average path length across all trees. Shorter average paths indicate higher anomaly scores.
+> The **normalized anomaly index** is derived from the average path length across all trees. Shorter average paths indicate higher Normalized Anomaly Indices.
 
 ## Isolation Forest for InfraSocket
 
@@ -29,7 +29,7 @@ flowchart TD
     ADC --> SP["Signal Processing\n(Filter, FFT)"]
     SP --> FE["Feature Extraction\n(RMS, Energy, Frequency,\nCentroid, Bandwidth, ...)"]
     FE --> IF["Isolation Forest\nModel"]
-    IF --> RAWSCORE["Raw Anomaly Score"]
+    IF --> RAWSCORE["Raw Normalized Anomaly Index"]
     RAWSCORE --> NORMSCORE["Project-defined\nNormalized Anomaly Index"]
     NORMSCORE --> THRESH{"Index > Threshold?"}
     THRESH -->|"Yes"| ANOM["🚨 POTENTIAL ANOMALY\nAlert + Log"]
@@ -51,7 +51,7 @@ flowchart TD
 2. **Extract features:** Same feature extraction as training
 3. **Normalize features:** Apply the same normalization used during training, if feature scaling is used (see note below)
 4. **Predict:** Pass the feature vector through the trained Isolation Forest
-5. **Score:** Receive the raw anomaly score; apply project-defined normalization to produce the anomaly index
+5. **Score:** Receive the raw normalized anomaly index; apply project-defined normalization to produce the anomaly index
 6. **Compare:** Compare the normalized anomaly index to the threshold
 7. **Act:** Log the result; if anomalous, trigger alert
 
@@ -69,7 +69,7 @@ flowchart TD
 
 ## Anomaly Index Interpretation
 
-The raw Isolation Forest score is processed through a project-defined normalization to produce a normalized anomaly index. This index is used for visualization and threshold-based decision making.
+The raw raw anomaly score is processed through a project-defined normalization to produce a normalized anomaly index. This index is used for visualization and threshold-based decision making.
 
 | Index Range | Interpretation | Action |
 |---|---|---|
@@ -79,7 +79,7 @@ The raw Isolation Forest score is processed through a project-defined normalizat
 | Above threshold | Potential anomaly | Trigger alert |
 | High | Strong potential anomaly | Trigger high-priority alert |
 
-> **Important:** The normalized anomaly index is a project-defined visualization/decision-support score. It is NOT a probability and must not be interpreted as model confidence. Actual index distributions and appropriate thresholds will be determined by testing with real data. See [Threshold Selection](threshold-selection.md).
+> **Important:** The Normalized Anomaly Index is a project-defined visualization and decision-support value. It is not a probability and must not be interpreted as model confidence. Actual index distributions and appropriate thresholds will be determined by testing with real data. See [Threshold Selection](threshold-selection.md).
 
 ## Why Isolation Forest Is Suitable for This Application
 
@@ -89,7 +89,7 @@ The raw Isolation Forest score is processed through a project-defined normalizat
 | **Works without large labeled datasets** | The anomaly detector can be trained without requiring labelled anomaly examples, but the amount and diversity of normal baseline data required for reliable performance will be determined experimentally |
 | **Computationally lightweight** | Fast training and inference; suitability for specific edge hardware to be benchmarked |
 | **No distribution assumptions** | Does not assume data follows a specific distribution |
-| **Interpretable** | Anomaly score has an intuitive meaning |
+| **Interpretable** | normalized anomaly index has an intuitive meaning |
 | **Well-established** | Published in IEEE ICDM 2008, widely used and validated |
 
 ## Limitations of Anomaly Detection
@@ -102,7 +102,7 @@ The raw Isolation Forest score is processed through a project-defined normalizat
 
 4. **False negatives:** Anomalous events that happen to produce feature vectors similar to normal conditions may be missed.
 
-5. **No severity estimation:** The anomaly score indicates how different a signal is, not how "important" or "dangerous" it is.
+5. **No severity estimation:** The normalized anomaly index indicates how different a signal is, not how "important" or "dangerous" it is.
 
 ---
 

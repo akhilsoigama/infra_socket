@@ -18,7 +18,7 @@ flowchart TD
 
     subgraph AI_LAYER["AI Layer"]
         FE -->|"Feature Vectors"| INFERENCE["AI Inference Service\n(Isolation Forest)"]
-        INFERENCE -->|"Raw Anomaly Score"| NORMALIZE["Project-defined\nNormalization"]
+        INFERENCE -->|"Raw Normalized Anomaly Index"| NORMALIZE["Project-defined\nNormalization"]
         NORMALIZE -->|"Anomaly Index"| DECISION["Decision Engine\n(Threshold Comparison)"]
     end
 
@@ -91,7 +91,7 @@ flowchart TD
 ### AI Inference Service
 - **Responsibility:** Run the trained Isolation Forest model on incoming feature vectors
 - **Input:** Feature vectors from the feature extraction service
-- **Output:** Anomaly scores
+- **Output:** Normalized Anomaly Indices
 - **Key behaviours:**
   - Load the trained model at startup
   - Process each feature vector and output a score
@@ -99,8 +99,8 @@ flowchart TD
   - Support model hot-reloading for updates
 
 ### Decision Engine
-- **Responsibility:** Compare anomaly scores against the configured threshold
-- **Input:** Anomaly scores
+- **Responsibility:** Compare Normalized Anomaly Indices against the configured threshold
+- **Input:** Normalized Anomaly Indices
 - **Output:** NORMAL / ANOMALY classification, trigger alerts
 - **Configuration:** Threshold value, cooldown period (to avoid repeated alerts for the same event)
 
@@ -121,7 +121,7 @@ flowchart TD
 
 ### Web Dashboard
 - **Responsibility:** Real-time visualization of system state
-- **Displays:** Waveform, spectrum, spectrogram, anomaly score, alerts, sensor health
+- **Displays:** Waveform, spectrum, spectrogram, normalized anomaly index, alerts, sensor health
 - **Technology:** Web-based (accessible via browser)
 
 ### Alert Service

@@ -29,7 +29,7 @@
 - High enough that the anti-aliasing filter can have a gentle rolloff (easier to design)
 - Common rate used in many data acquisition systems
 
-> **Important:** Sampling rate determines the upper frequency limit. It does NOT by itself determine the low-frequency capability. Detecting/characterizing a 0.01 Hz signal (period ≈ 100 seconds) requires sufficiently long observation windows, stable sensor response, and appropriate reference chamber design. The target measurement band (0.01–20 Hz) is a design objective. Full sensor response across this entire band must be experimentally validated.
+> **Important:** Sampling rate primarily determines the upper usable frequency and anti-aliasing requirements. Low-frequency performance also depends on sensor response, stability, observation duration and system design. Detecting/characterizing a 0.01 Hz signal (period ≈ 100 seconds) requires sufficiently long observation windows, stable sensor response, and appropriate reference chamber design. The target measurement band (0.01–20 Hz) is a design objective. Full sensor response across this entire band must be experimentally validated.
 
 ### Data Volume at 50 Hz
 ```

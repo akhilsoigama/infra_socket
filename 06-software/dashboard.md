@@ -52,7 +52,7 @@ The real-time web dashboard provides visual feedback on system status, sensor da
 | Frequency spectrum | Latest FFT | Per window (~30 sec) |
 | Spectrogram | Rolling spectrogram data | Per window |
 | Temperature | Temperature sensor | Every 5–10 seconds |
-| Anomaly score | AI inference output | Per window |
+| normalized anomaly index | AI inference output | Per window |
 | Anomaly status | Threshold comparison | Per window |
 | Event timeline | Anomaly records from DB | Per window |
 | Historical data | Database query | On demand |

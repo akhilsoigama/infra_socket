@@ -32,7 +32,7 @@ sequenceDiagram
         FE->>AI: Feature vector
         AI->>AI: Isolation Forest inference
         AI->>DB: Store anomaly record
-        alt Anomaly Score > Threshold
+        alt Normalized Anomaly Index > Threshold
             AI->>ALERT: Trigger anomaly alert
             ALERT->>DASH: Push alert notification
         end
@@ -74,7 +74,7 @@ This interface is simple and well-defined: the AI model expects a fixed-length n
 ### AI ↔ Application Interface
 
 The AI subsystem outputs:
-- **Anomaly score** (float, 0.0–1.0)
+- **normalized anomaly index** (float, 0.0–1.0)
 - **Decision** (NORMAL or ANOMALY, based on threshold)
 - **Metadata** (timestamp, window ID, associated sensor ID)
 

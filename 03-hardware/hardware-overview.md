@@ -61,7 +61,7 @@ flowchart TD
 | Component | Purpose | Key Requirement |
 |---|---|---|
 | [Wind-noise reduction manifold](wind-noise-reduction.md) | Reduce turbulent wind-induced pressure noise | Multiple spatially distributed inlets |
-| [Pressure sensor](pressure-sensing.md) | Convert pressure variations to electrical signal | Response down to 0.01 Hz, differential capability |
+| [Pressure sensor](pressure-sensing.md) | Convert pressure variations to electrical signal | Target response: approximately 0.01–20 Hz; actual sensor response remains To Be Validated, differential capability |
 | [Diaphragm / sensing element](diaphragm-design.md) | Mechanical element that deflects under pressure | Sensitivity, linearity, low hysteresis |
 | [Reference chamber](reference-chamber.md) | Provide stable reference pressure | Sealed volume with controlled capillary leak |
 | [Differential pressure system](differential-pressure-system.md) | Suppress slow barometric drift | Atmosphere vs. reference chamber |

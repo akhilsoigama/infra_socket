@@ -16,7 +16,7 @@
 - "The model learns what 'normal' atmospheric conditions look like and flags anything that significantly deviates"
 - "Our AI does anomaly DETECTION, not event CLASSIFICATION — it says 'this is unusual,' not 'this was an explosion'"
 - "Isolation Forest is computationally lightweight — actual inference latency will be benchmarked on the selected edge hardware"
-- "The anomaly score is a project-defined normalized index, NOT a probability"
+- "The normalized anomaly index is a project-defined normalized index, NOT a probability"
 
 ### Dashboard
 - "The web-based dashboard provides live visualization of the pressure waveform, frequency spectrum, and anomaly index"

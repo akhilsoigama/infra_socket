@@ -32,7 +32,7 @@ Learns to compress and reconstruct normal data. Anomalies produce high reconstru
 Density-based approach — anomalies are in low-density regions. Computationally heavier during inference. May be used alongside Isolation Forest for comparison.
 
 ### Ensemble Approach
-Combine multiple models and aggregate their anomaly scores. More robust but more complex. `Future Scope`.
+Combine multiple models and aggregate their Normalized Anomaly Indices. More robust but more complex. `Future Scope`.
 
 ## Model Comparison Plan
 

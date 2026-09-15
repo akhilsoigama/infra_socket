@@ -70,8 +70,8 @@ Once digitized, the signal passes through:
 The extracted features from each signal window are fed into an **Isolation Forest** model:
 
 - **Training:** The model is trained on feature vectors from normal (baseline) atmospheric conditions
-- **Inference:** For each new signal window, the model computes an anomaly score
-- **Decision:** If the anomaly score exceeds a configurable threshold, the system flags an anomaly
+- **Inference:** For each new signal window, the model computes an normalized anomaly index
+- **Decision:** If the normalized anomaly index exceeds a configurable threshold, the system flags an anomaly
 
 > **What this achieves:** The system learns what "normal" looks like and alerts when something "unusual" occurs.
 >
@@ -83,7 +83,7 @@ A web-based dashboard provides:
 
 - Real-time pressure waveform
 - Live frequency spectrum and spectrogram
-- Current anomaly score with threshold indicator
+- Current normalized anomaly index with threshold indicator
 - Alert notifications when anomalies are detected
 - Historical data browsing
 - Sensor health status
@@ -125,8 +125,8 @@ A successful prototype demonstration would show:
 1. A clean waveform captured in a quiet environment
 2. Visible noise reduction when the wind manifold is engaged
 3. Correct FFT peaks for a known test signal
-4. An anomaly score near zero for normal conditions
-5. An elevated anomaly score and alert for a controlled test anomaly
+4. An normalized anomaly index near zero for normal conditions
+5. An elevated normalized anomaly index and alert for a controlled test anomaly
 6. All of the above visible on the real-time dashboard
 
 ---

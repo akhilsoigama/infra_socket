@@ -14,6 +14,8 @@ Digital filtering isolates the infrasound frequency band (0.01–20 Hz) from the
 
 **Challenge:** Implementing a digital high-pass filter at 0.01 Hz is difficult because the time constant is very long (100 seconds per cycle). The filter needs many samples of history to operate effectively.
 
+> **Important:** High-pass filtering at 0.01 Hz removes DC and extreme low-frequency drift, but it does NOT create 0.01 Hz infrasound data if the sensor hardware itself failed to capture it. Digital filtering only isolates what was physically detected.
+
 ### 2. Low-Pass Filter (LPF)
 
 **Purpose:** Removes frequencies above the infrasound range (> 20 Hz), including any residual noise from electronics, mains hum (50/60 Hz), and other high-frequency interference.

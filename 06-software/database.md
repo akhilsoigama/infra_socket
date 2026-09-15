@@ -64,7 +64,7 @@ CREATE TABLE anomalies (
     timestamp TEXT NOT NULL,
     sensor_id TEXT NOT NULL,
     window_id TEXT,
-    anomaly_score REAL,
+    anomaly_index REAL,
     threshold REAL,
     status TEXT,
     severity TEXT,

@@ -36,7 +36,7 @@ Develop an anomaly-detection system that:
 - Learns a baseline of "normal" atmospheric pressure behaviour
 - Flags signal windows that deviate significantly from the learned baseline
 - Uses an unsupervised approach (Isolation Forest) that does not require labeled anomaly data
-- Generates anomaly scores and compares them against configurable thresholds
+- Generates Normalized Anomaly Indices and compares them against configurable thresholds
 
 > **Important:** The MVP objective is **anomaly detection**, not event classification. The system flags unusual patterns — it does not identify what caused them.
 
@@ -47,7 +47,7 @@ Build a dashboard that displays:
 - Live pressure waveform
 - Frequency spectrum
 - Spectrogram
-- Current anomaly score
+- Current normalized anomaly index
 - Alert status
 - Sensor health
 

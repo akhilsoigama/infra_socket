@@ -59,5 +59,4 @@ The total prototype cost is expected to fall in the range of a student/hackathon
 4. Bulk purchasing or sponsor support may reduce costs
 
 ---
-
 *See also: [Hardware Overview](hardware-overview.md) | [Bill of Materials](../12-cost-and-feasibility/bill-of-materials.md) | [Prototype Cost](../12-cost-and-feasibility/prototype-cost.md)*

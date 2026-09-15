@@ -7,11 +7,11 @@
 
 ### Steps
 
-1. **Show normal state:** Dashboard displays calm waveform, flat spectrum, low anomaly score
+1. **Show normal state:** Dashboard displays calm waveform, flat spectrum, low normalized anomaly index
 2. **Introduce event:** Apply controlled test signal (e.g., a low-frequency pressure pulse)
 3. **Show waveform change:** The live waveform clearly shows the pressure excursion
 4. **Show FFT peak:** The frequency spectrum shows energy at the test signal's frequency
-5. **Show AI response:** The anomaly score spikes above the threshold
+5. **Show AI response:** The normalized anomaly index spikes above the threshold
 6. **Show alert:** A notification appears on the dashboard
 7. **Return to normal:** Stop the test signal; show the system returning to normal state
 

@@ -15,7 +15,7 @@
 ## Digital Noise Reduction Techniques
 
 ### 1. Band-Pass Filtering (Primary)
-The most effective digital noise reduction is the band-pass filter, which eliminates all noise outside the 0.01–20 Hz target band. This removes mains hum, high-frequency electronic noise, and much of the thermal drift.
+The most effective digital noise reduction is the band-pass filter, which attenuates frequency components outside the target band (0.01–20 Hz). This attenuates mains hum, high-frequency electronic noise, and much of the thermal drift.
 
 ### 2. Averaging
 Averaging multiple signal windows reduces random noise:
@@ -53,6 +53,38 @@ SNR (dB) = 10 × log10(Signal Power / Noise Power)
 ```
 
 A signal is detectable when SNR > 1 (or > 0 dB). For reliable detection with low false alarm rate, higher SNR is needed.
+
+## Urban Noise and Environmental Interference
+
+Urban environments present significant challenges, including traffic, construction, industrial machinery, aircraft, wind, storms, temperature effects, pressure changes, and electronic noise.
+
+> AI alone does not solve environmental interference. 
+
+The system relies on a complete processing chain to handle these challenges:
+
+```text
+Atmospheric Pressure
+        ↓
+Pressure Sensor
+        ↓
+Wind-Noise Reduction
+        ↓
+Analog Filtering
+        ↓
+ADC
+        ↓
+Signal Quality Checks
+        ↓
+Frequency / Amplitude / Duration Analysis
+        ↓
+AI Anomaly Screening
+        ↓
+Normal / Potential Anomaly
+        ↓
+Further Correlation / Analysis
+```
+
+> A detected anomaly is not automatically a confirmed explosion, meteor, volcanic eruption or other specific event.
 
 ## Noise Reduction Hierarchy
 

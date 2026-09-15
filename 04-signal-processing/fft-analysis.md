@@ -26,7 +26,7 @@
 - **Longer FFT window (larger N):** Better frequency resolution but poorer time resolution
 - **Shorter FFT window (smaller N):** Better time resolution but poorer frequency resolution
 
-For infrasound at 0.01 Hz, even with N = 2048 at 50 Hz (≈ 41 seconds), the frequency resolution of 0.024 Hz is adequate but not extremely fine. To resolve 0.01 Hz precisely, longer windows (100+ seconds) would be needed.
+For a 50 Hz sampling rate and N=2048, the FFT bin spacing is approximately 0.0244 Hz. This can be useful for higher-frequency screening but is too coarse for precise characterization near 0.01 Hz. Longer observation windows and larger FFT sizes are preferable when characterizing components close to 0.01 Hz.
 
 ### Short vs. Long Processing Windows
 
@@ -35,7 +35,7 @@ For infrasound at 0.01 Hz, even with N = 2048 at 50 Hz (≈ 41 seconds), the fre
 | **Short processing window** | 10–60 seconds | Faster monitoring, higher-frequency components, preliminary anomaly screening |
 | **Long observation window** | 100–300+ seconds | Characterizing very-low-frequency components, resolving frequencies close to 0.01 Hz, low-frequency spectral analysis |
 
-> **Important:** A 0.01 Hz signal has a period of approximately 100 seconds. A short FFT window (e.g., 30–40 seconds) cannot properly resolve a 0.01 Hz signal. The lower-frequency limit of 0.01 Hz requires sufficiently long observation windows. Shorter analysis windows may be used for higher-frequency screening, while low-frequency characterization requires longer-duration observations.
+> **Important:** A 0.01 Hz signal has a period of approximately 100 seconds. A 20–30 second window cannot properly resolve a 0.01 Hz component. Longer observation windows are required for meaningful low-frequency characterization. The target lower-frequency limit of 0.01 Hz requires sufficiently long observation windows. Shorter analysis windows may be used for higher-frequency screening.
 
 ## Windowing
 

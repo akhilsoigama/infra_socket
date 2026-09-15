@@ -9,7 +9,7 @@
 flowchart LR
     SENSOR["🔧 Hardware Sensor\n(Physical Detection)"] -->|"Digital Signal"| SP["📊 Signal Processing\n(Filtering, FFT)"]
     SP -->|"Feature Vector"| AI["🤖 AI Model\n(Pattern Analysis)"]
-    AI -->|"Anomaly Score"| DECISION["Normal /\nAnomaly"]
+    AI -->|"Normalized Anomaly Index"| DECISION["Normal /\nAnomaly"]
 ```
 
 ## What AI Does in This System
@@ -17,7 +17,7 @@ flowchart LR
 | AI Function | Description |
 |---|---|
 | **Learn baseline** | Build a model of what "normal" atmospheric conditions look like in terms of signal features |
-| **Score new data** | Assign an anomaly score to each new signal window based on how different it is from the learned baseline |
+| **Score new data** | Assign an normalized anomaly index to each new signal window based on how different it is from the learned baseline |
 | **Flag anomalies** | When the score exceeds a threshold, flag the data as anomalous |
 
 ## What AI Does NOT Do in This System
@@ -57,7 +57,7 @@ flowchart TD
     subgraph INFERENCE["Inference Phase (Real-Time)"]
         NEW_DATA["New Sensor\nData"] --> PROCESS_I["Signal Processing\n+ Feature Extraction"]
         PROCESS_I --> LOAD["Load Trained\nModel"]
-        LOAD --> SCORE["Compute\nAnomaly Score"]
+        LOAD --> SCORE["Compute\nNormalized Anomaly Index"]
         SCORE --> THRESHOLD{"Score >\nThreshold?"}
         THRESHOLD -->|"Yes"| ANOMALY["🚨 ANOMALY"]
         THRESHOLD -->|"No"| NORMAL["✅ NORMAL"]
@@ -71,7 +71,7 @@ flowchart TD
 | Filtering | Signal Processing | Yes | Filtered signal |
 | FFT | Signal Processing | Yes | Frequency spectrum |
 | Feature Extraction | Signal Processing | Yes | Feature vector |
-| Isolation Forest | **AI / Machine Learning** | No (learned model) | Anomaly score |
+| Isolation Forest | **AI / Machine Learning** | No (learned model) | normalized anomaly index |
 | Threshold comparison | Decision logic | Yes | Normal / Anomaly |
 
 Only the Isolation Forest step is AI/ML. Everything before it is traditional signal processing.

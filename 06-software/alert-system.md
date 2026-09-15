@@ -8,7 +8,7 @@ The alert system notifies users when the AI anomaly detection identifies an unus
 
 ```mermaid
 flowchart TD
-    AI["AI Inference:\nAnomaly Score > Threshold"] --> COOL{"Cooldown\nActive?"}
+    AI["AI Inference:\nNormalized Anomaly Index > Threshold"] --> COOL{"Cooldown\nActive?"}
     COOL -->|Yes| SKIP["Skip Alert\n(Log Only)"]
     COOL -->|No| GEN["Generate Alert\nRecord"]
     GEN --> DB["Store in\nDatabase"]
@@ -26,7 +26,7 @@ flowchart TD
   "alert_id": "ALERT-20250315-104530",
   "timestamp": "2025-03-15T10:45:30Z",
   "sensor_id": "SENSOR-001",
-  "anomaly_score": 0.82,
+  "anomaly_index": 0.82,
   "threshold": 0.70,
   "severity": "HIGH",
   "status": "NEW",

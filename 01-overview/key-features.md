@@ -29,7 +29,7 @@ mindmap
       Data Storage
       Sensor Monitoring
 ```
-
+====
 ## Core Features
 
 ### 1. Low-Frequency Pressure Detection (0.01–20 Hz)
@@ -69,7 +69,7 @@ The system implements a complete signal-processing chain:
 
 An Isolation Forest model trained on normal atmospheric data flags signal windows that deviate significantly from the learned baseline. The system outputs:
 
-- **Anomaly score** — a numerical measure of how unusual a signal window is
+- **normalized anomaly index** — a numerical measure of how unusual a signal window is
 - **Classification** — Normal or Anomaly, based on a configurable threshold
 - **Alert** — notification when an anomaly is detected
 
@@ -80,7 +80,7 @@ A web-based dashboard displays:
 - Live pressure waveform
 - Frequency spectrum
 - Spectrogram
-- Anomaly score with threshold indicator
+- normalized anomaly index with threshold indicator
 - Sensor status and health
 - Alert history and event timeline
 
@@ -117,7 +117,7 @@ Each subsystem (hardware, signal processing, AI, software) is designed as an ind
 | Event classification | `Future Scope` | Requires labeled datasets |
 | Multi-sensor array | `Future Scope` | Requires multiple stations |
 | Source localization | `Future Scope` | Requires array processing |
-
+****
 ---
 
 *See also: [Proposed Solution](proposed-solution.md) | [Scope and Limitations](scope-and-limitations.md)*
