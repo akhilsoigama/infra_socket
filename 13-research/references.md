@@ -4,6 +4,47 @@
 
 > **Note:** All references listed below are real, verifiable sources from established organizations and peer-reviewed publications.
 
+# **SIH Problem Statement** 
+
+144  :  Background The Infrasound sensors are precision instruments designed to detect and measure low frequency atmospheric pressure waves, known as infrasound, that fall below the range of human hearing, typically under 20 Hz. These waves can travel long distances through the atmosphere and are produced by a variety of natural and human-made sources including distant Industrial explosions, volcanic eruptions, severe weather systems, meteors, rocket launches, and other energetic phenomena. Detection and analysis of these signals are important for atmospheric monitoring, geophysical research, disaster warning systems and security applications.  
+• Description It is required to design and develop a high-sensitivity atmospheric microbarometer Infrasound sensor capable of measuring infrasonic pressure fluctuations in the frequency range of approximately 0.01 Hz to 20 Hz.  
+  
+**The sensor should address the complete hardware architecture, including:**  
+  
+(a).Pressure sensing mechanism.  
+  
+(b).Mechanical transducer design.  
+  
+(c).Differential pressure measurement technique.  
+  
+(d).Low-noise analog front-end electronics.  
+  
+(e).Temperature compensation.  
+  
+(f).Long-period pressure equalization system.  
+  
+(g).Environmental enclosure.  
+  
+(h).Wind-noise reduction interface.  
+  
+(i).Calibration methodology.  
+  
+The design should aim to detect very small pressure variations while maintaining long-term stability, low drift, and high signal fidelity. The data acquisition (digitizer) and real time waveform display & analysis software available in open market to be included to demonstrate complete functional sensor system.  
+  
+• Expected Solution The prototype infrasound sensor should have high sensitivity, long-term stability and low-noise signal condition to measure infrasound signals accurately. Sensor should demonstrate:  
+  
+(a).Detection of low-frequency pressure signals.  
+  
+(b).Laboratory characterization of frequency response.  
+  
+(c).Noise floor measurements.  
+  
+(d).Sensitivity estimation.  
+  
+(e).Stability testing.  
+  
+The evaluation will be conducted based on the achievement of the following parameters Attach Table Here The digitizer and data acquisition software (available in open market) for real time waveform display & analysis will be arranged by candidates themselves to demonstrate the complete functional sensor system.
+
 ### Infrasound and Atmospheric Acoustics
 
 1. **CTBTO Preparatory Commission.** "Infrasound Monitoring." Comprehensive Nuclear-Test-Ban Treaty Organization.
@@ -65,6 +106,18 @@
 14. **KNMI (Royal Netherlands Meteorological Institute).** "KNMI Data Platform."
     - URL: https://dataplatform.knmi.nl/
     - *Seismic and infrasound station data for the Netherlands.*
+
+### Reference Sensor: Seismo Wave MB3a Infrasound Sensor
+
+The **Seismo Wave MB3a** is a professional infrasound sensor used as a reference for the design of our InfraSocket system. It is designed to detect very low-frequency atmospheric pressure variations, with a pressure-output bandwidth of **0.01–28 Hz**, covering the infrasound frequency range.
+
+The MB3a uses an **aneroid capsule coupled with a magnet and coil transducer** to convert atmospheric pressure variations into an electrical signal. It provides a default pressure sensitivity of **20 mV/Pa** and has low instrumental self-noise, making it suitable for detecting small pressure fluctuations.
+
+The sensor also includes **temperature and atmospheric-pressure measurements**, which can be useful for environmental monitoring and compensation. It operates from **12 V DC** and provides a differential analog output that can be connected to a suitable digitizer.
+
+For the InfraSocket project, the MB3a is used as a **technical reference and benchmark**, particularly for its frequency range, sensitivity, noise performance, environmental sensing, and signal-output approach. The actual prototype will aim to achieve similar functional objectives using **lower-cost, commercially available components**.
+
+URL : https://seismowave.com/wp-content/uploads/2019/07/datasheet_mb3a2017.V2.pdf
 
 ### Software Libraries
 
