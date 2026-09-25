@@ -11,14 +11,10 @@
             "id": "794afad487c021d1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "01-overview/problem-statement.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "problem-statement"
+              "title": "New tab"
             }
           }
         ]
@@ -188,13 +184,50 @@
   },
   "active": "794afad487c021d1",
   "lastOpenFiles": [
-    "01-overview/key-features.md",
-    "13-research/references.md",
-    "01-overview/problem-statement.md",
-    "Untitled",
-    "01-overview/project-objectives.md",
-    "02-system-architecture/architecture.md",
-    "infrasocket.zip",
-    "01-overview.zip"
+    "fix-align.js",
+    "patch-ascii.js",
+    "patch-final.js",
+    "patch-menu.js",
+    "patch-toc.js",
+    "node_modules/marked/package.json",
+    "node_modules/cheerio/package.json",
+    "patch-ui.js",
+    "patch-mermaid-font.js",
+    "patch-mermaid-theme.js",
+    "patch-all-html.js",
+    "node_modules/highlight.js/styles/brown-papersq.png",
+    "node_modules/highlight.js/VERSION_11_UPGRADE.md",
+    "node_modules/highlight.js/VERSION_10_UPGRADE.md",
+    "node_modules/highlight.js/SUPPORTED_LANGUAGES.md",
+    "node_modules/highlight.js/SECURITY.md",
+    "node_modules/highlight.js/README.md",
+    "node_modules/highlight.js/CHANGES.md",
+    "node_modules/highlight.js/styles/pojoaque.jpg",
+    "node_modules/undici/types/README.md",
+    "node_modules/undici/docs/docs/best-practices/writing-tests.md",
+    "node_modules/undici/docs/docs/best-practices/undici-vs-builtin-fetch.md",
+    "node_modules/undici/docs/docs/best-practices/proxy.md",
+    "node_modules/undici/docs/docs/best-practices/mocking-request.md",
+    "node_modules/undici/docs/docs/best-practices/crawling.md",
+    "node_modules/undici/docs/docs/best-practices/client-certificate.md",
+    "node_modules/undici/docs/docs/api/WebSocket.md",
+    "node_modules/undici/docs/docs/api/Util.md",
+    "node_modules/undici/docs/docs/api/Socks5ProxyAgent.md",
+    "node_modules/undici/docs/docs/api/SnapshotAgent.md",
+    "node_modules/undici/docs/docs/api/RoundRobinPool.md",
+    "node_modules/undici/docs/docs/api/RetryHandler.md",
+    "node_modules/undici/docs/docs/api/RetryAgent.md",
+    "node_modules/undici/docs/docs/api/RedirectHandler.md",
+    "node_modules/undici/docs/docs/api/ProxyAgent.md",
+    "node_modules/undici/docs/docs/api/PoolStats.md",
+    "node_modules/undici/docs/docs/api/Pool.md",
+    "node_modules/undici/docs/docs/api/MockPool.md",
+    "logo-removebg-preview.png",
+    "website/assets/infrasocket-logo.webp",
+    "website/assets/hardware/wind-rosette-concept.jpg",
+    "website/assets/hardware/infrasocket-node-concept.jpg",
+    "website/assets/hardware/differential-pressure-concept.jpg",
+    "logo.webp",
+    "logo.png"
   ]
 }
