@@ -234,20 +234,7 @@ The AI component in InfraSocket is focused on **anomaly detection** — not even
 - [References](13-research/references.md)
 - [Technical Assumptions](13-research/technical-assumptions.md)
 
-### 🎬 Demo
-- [Demo Plan](14-demo/demo-plan.md)
-- [Demo Scenario](14-demo/demo-scenario.md)
-- [Expected Output](14-demo/expected-output.md)
-- [Live Dashboard](14-demo/live-dashboard.md)
-- [Judge Demo Flow](14-demo/judge-demo-flow.md)
 
-### 🎤 Presentation
-- [Presentation Flow](15-presentation/presentation-flow.md)
-- [Problem Explanation](15-presentation/problem-explanation.md)
-- [Solution Explanation](15-presentation/solution-explanation.md)
-- [Architecture Explanation](15-presentation/architecture-explanation.md)
-- [AI Explanation](15-presentation/ai-explanation.md)
-- [Judge Questions](15-presentation/judge-questions.md)
 
 ### 🗺️ Roadmap
 - [Development Phases](16-roadmap/development-phases.md)
@@ -278,18 +265,6 @@ gantt
         Multi-sensor + Classification      :p5a, after p4b, 45d
 ```
 
-## Demo Flow (5–7 Minutes)
-
-1. **Problem** — Why infrasound matters and why it is hard to detect
-2. **Existing Challenges** — Cost, complexity, wind noise
-3. **Our Sensor** — Hardware design and wind-noise reduction
-4. **Signal Acquisition** — Live ADC data capture
-5. **Signal Processing** — Filtering, FFT, spectrogram
-6. **AI Anomaly Detection** — Normalized Anomaly Index
-7. **Dashboard** — Real-time visualization
-8. **Live Demo** — Normal signal → Controlled anomaly → Alert
-9. **Applications** — Atmospheric research, volcanic monitoring, education
-10. **Future Scope** — Event classification, multi-sensor arrays
 
 ---
 

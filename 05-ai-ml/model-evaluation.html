@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Evaluation - InfraSocket Docs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css" id="hljs-light">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" id="hljs-dark" disabled>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sky: { 50: '#f0f9ff', 100: '#e0f2fe', 400: '#38bdf8', 600: '#0284c7', 700: '#0369a1', 900: '#0c4a6e' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+        
+        // Theme init
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('hljs-light').disabled = true;
+            document.getElementById('hljs-dark').disabled = false;
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                document.getElementById('hljs-light').disabled = false;
+                document.getElementById('hljs-dark').disabled = true;
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                document.getElementById('hljs-light').disabled = true;
+                document.getElementById('hljs-dark').disabled = false;
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+        
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        .markdown-body h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .markdown-body h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+        .dark .markdown-body h2 { border-bottom-color: #374151; }
+        
+        .markdown-body h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .markdown-body p, .markdown-body ul, .markdown-body ol { margin-bottom: 1.25rem; line-height: 1.6; }
+        .markdown-body ul, .markdown-body ol { padding-left: 1.5rem; list-style-type: disc; }
+        .markdown-body li { margin-bottom: 0.5rem; }
+        
+        .markdown-body a { color: #0284c7; text-decoration: none; }
+        .markdown-body a:hover { text-decoration: underline; }
+        .dark .markdown-body a { color: #38bdf8; }
+        
+        .markdown-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 3px; border: 1px solid #e5e7eb; }
+        .dark .markdown-body code { background: #374151; border-color: #4b5563; }
+        
+        .markdown-body pre { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem; }
+        .dark .markdown-body pre { background: #1f2937; border-color: #374151; }
+        .markdown-body pre code { background: none; padding: 0; border: none; font-size: 0.9em; }
+        
+        .markdown-body blockquote { border-left: 4px solid #0284c7; background: #e0f2fe; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 4px 4px 0; color: #111827; }
+        .dark .markdown-body blockquote { background: #0c4a6e; border-left-color: #38bdf8; color: #f3f4f6; }
+        
+        .markdown-body table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .markdown-body th, .markdown-body td { padding: 0.75rem; border: 1px solid #e5e7eb; text-align: left; }
+        .dark .markdown-body th, .dark .markdown-body td { border-color: #374151; }
+        .markdown-body th { background: #f9fafb; font-weight: 600; }
+        .dark .markdown-body th { background: #1f2937; }
+        
+        .markdown-body img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #e5e7eb; }
+        .dark .markdown-body img { border-color: #374151; }
+        
+        /* Mermaid dark mode overrides */
+        .dark .mermaid svg { filter: invert(0.9) hue-rotate(180deg); }
+    </style>
+</head>
+<body class="font-sans text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 h-screen flex flex-col overflow-hidden transition-colors duration-200">
+    <header class="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 z-50 transition-colors duration-200">
+        <div class="flex items-center gap-2 font-bold text-lg">
+            <i class="fa-solid fa-satellite-dish text-sky-600 dark:text-sky-400"></i> InfraSocket
+        </div>
+        <div class="hidden md:flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-3 py-1.5 w-72 text-gray-500 dark:text-gray-400 focus-within:border-sky-600 focus-within:ring-1 focus-within:ring-sky-600 transition-colors">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search documentation..." class="bg-transparent border-none outline-none ml-2 w-full text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400">
+        </div>
+        <div class="flex items-center gap-6">
+            <button onclick="toggleTheme()" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:inline"></i>
+            </button>
+            <a href="#" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors"><i class="fa-brands fa-github mr-1"></i> GitHub</a>
+            <span class="text-xs bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-gray-500 dark:text-gray-400 transition-colors">v1.0</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <aside class="hidden md:block w-72 bg-gray-50 dark:bg-gray-900/50 border-r border-gray-200 dark:border-gray-800 overflow-y-auto p-6 transition-colors duration-200">
+            <details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-book w-4 text-center text-gray-500 dark:text-gray-400"></i> Overview</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../01-overview/key-features.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Key Features</a></li><li><a href="../01-overview/problem-statement.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Problem Statement</a></li><li><a href="../01-overview/project-objectives.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Project Objectives</a></li><li><a href="../01-overview/proposed-solution.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Proposed Solution</a></li><li><a href="../01-overview/real-world-use-cases.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Real-World Use Cases</a></li><li><a href="../01-overview/scope-and-limitations.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Scope and Limitations</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-diagram-project w-4 text-center text-gray-500 dark:text-gray-400"></i> System Architecture</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../02-system-architecture/architecture.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">System Architecture</a></li><li><a href="../02-system-architecture/component-interaction.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Component Interaction</a></li><li><a href="../02-system-architecture/data-flow.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Flow</a></li><li><a href="../02-system-architecture/deployment-architecture.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Deployment Architecture</a></li><li><a href="../02-system-architecture/hardware-architecture.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Architecture</a></li><li><a href="../02-system-architecture/software-architecture.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Software Architecture</a></li><li><a href="../02-system-architecture/system-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">System Overview</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-microchip w-4 text-center text-gray-500 dark:text-gray-400"></i> Hardware</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../03-hardware/adc-digitization.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">ADC / Digitization</a></li><li><a href="../03-hardware/analog-front-end.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Analog Front End</a></li><li><a href="../03-hardware/calibration.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Calibration</a></li><li><a href="../03-hardware/diaphragm-design.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Diaphragm Design</a></li><li><a href="../03-hardware/differential-pressure-system.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Differential Pressure System</a></li><li><a href="../03-hardware/environmental-enclosure.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Environmental Enclosure</a></li><li><a href="../03-hardware/hardware-bom.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Bill of Materials (BOM)</a></li><li><a href="../03-hardware/hardware-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Overview</a></li><li><a href="../03-hardware/power-system.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Power System</a></li><li><a href="../03-hardware/pressure-sensing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Pressure Sensing</a></li><li><a href="../03-hardware/reference-chamber.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Reference Chamber</a></li><li><a href="../03-hardware/temperature-sensing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Temperature Sensing</a></li><li><a href="../03-hardware/wind-noise-reduction.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Wind-Noise Reduction</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-wave-square w-4 text-center text-gray-500 dark:text-gray-400"></i> Signal Processing</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../04-signal-processing/feature-extraction.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Feature Extraction</a></li><li><a href="../04-signal-processing/fft-analysis.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">FFT Analysis</a></li><li><a href="../04-signal-processing/filtering.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Filtering</a></li><li><a href="../04-signal-processing/frequency-analysis.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Frequency Analysis</a></li><li><a href="../04-signal-processing/noise-reduction.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Noise Reduction</a></li><li><a href="../04-signal-processing/sampling.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Sampling</a></li><li><a href="../04-signal-processing/signal-processing-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Signal Processing Overview</a></li><li><a href="../04-signal-processing/signal-quality-checks.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Signal Quality Checks</a></li></ul></details><details class="mb-1 group" open><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-brain w-4 text-center text-gray-500 dark:text-gray-400"></i> AI / ML</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../05-ai-ml/ai-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">AI Overview</a></li><li><a href="../05-ai-ml/anomaly-detection.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Anomaly Detection</a></li><li><a href="../05-ai-ml/data-preprocessing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Preprocessing</a></li><li><a href="../05-ai-ml/dataset-strategy.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Dataset Strategy</a></li><li><a href="../05-ai-ml/false-positive-handling.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">False Positive Handling</a></li><li><a href="../05-ai-ml/feature-engineering.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Feature Engineering</a></li><li><a href="../05-ai-ml/future-event-classification.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Future Event Classification</a></li><li><a href="../05-ai-ml/model-evaluation.html" class="block px-2 py-1.5 text-sm rounded transition-colors bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium">Model Evaluation</a></li><li><a href="../05-ai-ml/model-inference.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Model Inference</a></li><li><a href="../05-ai-ml/model-selection.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Model Selection</a></li><li><a href="../05-ai-ml/model-training.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Model Training</a></li><li><a href="../05-ai-ml/threshold-selection.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Threshold Selection</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-code w-4 text-center text-gray-500 dark:text-gray-400"></i> Software</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../06-software/alert-system.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Alert System</a></li><li><a href="../06-software/api-design.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">API Design</a></li><li><a href="../06-software/backend.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Backend</a></li><li><a href="../06-software/dashboard.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Dashboard</a></li><li><a href="../06-software/data-ingestion.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Ingestion</a></li><li><a href="../06-software/database.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Database</a></li><li><a href="../06-software/realtime-processing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Real-Time Processing</a></li><li><a href="../06-software/software-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Software Overview</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-database w-4 text-center text-gray-500 dark:text-gray-400"></i> Data</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../07-data/anomaly-record-format.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Anomaly Record Format</a></li><li><a href="../07-data/data-model.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Model</a></li><li><a href="../07-data/data-retention.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Retention</a></li><li><a href="../07-data/feature-data-format.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Feature Data Format</a></li><li><a href="../07-data/processed-data-format.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Processed Data Format</a></li><li><a href="../07-data/raw-data-format.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Raw Data Format</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-vial w-4 text-center text-gray-500 dark:text-gray-400"></i> Testing</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../08-testing/acceptance-criteria.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Acceptance Criteria</a></li><li><a href="../08-testing/ai-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">AI Testing</a></li><li><a href="../08-testing/environmental-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Environmental Testing</a></li><li><a href="../08-testing/hardware-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Testing</a></li><li><a href="../08-testing/integration-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Integration Testing</a></li><li><a href="../08-testing/performance-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Performance Testing</a></li><li><a href="../08-testing/sensor-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Sensor Testing</a></li><li><a href="../08-testing/signal-testing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Signal Testing</a></li><li><a href="../08-testing/testing-strategy.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Testing Strategy</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-sliders w-4 text-center text-gray-500 dark:text-gray-400"></i> Calibration & Validation</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../09-calibration-validation/calibration-plan.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Calibration Plan</a></li><li><a href="../09-calibration-validation/frequency-response-test.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Frequency Response Test</a></li><li><a href="../09-calibration-validation/noise-floor-test.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Noise Floor Test</a></li><li><a href="../09-calibration-validation/pressure-step-test.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Pressure Step Test</a></li><li><a href="../09-calibration-validation/sensitivity-test.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Sensitivity Test</a></li><li><a href="../09-calibration-validation/validation-methodology.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Validation Methodology</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-server w-4 text-center text-gray-500 dark:text-gray-400"></i> Deployment</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../10-deployment/deployment-overview.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Deployment Overview</a></li><li><a href="../10-deployment/field-deployment.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Field Deployment</a></li><li><a href="../10-deployment/hardware-deployment.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Hardware Deployment</a></li><li><a href="../10-deployment/maintenance.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Maintenance</a></li><li><a href="../10-deployment/monitoring.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Monitoring</a></li><li><a href="../10-deployment/software-deployment.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Software Deployment</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved w-4 text-center text-gray-500 dark:text-gray-400"></i> Security & Reliability</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../11-security-reliability/data-integrity.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Data Integrity</a></li><li><a href="../11-security-reliability/fault-handling.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Fault Handling</a></li><li><a href="../11-security-reliability/recovery.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Recovery</a></li><li><a href="../11-security-reliability/reliability.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Reliability</a></li><li><a href="../11-security-reliability/security.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Security</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-coins w-4 text-center text-gray-500 dark:text-gray-400"></i> Cost & Feasibility</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../12-cost-and-feasibility/bill-of-materials.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Bill of Materials</a></li><li><a href="../12-cost-and-feasibility/cost-optimization.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Cost Optimization</a></li><li><a href="../12-cost-and-feasibility/operational-cost.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Operational Cost</a></li><li><a href="../12-cost-and-feasibility/prototype-cost.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Prototype Cost</a></li><li><a href="../12-cost-and-feasibility/scalability.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Scalability</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-flask w-4 text-center text-gray-500 dark:text-gray-400"></i> Research</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../13-research/background.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Background</a></li><li><a href="../13-research/existing-solutions.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Existing Solutions</a></li><li><a href="../13-research/proposed-vs-existing.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Proposed vs Existing</a></li><li><a href="../13-research/references.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">References</a></li><li><a href="../13-research/technical-assumptions.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Technical Assumptions</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-display w-4 text-center text-gray-500 dark:text-gray-400"></i> Demo</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../14-demo/demo-plan.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Demo Plan</a></li><li><a href="../14-demo/demo-scenario.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Demo Scenario</a></li><li><a href="../14-demo/expected-output.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Expected Output</a></li><li><a href="../14-demo/judge-demo-flow.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Judge Demo Flow</a></li><li><a href="../14-demo/live-dashboard.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Live Dashboard</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-person-chalkboard w-4 text-center text-gray-500 dark:text-gray-400"></i> Presentation</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../15-presentation/anticipated-questions.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Anticipated Questions</a></li><li><a href="../15-presentation/presentation-flow.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Presentation Flow</a></li><li><a href="../15-presentation/talking-points.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Talking Points</a></li></ul></details><details class="mb-1 group" ><summary class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><div class="flex items-center gap-2"><i class="fa-solid fa-road w-4 text-center text-gray-500 dark:text-gray-400"></i> Roadmap</div><i class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i></summary><ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4"><li><a href="../16-roadmap/contribution-guide.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Contribution Guide</a></li><li><a href="../16-roadmap/future-scope.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Future Scope</a></li><li><a href="../16-roadmap/phase-plan.html" class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Phase Plan</a></li></ul></details>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-8 md:px-16 lg:px-24 bg-white dark:bg-gray-900 transition-colors duration-200">
+            <nav class="text-sm text-gray-500 dark:text-gray-400 mb-8">
+                <a href="#" class="hover:underline">Home</a> / 
+                <a href="#" class="hover:underline">AI / ML</a> / 
+                <span class="font-medium text-gray-900 dark:text-gray-200">Model Evaluation</span>
+            </nav>
+
+            <article class="markdown-body max-w-3xl">
+                <html><head></head><body><h1>Model Evaluation</h1>
+<h2 id="evaluation-metrics">Evaluation Metrics</h2>
+<h3 id="precision">Precision</h3>
+<blockquote>
+<p><strong>Simple:</strong> Of all the times the system said "ANOMALY," how many were actually anomalies?</p>
+</blockquote>
+<pre><code>Precision = True Positives / (True Positives + False Positives)
+</code></pre>
+<p>High precision = few false alarms.</p>
+<h3 id="recall-sensitivity-">Recall (Sensitivity)</h3>
+<blockquote>
+<p><strong>Simple:</strong> Of all the actual anomalies that occurred, how many did the system catch?</p>
+</blockquote>
+<pre><code>Recall = True Positives / (True Positives + False Negatives)
+</code></pre>
+<p>High recall = few missed anomalies.</p>
+<h3 id="f1-score">F1-Score</h3>
+<blockquote>
+<p><strong>Simple:</strong> A single number that balances precision and recall. Ranges from 0 (worst) to 1 (best).</p>
+</blockquote>
+<pre><code>F1 = 2 × (Precision × Recall) / (Precision + Recall)
+</code></pre>
+<h3 id="false-positive-rate-fpr-">False Positive Rate (FPR)</h3>
+<pre><code>FPR = False Positives / (False Positives + True Negatives)
+</code></pre>
+<h3 id="detection-latency">Detection Latency</h3>
+<p>Time from when an anomalous signal enters the sensor to when the alert is generated. Includes signal window accumulation, processing, and inference time.</p>
+<h2 id="evaluation-strategy">Evaluation Strategy</h2>
+<p>Since real anomaly events are rare and unpredictable, evaluation relies primarily on controlled test data (Level 2):</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Input</th>
+<th>Expected Output</th>
+<th>Evaluates</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Normal baseline data</td>
+<td>Quiet atmospheric recording</td>
+<td>NORMAL for all/most windows</td>
+<td>False positive rate</td>
+</tr>
+<tr>
+<td>Controlled pressure pulse</td>
+<td>Known pressure step</td>
+<td>ANOMALY</td>
+<td>True positive detection</td>
+</tr>
+<tr>
+<td>Controlled sinusoidal signal</td>
+<td>Known frequency sine wave</td>
+<td>ANOMALY</td>
+<td>Frequency sensitivity</td>
+</tr>
+<tr>
+<td>Noise-only input</td>
+<td>High wind or electrical noise</td>
+<td>NORMAL (ideally)</td>
+<td>Noise rejection</td>
+</tr>
+<tr>
+<td>Borderline signal</td>
+<td>Weak controlled signal</td>
+<td>May or may not detect</td>
+<td>Sensitivity threshold</td>
+</tr>
+</tbody></table>
+<h2 id="evaluation-record-template">Evaluation Record Template</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Total test windows</td>
+<td><em>To be measured</em></td>
+<td></td>
+</tr>
+<tr>
+<td>True positives</td>
+<td><em>To be measured</em></td>
+<td></td>
+</tr>
+<tr>
+<td>False positives</td>
+<td><em>To be measured</em></td>
+<td></td>
+</tr>
+<tr>
+<td>True negatives</td>
+<td><em>To be measured</em></td>
+<td></td>
+</tr>
+<tr>
+<td>False negatives</td>
+<td><em>To be measured</em></td>
+<td></td>
+</tr>
+<tr>
+<td>Precision</td>
+<td><em>To be calculated</em></td>
+<td></td>
+</tr>
+<tr>
+<td>Recall</td>
+<td><em>To be calculated</em></td>
+<td></td>
+</tr>
+<tr>
+<td>F1-Score</td>
+<td><em>To be calculated</em></td>
+<td></td>
+</tr>
+<tr>
+<td>FPR</td>
+<td><em>To be calculated</em></td>
+<td></td>
+</tr>
+<tr>
+<td>Detection latency</td>
+<td><em>To be measured</em></td>
+<td>seconds</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Important:</strong> Do not fabricate performance numbers. These fields are templates to be filled with actual measured results during testing.</p>
+</blockquote>
+<hr>
+<p><em>See also: <a href="model-training.md">Model Training</a> | <a href="threshold-selection.md">Threshold Selection</a> | <a href="../08-testing/ai-testing.md">AI Testing</a></em></p>
+</body></html>
+            </article>
+        </main>
+
+        <aside class="hidden lg:block w-64 p-8 overflow-y-auto border-l border-gray-200 dark:border-gray-800 transition-colors duration-200">
+            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">On this page</div>
+            <ul class="text-sm">
+                <li class="mb-2 "><a href="#evaluation-metrics" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Evaluation Metrics</a></li><li class="mb-2 pl-4"><a href="#precision" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Precision</a></li><li class="mb-2 pl-4"><a href="#recall-sensitivity-" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Recall (Sensitivity)</a></li><li class="mb-2 pl-4"><a href="#f1-score" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">F1-Score</a></li><li class="mb-2 pl-4"><a href="#false-positive-rate-fpr-" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">False Positive Rate (FPR)</a></li><li class="mb-2 pl-4"><a href="#detection-latency" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Detection Latency</a></li><li class="mb-2 "><a href="#evaluation-strategy" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Evaluation Strategy</a></li><li class="mb-2 "><a href="#evaluation-record-template" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Evaluation Record Template</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        document.querySelectorAll('.language-mermaid').forEach(el => {
+            el.parentElement.outerHTML = `<div class="mermaid">${el.textContent}</div>`;
+        });
+    </script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        
+        // Simple dark mode detection for mermaid theme
+        const isDark = document.documentElement.classList.contains('dark');
+        
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: isDark ? 'dark' : 'neutral',
+            fontFamily: '"Inter", "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif'
+        });
+    </script>
+</body>
+</html>

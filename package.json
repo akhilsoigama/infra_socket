@@ -1,0 +1,26 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "> **Connecting the Unheard.**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhilsoigama/infra_socket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/akhilsoigama/infra_socket/issues"
+  },
+  "homepage": "https://github.com/akhilsoigama/infra_socket#readme",
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "highlight.js": "^11.12.0",
+    "marked": "^18.0.14"
+  }
+}
