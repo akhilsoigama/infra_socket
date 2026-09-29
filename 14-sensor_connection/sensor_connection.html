@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Features - InfraSocket Docs</title>
+    <title>Sensor Connection Architecture - InfraSocket Docs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css"
-        id="hljs-light">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css"
-        id="hljs-dark" disabled>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css" id="hljs-light">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" id="hljs-dark" disabled>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -26,44 +24,44 @@
                 }
             }
         }
-
+        
         // Theme init with URL param support for file:// navigation persistence
         const urlParams = new URLSearchParams(window.location.search);
         const urlTheme = urlParams.get('theme');
         if (urlTheme) {
-            try { localStorage.theme = urlTheme; } catch (e) { }
+            try { localStorage.theme = urlTheme; } catch(e){}
         }
-
+        
         let currentTheme = 'light';
         try {
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 currentTheme = 'dark';
             }
-        } catch (e) {
+        } catch(e) {
             if (urlTheme === 'dark') currentTheme = 'dark';
         }
 
         if (currentTheme === 'dark') {
             document.documentElement.classList.add('dark');
-            if (document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = true;
-            if (document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = false;
+            if(document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = true;
+            if(document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = false;
         } else {
             document.documentElement.classList.remove('dark');
         }
-
+        
         function toggleTheme() {
             const isDark = document.documentElement.classList.contains('dark');
             if (isDark) {
                 document.documentElement.classList.remove('dark');
-                try { localStorage.theme = 'light'; } catch (e) { }
-                if (document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = false;
-                if (document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = true;
+                try { localStorage.theme = 'light'; } catch(e){}
+                if(document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = false;
+                if(document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = true;
                 updateUrlTheme('light');
             } else {
                 document.documentElement.classList.add('dark');
-                try { localStorage.theme = 'dark'; } catch (e) { }
-                if (document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = true;
-                if (document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = false;
+                try { localStorage.theme = 'dark'; } catch(e){}
+                if(document.getElementById('hljs-light')) document.getElementById('hljs-light').disabled = true;
+                if(document.getElementById('hljs-dark')) document.getElementById('hljs-dark').disabled = false;
                 updateUrlTheme('dark');
             }
         }
@@ -85,39 +83,37 @@
                     const url = new URL(a.href, window.location.href);
                     url.searchParams.set('theme', isDark ? 'dark' : 'light');
                     a.href = url.href;
-                } catch (e) { }
+                } catch(e){}
             }
         });
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            if (sidebar) sidebar.classList.toggle('-translate-x-full');
-            if (overlay) overlay.classList.toggle('hidden');
+            if(sidebar) sidebar.classList.toggle('-translate-x-full');
+            if(overlay) overlay.classList.toggle('hidden');
         }
 
-        function getSearchIndex() {
-            return [...document.querySelectorAll('#sidebar a')].map(link => ({
+        
+        function handleSearch(e) {
+            const query = e.target.value.replace(/\s+/g, ' ').trim().toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+            if (!resultsContainer) return;
+            const searchIndex = [...document.querySelectorAll('#sidebar a')].map(link => ({
                 title: link.textContent.replace(/\s+/g, ' ').trim(),
                 section: link.closest('details')?.querySelector('summary')?.textContent.replace(/\s+/g, ' ').trim() || '',
                 url: link.getAttribute('href')
             }));
-        }
-
-        function handleSearch(e) {
-            const query = e.target.value.toLowerCase();
-            const resultsContainer = document.getElementById('search-results');
-            if (!resultsContainer) return;
             if (!query) {
                 resultsContainer.classList.add('hidden');
                 return;
             }
-
-            const results = getSearchIndex().filter(item =>
-                item.title.toLowerCase().includes(query) ||
+            
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
                 item.section.toLowerCase().includes(query)
             );
-
+            
             resultsContainer.innerHTML = '';
             if (results.length > 0) {
                 results.forEach(item => {
@@ -139,63 +135,70 @@
         document.addEventListener('click', (e) => {
             if (!e.target.closest('#search-container')) {
                 const res = document.getElementById('search-results');
-                if (res) res.classList.add('hidden');
+                if(res) res.classList.add('hidden');
             }
-        });    </script>
+        });
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-        details>summary {
+        :root {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+        }
+
+        details > summary {
             list-style: none;
         }
 
-        details>summary::-webkit-details-marker {
+        details > summary::-webkit-details-marker {
             display: none;
         }
 
+        /* Base Typography */
+        .markdown-body {
+            font-family: var(--font-sans);
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        .dark .markdown-body {
+            color: #cbd5e1;
+        }
+
+        /* Headings Typography & Color System */
         .markdown-body h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .markdown-body h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .dark .markdown-body h2 {
-            border-bottom-color: #374151;
-        }
-
-        .markdown-body h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .markdown-body h1 {
+            font-family: var(--font-sans);
             font-size: 2.75rem;
             font-weight: 800;
-            margin-bottom: 2rem;
+            letter-spacing: -0.025em;
             line-height: 1.2;
+            margin-top: 0;
+            margin-bottom: 2rem;
             background: linear-gradient(135deg, #0ea5e9, #6366f1);
-            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline-block;
         }
 
+        @media (max-width: 640px) {
+            .markdown-body h1 {
+                font-size: 2.15rem;
+            }
+        }
+
         .markdown-body h2 {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
             color: #0f172a;
             position: relative;
-            padding-bottom: 0.75rem;
             border-bottom: none !important;
         }
 
@@ -214,29 +217,114 @@
             border-radius: 3px;
         }
 
+        .markdown-body h3 {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.4;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+        }
+
+        .dark .markdown-body h3 {
+            color: #f1f5f9;
+        }
+
+        .markdown-body h4 {
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.5;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #334155;
+        }
+
+        .dark .markdown-body h4 {
+            color: #e2e8f0;
+        }
+
+        .markdown-body h5,
+        .markdown-body h6 {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #475569;
+        }
+
+        .dark .markdown-body h5,
+        .dark .markdown-body h6 {
+            color: #cbd5e1;
+        }
+
+        /* Body Text, Lists & Inline Elements */
         .markdown-body p,
         .markdown-body ul,
         .markdown-body ol {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.75;
             margin-bottom: 1.25rem;
-            line-height: 1.6;
+            color: #334155;
         }
 
-        .markdown-body ul,
-        .markdown-body ol {
+        .dark .markdown-body p,
+        .dark .markdown-body ul,
+        .dark .markdown-body ol {
+            color: #cbd5e1;
+        }
+
+        .markdown-body strong,
+        .markdown-body b {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .dark .markdown-body strong,
+        .dark .markdown-body b {
+            color: #f8fafc;
+        }
+
+        .markdown-body em,
+        .markdown-body i {
+            font-style: italic;
+        }
+
+        .markdown-body ul {
             padding-left: 1.5rem;
             list-style-type: disc;
         }
 
+        .markdown-body ol {
+            padding-left: 1.5rem;
+            list-style-type: decimal;
+        }
+
         .markdown-body li {
+            margin-bottom: 0.5rem;
+            line-height: 1.75;
+        }
+
+        .markdown-body li > p {
             margin-bottom: 0.5rem;
         }
 
+        /* Links */
         .markdown-body a {
             color: #0284c7;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s ease, text-decoration 0.15s ease;
         }
 
         .markdown-body a:hover {
+            color: #0369a1;
             text-decoration: underline;
         }
 
@@ -244,58 +332,87 @@
             color: #38bdf8;
         }
 
+        .dark .markdown-body a:hover {
+            color: #7dd3fc;
+        }
+
+        /* Inline Code */
         .markdown-body code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85em;
-            background: #f3f4f6;
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-            border: 1px solid #e5e7eb;
+            font-family: var(--font-mono);
+            font-size: 0.875em;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 0.2em 0.45em;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
         }
 
         .dark .markdown-body code {
-            background: #374151;
-            border-color: #4b5563;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-color: #334155;
         }
 
+        /* Preformatted & Terminal UI Code Blocks */
         .markdown-body pre {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 1rem;
+            background-color: #1e293b !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid #334155 !important;
+            border-radius: 0.75rem !important;
+            padding: 1.5rem !important;
             overflow-x: auto;
             margin-bottom: 1.5rem;
             -webkit-overflow-scrolling: touch;
             max-width: 100%;
+            color: #cbd5e1 !important;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .markdown-body pre:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.15) !important;
         }
 
         .dark .markdown-body pre {
-            background: #1f2937;
-            border-color: #374151;
+            background-color: #0f172a !important;
+            border-color: #1e293b !important;
         }
 
         .markdown-body pre code {
-            background: none;
-            padding: 0;
-            border: none;
+            font-family: var(--font-mono) !important;
+            line-height: 1.6 !important;
             font-size: 0.9em;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            color: inherit;
         }
 
+        .markdown-body pre code.hljs {
+            background: transparent !important;
+            color: #e2e8f0 !important;
+        }
+
+        /* Blockquotes */
         .markdown-body blockquote {
-            border-left: 4px solid #0284c7;
-            background: #e0f2fe;
-            padding: 1rem;
+            border-left: 4px solid #6366f1;
+            background: linear-gradient(to right, #eef2ff, transparent);
+            border-radius: 0 8px 8px 0;
+            padding: 1.25rem 1.5rem;
             margin-bottom: 1.5rem;
-            border-radius: 0 4px 4px 0;
-            color: #111827;
+            color: #1e293b;
+            line-height: 1.75;
         }
 
         .dark .markdown-body blockquote {
-            background: #0c4a6e;
-            border-left-color: #38bdf8;
-            color: #f3f4f6;
+            background: linear-gradient(to right, rgba(99, 102, 241, 0.1), transparent);
+            color: #cbd5e1;
         }
 
+        .markdown-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Tables */
         .markdown-body table {
             width: 100%;
             border-collapse: collapse;
@@ -304,55 +421,108 @@
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
+            border-radius: 6px;
         }
 
         .markdown-body th,
         .markdown-body td {
-            padding: 0.75rem;
-            border: 1px solid #e5e7eb;
+            padding: 0.875rem 1rem;
+            border: 1px solid #e2e8f0;
             text-align: left;
+            font-size: 0.9rem;
         }
 
         .dark .markdown-body th,
         .dark .markdown-body td {
-            border-color: #374151;
+            border-color: #334155;
         }
 
         .markdown-body th {
-            background: #f9fafb;
+            background: #f8fafc;
+            color: #334155;
             font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
         }
 
         .dark .markdown-body th {
-            background: #1f2937;
+            background: #1e293b;
+            color: #94a3b8;
         }
 
+        .markdown-body td {
+            color: #334155;
+        }
+
+        .dark .markdown-body td {
+            color: #cbd5e1;
+        }
+
+        .markdown-body table tr {
+            transition: background-color 0.15s ease;
+        }
+
+        .markdown-body table tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .dark .markdown-body table tr:hover {
+            background-color: #0f172a;
+        }
+
+        /* Images */
         .markdown-body img {
             max-width: 100%;
             height: auto;
-            border-radius: 6px;
-            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .dark .markdown-body img {
-            border-color: #374151;
+            border-color: #334155;
         }
 
-        /* Mermaid dark mode overrides */
+        /* Horizontal Rules */
+        .markdown-body hr {
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 2rem 0;
+        }
+
+        .dark .markdown-body hr {
+            border-top-color: #334155;
+        }
+
+        /* Mermaid Diagrams */
         .mermaid {
             max-width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .mermaid svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        .markdown-body .mermaid svg {
+            display: block;
+            max-width: none !important;
+            height: auto !important;
         }
 
         .dark .mermaid svg {
             filter: invert(0.9) hue-rotate(180deg);
         }
 
-        /* Custom Thin Scrollbar for all scrollable elements */
+        /* Custom Sleek Scrollbar */
         ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -361,11 +531,19 @@
 
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 4px;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         .dark ::-webkit-scrollbar-thumb {
             background: #475569;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
 
         * {
@@ -377,6 +555,7 @@
             scrollbar-color: #475569 transparent;
         }
 
+        /* Logo Sizing */
         .logo {
             height: auto;
             width: auto;
@@ -399,84 +578,40 @@
                 max-width: 100px;
             }
         }
-    
-        /* Ultimate Terminal UI for pre blocks */
-        .markdown-body pre {
-            background-color: #1e293b !important; /* Deep Slate 800 */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15) !important;
-            border: 1px solid #334155 !important;
-            border-radius: 0.75rem !important;
-            padding: 1.5rem !important;
-            overflow-x: auto;
-            color: #cbd5e1 !important; /* Fallback text color */
-        }
-        .markdown-body pre:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.15) !important;
-        }
-        .markdown-body pre code {
-            font-family: 'JetBrains Mono', monospace !important;
-            line-height: 1.6 !important;
-            color: inherit;
-        }
-        .dark .markdown-body pre {
-            background-color: #0f172a !important; /* Deeper Slate 900 */
-            border-color: #1e293b !important;
-        }
-        /* Override Highlight.js colors to look better on dark background in both light/dark modes */
-        .markdown-body pre code.hljs {
-            background: transparent !important;
-            color: #e2e8f0 !important;
-        }
-        
     </style>
 </head>
-
-<body
-    class="font-sans text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 h-screen flex flex-col overflow-hidden transition-colors duration-200">
-    <header
-        class="h-auto min-h-[4rem] py-2 md:h-16 md:py-0 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 z-30 transition-colors duration-200 relative">
+<body class="font-sans text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 h-screen flex flex-col overflow-hidden transition-colors duration-200">
+    <header class="h-auto min-h-[4rem] py-2 md:h-16 md:py-0 flex items-center justify-between px-4 md:px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 z-30 transition-colors duration-200 relative">
         <div class="flex items-center gap-2 font-bold text-lg">
-            <button onclick="toggleSidebar()"
-                class="md:hidden mr-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                aria-label="Toggle Sidebar">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
+            <button onclick="toggleSidebar()" class="md:hidden mr-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars text-xl"></i></button>
             <img src="../logo-removebg-preview.png" alt="" class="logo">InfraSocket
         </div>
-        <div id="search-container"
-            class="relative hidden md:flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-3 py-1.5 w-72 text-gray-500 dark:text-gray-400 focus-within:border-sky-600 focus-within:ring-1 focus-within:ring-sky-600 transition-colors z-50">
+        <div id="search-container" class="relative hidden md:flex items-center bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-3 py-1.5 w-72 text-gray-500 dark:text-gray-400 focus-within:border-sky-600 focus-within:ring-1 focus-within:ring-sky-600 transition-colors">
             <i class="fa-solid fa-search"></i>
-            <input type="text" oninput="handleSearch(event)" placeholder="Search modules & features..."
-                class="bg-transparent border-none outline-none ml-2 w-full text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400">
-            <div id="search-results"
-                class="hidden absolute top-full left-0 mt-1 w-full max-h-96 overflow-y-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            </div>
+            <input type="text" oninput="handleSearch(event)" placeholder="Search modules & features..." class="bg-transparent border-none outline-none ml-2 w-full text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400">
+        <div id="search-results" class="hidden absolute top-full left-0 mt-1 w-full max-h-96 overflow-y-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-xl z-50"></div>
         </div>
         <div class="flex items-center gap-6">
-            <button onclick="toggleTheme()"
-                class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-                aria-label="Toggle Dark Mode">
+            <button onclick="toggleTheme()" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
                 <i class="fa-solid fa-moon dark:hidden"></i>
                 <i class="fa-solid fa-sun hidden dark:inline"></i>
             </button>
-            <span
-                class="text-xs bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-gray-500 dark:text-gray-400 transition-colors">v1.0</span>
+            <span class="text-xs bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-gray-500 dark:text-gray-400 transition-colors">v1.0</span>
         </div>
     </header>
 
     <div class="flex flex-1 overflow-hidden relative">
-        <div id="sidebar-overlay" onclick="toggleSidebar()"
-            class="fixed inset-0 bg-gray-900/50 dark:bg-black/50 z-40 hidden md:hidden transition-opacity"></div>
+        <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-gray-900/50 dark:bg-black/50 z-40 hidden md:hidden"></div>
         <aside id="sidebar"
             class="fixed md:static inset-y-0 left-0 z-50 w-72 bg-gray-50 dark:bg-gray-900 md:dark:bg-gray-900/50 border-r border-gray-200 dark:border-gray-800 overflow-y-auto p-6 transition-transform duration-300 transform -translate-x-full md:translate-x-0 h-full md:h-auto shadow-2xl md:shadow-none">
             <div class="flex items-center justify-between md:hidden mb-6">
                 <span class="font-bold text-lg text-gray-900 dark:text-gray-100">Documentation</span>
-                <button onclick="toggleSidebar()"
+                <button onclick="toggleSidebar()" aria-label="Close sidebar"
                     class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                     <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
             </div>
-            <details class="mb-1 group" open>
+            <details class="mb-1 group">
                 <summary
                     class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                     <div class="flex items-center gap-2"><i
@@ -486,7 +621,7 @@
                 </summary>
                 <ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4">
                     <li><a href="../01-overview/key-features.html"
-                            class="block px-2 py-1.5 text-sm rounded transition-colors bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium">Key
+                            class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Key
                             Features</a></li>
                     <li><a href="../01-overview/problem-statement.html"
                             class="block px-2 py-1.5 text-sm rounded transition-colors text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200">Problem
@@ -622,7 +757,19 @@
                             Quality Checks</a></li>
                 </ul>
             </details>
-            <a href="../14-sensor_connection/sensor_connection.html" class="block cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><span class="flex items-center gap-2"><i class="fa-solid fa-plug w-4 text-center text-gray-500 dark:text-gray-400"></i> Sensor Connection</span><i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i></a>
+            <details class="mb-1 group">
+                <summary
+                    class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <div class="flex items-center gap-2"><i
+                            class="fa-solid fa-plug w-4 text-center text-gray-500 dark:text-gray-400"></i> Sensor Connection
+                    </div><i
+                        class="fa-solid fa-chevron-right text-[10px] text-gray-400 transition-transform duration-200 group-open:rotate-90"></i>
+                </summary>
+                <ul class="space-y-0.5 mb-3 pl-4 border-l border-gray-200 dark:border-gray-700 ml-4">
+                    <li><a href="../14-sensor_connection/sensor_connection.html"
+                            class="block px-2 py-1.5 text-sm rounded transition-colors bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium">Sensor Connection Architecture</a></li>
+                </ul>
+            </details>
             <details class="mb-1 group">
                 <summary
                     class="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -930,268 +1077,176 @@
             </details>
         </aside>
 
-        <main
-            class="flex-1 overflow-y-auto p-4 md:p-8 md:px-16 lg:px-24 bg-white dark:bg-gray-900 transition-colors duration-200 w-full overflow-x-hidden">
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 md:px-16 lg:px-24 bg-white dark:bg-gray-900 transition-colors duration-200 w-full overflow-x-hidden">
             <nav class="text-sm text-gray-500 dark:text-gray-400 mb-8">
-                <a href="#" class="hover:underline">Home</a> /
-                <a href="#" class="hover:underline">Overview</a> /
-                <span class="font-medium text-gray-900 dark:text-gray-200">Key Features</span>
+                <a href="#" class="hover:underline">Home</a> / 
+                <a href="#" class="hover:underline">Sensor Connection</a> / 
+                <span class="font-medium text-gray-900 dark:text-gray-200">Sensor Connection Architecture</span>
             </nav>
 
             <article class="markdown-body max-w-3xl">
-                <html>
-
-                <head></head>
-
-                <body>
-                    <h1>Key Features</h1>
-                    <h2 id="feature-overview">Feature Overview</h2>
-                    <pre><code class="language-mermaid">mindmap
-  root((InfraSocket))
-    Hardware
-      Pressure Sensor
-      Reference Chamber
-      Wind-Noise Reduction
-      Analog Front End
-      High-Resolution ADC
-      Temperature Sensing
-    Signal Processing
-      Band-Pass Filtering
-      FFT Analysis
-      Spectrogram
-      Feature Extraction
-    AI / ML
-      Anomaly Detection
-      Isolation Forest
-      Configurable Threshold
-      Anomaly Scoring
-    Software
-      Real-Time Dashboard
-      REST API
-      Alert System
-      Data Storage
-      Sensor Monitoring
+                <h1>Sensor Connection Architecture</h1>
+<h2 id="storage-calculations">Storage Calculations</h2>
+<p>Suppose one sensor records:</p>
+<ul>
+<li><strong>Sampling rate:</strong> 100 samples/second</li>
+<li><strong>Data:</strong> 4 bytes/sample</li>
+</ul>
+<h3 id="32-bit-data-4-bytes-sample-">32-bit Data (4 bytes/sample)</h3>
+<p><strong>Raw Data Calculation:</strong></p>
+<ul>
+<li>100 samples/second × 4 bytes = 400 bytes/second</li>
+</ul>
+<p><strong>Approximate Storage Requirements:</strong></p>
+<ul>
+<li>34.6 MB/day</li>
+<li>≈ 1.04 GB/month</li>
+<li>≈ 12.6 GB/year</li>
+</ul>
+<p><em>Note: That's for one channel, before considering timestamps, headers, and metadata.</em></p>
+<h3 id="16-bit-data-2-bytes-sample-">16-bit Data (2 bytes/sample)</h3>
+<p><strong>Raw Data Calculation:</strong></p>
+<ul>
+<li>100 samples/second × 2 bytes = 200 bytes/second</li>
+</ul>
+<p><strong>Approximate Storage Requirements:</strong></p>
+<ul>
+<li>≈ 17.3 MB/day</li>
+<li>≈ 0.52 GB/month</li>
+<li>≈ 6.3 GB/year</li>
+</ul>
+<p><strong>Conclusion:</strong> A 32 GB card is already quite useful for a prototype.</p>
+<hr>
+<h2 id="benefits-of-local-storage">Benefits of Local Storage</h2>
+<p>A better architecture leverages both local and remote storage:</p>
+<pre><code class="language-mermaid">graph TD
+    Sensor[Sensor] --&gt; ESP32[ESP32]
+    ESP32 --&gt; SD[microSD&lt;br/&gt;Local backup]
+    ESP32 --&gt; WiFi[Wi-Fi]
+    WiFi --&gt; Server[Server]
+    Server --&gt; DB[(Database)]
 </code></pre>
-                    <p>====</p>
-                    <h2 id="core-features">Core Features</h2>
-                    <h3 id="1-low-frequency-pressure-detection-0-01-20-hz-">1. Low-Frequency Pressure Detection (0.01–20
-                        Hz)</h3>
-                    <p>The system is designed to detect atmospheric pressure variations in the infrasound range. This is
-                        achieved through a combination of:</p>
-                    <ul>
-                        <li>A pressure sensor capable of responding to sub-hertz changes</li>
-                        <li>A differential-pressure reference chamber that suppresses slow barometric drift</li>
-                        <li>An analog signal chain optimized for very-low-frequency signals</li>
-                    </ul>
-                    <h3 id="2-wind-noise-reduction">2. Wind-Noise Reduction</h3>
-                    <p>Wind-induced pressure fluctuations are a major source of interference for infrasound sensors.
-                        InfraSocket uses a spatial-averaging manifold with multiple inlet ports to reduce turbulent wind
-                        noise while preserving the coherent infrasound signal.</p>
-                    <h3 id="3-differential-pressure-with-reference-chamber">3. Differential Pressure with Reference
-                        Chamber</h3>
-                    <p>A sealed reference chamber connected to the atmosphere through a narrow capillary acts as a
-                        mechanical high-pass filter. Slow atmospheric pressure changes equalize through the capillary,
-                        while faster infrasound variations appear as a measurable pressure difference across the sensor.
-                    </p>
-                    <h3 id="4-high-resolution-digitization">4. High-Resolution Digitization</h3>
-                    <p>A high-resolution ADC (target: ≥ 16-bit) samples the conditioned analog signal at a rate
-                        sufficient to capture the full target frequency range. The digital output feeds directly into
-                        the signal-processing pipeline.</p>
-                    <h3 id="5-digital-signal-processing">5. Digital Signal Processing</h3>
-                    <p>The system implements a complete signal-processing chain:</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Stage</th>
-                                <th>Function</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>DC offset removal</td>
-                                <td>Centres the signal around zero</td>
-                            </tr>
-                            <tr>
-                                <td>Band-pass filtering</td>
-                                <td>Isolates the 0.01–20 Hz range</td>
-                            </tr>
-                            <tr>
-                                <td>Windowing</td>
-                                <td>Prepares segments for spectral analysis</td>
-                            </tr>
-                            <tr>
-                                <td>FFT</td>
-                                <td>Transforms to frequency domain</td>
-                            </tr>
-                            <tr>
-                                <td>Spectrogram</td>
-                                <td>Time-frequency visualization</td>
-                            </tr>
-                            <tr>
-                                <td>Feature extraction</td>
-                                <td>Computes signal characteristics for AI</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h3 id="6-ai-based-anomaly-detection">6. AI-Based Anomaly Detection</h3>
-                    <p>An Isolation Forest model trained on normal atmospheric data flags signal windows that deviate
-                        significantly from the learned baseline. The system outputs:</p>
-                    <ul>
-                        <li><strong>normalized anomaly index</strong> — a numerical measure of how unusual a signal
-                            window is</li>
-                        <li><strong>Classification</strong> — Normal or Anomaly, based on a configurable threshold</li>
-                        <li><strong>Alert</strong> — notification when an anomaly is detected</li>
-                    </ul>
-                    <h3 id="7-real-time-dashboard">7. Real-Time Dashboard</h3>
-                    <p>A web-based dashboard displays:</p>
-                    <ul>
-                        <li>Live pressure waveform</li>
-                        <li>Frequency spectrum</li>
-                        <li>Spectrogram</li>
-                        <li>normalized anomaly index with threshold indicator</li>
-                        <li>Sensor status and health</li>
-                        <li>Alert history and event timeline</li>
-                    </ul>
-                    <h3 id="8-temperature-monitoring">8. Temperature Monitoring</h3>
-                    <p>A temperature sensor tracks ambient and/or enclosure temperature, enabling:</p>
-                    <ul>
-                        <li>Temperature logging alongside pressure data</li>
-                        <li>Potential temperature-drift compensation</li>
-                        <li>Environmental condition monitoring</li>
-                    </ul>
-                    <h3 id="9-modular-and-extensible-architecture">9. Modular and Extensible Architecture</h3>
-                    <p>Each subsystem (hardware, signal processing, AI, software) is designed as an independent module:
-                    </p>
-                    <ul>
-                        <li>Hardware can be upgraded without changing software</li>
-                        <li>Signal-processing algorithms can be replaced or tuned independently</li>
-                        <li>The AI model can be retrained or swapped</li>
-                        <li>The dashboard can be extended with new visualizations</li>
-                    </ul>
-                    <h2 id="feature-status">Feature Status</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Status</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Pressure sensing</td>
-                                <td>Proposed design</td>
-                                <td>Sensor selection pending</td>
-                            </tr>
-                            <tr>
-                                <td>Reference chamber</td>
-                                <td>Proposed design</td>
-                                <td>Mechanical design required</td>
-                            </tr>
-                            <tr>
-                                <td>Wind-noise reduction</td>
-                                <td>Proposed design</td>
-                                <td>Manifold construction required</td>
-                            </tr>
-                            <tr>
-                                <td>Analog front end</td>
-                                <td>Proposed design</td>
-                                <td>Component selection pending</td>
-                            </tr>
-                            <tr>
-                                <td>ADC</td>
-                                <td>Proposed design</td>
-                                <td>Resolution/rate to be determined</td>
-                            </tr>
-                            <tr>
-                                <td>Signal processing</td>
-                                <td>Proposed design</td>
-                                <td>Algorithm selection finalized</td>
-                            </tr>
-                            <tr>
-                                <td>AI anomaly detection</td>
-                                <td>Proposed design</td>
-                                <td>Isolation Forest selected</td>
-                            </tr>
-                            <tr>
-                                <td>Dashboard</td>
-                                <td>Proposed design</td>
-                                <td>Technology stack to be finalized</td>
-                            </tr>
-                            <tr>
-                                <td>Alert system</td>
-                                <td>Proposed design</td>
-                                <td>Notification method to be decided</td>
-                            </tr>
-                            <tr>
-                                <td>Event classification</td>
-                                <td><code>Future Scope</code></td>
-                                <td>Requires labeled datasets</td>
-                            </tr>
-                            <tr>
-                                <td>Multi-sensor array</td>
-                                <td><code>Future Scope</code></td>
-                                <td>Requires multiple stations</td>
-                            </tr>
-                            <tr>
-                                <td>Source localization</td>
-                                <td><code>Future Scope</code></td>
-                                <td>Requires array processing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr>
-                    <hr>
-                    <p><em>See also: <a href="proposed-solution.html">Proposed Solution</a> | <a
-                                href="scope-and-limitations.html">Scope and Limitations</a></em></p>
-                </body>
+<ul>
+<li>The microSD acts as a local backup/buffer.</li>
+<li>The server becomes the main long-term storage.</li>
+</ul>
+<h3 id="standard-workflow">Standard Workflow</h3>
+<ol>
+<li><strong>ESP32</strong> records data from the sensor.</li>
+<li>Data is saved to the <strong>microSD</strong> card.</li>
+<li>Data is sent through <strong>Wi-Fi</strong>.</li>
+<li><strong>Server</strong> receives the data.</li>
+<li>Data is stored in the <strong>Database</strong>.</li>
+</ol>
+<h3 id="store-and-forward-approach-wi-fi-failure-">Store-and-Forward Approach (Wi-Fi Failure)</h3>
+<p>If Wi-Fi fails:</p>
+<ol>
+<li>Wi-Fi connection is lost (❌).</li>
+<li><strong>Sensor</strong> continues to send data to the <strong>ESP32</strong>.</li>
+<li><strong>ESP32</strong> continues recording to the <strong>microSD</strong> card.</li>
+</ol>
+<p>When Wi-Fi comes back:</p>
+<ol>
+<li><strong>ESP32</strong> retrieves missing data from the <strong>microSD</strong> card.</li>
+<li><strong>ESP32</strong> uploads the missing data to the <strong>Server</strong>.</li>
+</ol>
+<hr>
+<h2 id="wi-fi-usage">Wi-Fi Usage</h2>
+<p>Wi-Fi is primarily used for communication, not storage. Your sensor node can send the following telemetry to your server:</p>
+<ul>
+<li>Pressure</li>
+<li>Temperature</li>
+<li>Timestamp</li>
+<li>Node ID</li>
+<li>Battery status</li>
+<li>Signal quality</li>
+</ul>
+<p><strong>Communication Flow:</strong></p>
+<pre><code class="language-mermaid">graph TD
+    Node01[Node 01] --&gt; WiFi[Wi-Fi]
+    WiFi --&gt; Router[Router]
+    Router --&gt; Internet[Internet / LAN]
+    Internet --&gt; Server[Server]
+</code></pre>
+<p>You can then see the data on your dashboard.</p>
+<hr>
+<h2 id="server-uses">Server Uses</h2>
+<p>The server is the central brain and storage system for all your sensor nodes.</p>
+<pre><code class="language-mermaid">graph TD
+    Node01[Node 01] --&gt; Server[Server]
+    Node02[Node 02] --&gt; Server
+    Node03[Node 03] --&gt; Server
+    Node04[Node 04] --&gt; Server
+</code></pre>
+<p>The server can perform several critical functions:</p>
+<ul>
+<li><strong>Store:</strong> Historical sensor data.</li>
+<li><strong>Process:</strong> Filtering, FFT (Fast Fourier Transform), Spectrogram, Feature extraction.</li>
+<li><strong>Compare:</strong> Node 01 vs Node 02 vs Node 03.</li>
+<li><strong>Detect Events:</strong> When multiple nodes detect the same event, it performs Event Correlation.</li>
+<li><strong>Display (Web Dashboard):</strong> Live waveform, Frequency spectrum, Spectrogram, Sensor status, and Events.</li>
+</ul>
+<hr>
+<h2 id="infra-socket-node-architecture">Infra Socket Node Architecture</h2>
+<pre><code class="language-mermaid">graph TD
+    subgraph "INFRA SOCKET NODE"
+        Pressure[Pressure Sensor] --&gt; Noise[Wind Noise Reduction]
+        Noise --&gt; AFE[Analog Front End]
+        AFE --&gt; ADC[ADC]
+        ADC --&gt; ESP32[ESP32]
+        
+        GPS[GPS/RTC time] --&gt; ESP32
+        ESP32 --&gt; SD[microSD]
+        ESP32 --&gt; WiFi[Wi-Fi]
+    end
+    
+    WiFi --&gt; ServerMain[SERVER]
+    
+    ServerMain --&gt; DB[(Database)]
+    ServerMain --&gt; Proc[Processing]
+    ServerMain --&gt; API[API]
+    
+    DB --&gt; Dashboard[Dashboard]
+    Proc --&gt; Dashboard
+    API --&gt; Dashboard
+</code></pre>
+<hr>
+<h2 id="multiple-locations-architecture">Multiple Locations Architecture</h2>
+<p>For multiple locations, the system architecture scales out:</p>
+<pre><code class="language-mermaid">graph TD
+    subgraph "CENTRAL SYSTEM"
+        Server[SERVER]
+        DB[(Database)]
+        Proc[Processing]
+        Server --- DB
+        Server --- Proc
+    end
 
-                </html>
+    Server --&gt; Node01[Node 01]
+    Server --&gt; Node02[Node 02]
+    Server --&gt; Node03[Node 03]
+
+    Node01 --- SD1[SD]
+    SD1 --- Sens1[Sensor]
+
+    Node02 --- SD2[SD]
+    SD2 --- Sens2[Sensor]
+
+    Node03 --- SD3[SD]
+    SD3 --- Sens3[Sensor]
+</code></pre>
+<p>Each node can have its own 32 GB microSD, while the server can have much larger centralized storage.</p>
+
             </article>
         </main>
 
-        <aside
-            class="hidden lg:block w-64 p-8 overflow-y-auto border-l border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">On this
-                page</div>
-            <ul class="text-sm">
-                <li class="mb-2 "><a href="#feature-overview"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Feature
-                        Overview</a></li>
-                <li class="mb-2 "><a href="#core-features"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Core
-                        Features</a></li>
-                <li class="mb-2 pl-4"><a href="#1-low-frequency-pressure-detection-0-01-20-hz-"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">1.
-                        Low-Frequency Pressure Detection (0.01–20 Hz)</a></li>
-                <li class="mb-2 pl-4"><a href="#2-wind-noise-reduction"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">2.
-                        Wind-Noise Reduction</a></li>
-                <li class="mb-2 pl-4"><a href="#3-differential-pressure-with-reference-chamber"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">3.
-                        Differential Pressure with Reference Chamber</a></li>
-                <li class="mb-2 pl-4"><a href="#4-high-resolution-digitization"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">4.
-                        High-Resolution Digitization</a></li>
-                <li class="mb-2 pl-4"><a href="#5-digital-signal-processing"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">5.
-                        Digital Signal Processing</a></li>
-                <li class="mb-2 pl-4"><a href="#6-ai-based-anomaly-detection"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">6.
-                        AI-Based Anomaly Detection</a></li>
-                <li class="mb-2 pl-4"><a href="#7-real-time-dashboard"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">7.
-                        Real-Time Dashboard</a></li>
-                <li class="mb-2 pl-4"><a href="#8-temperature-monitoring"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">8.
-                        Temperature Monitoring</a></li>
-                <li class="mb-2 pl-4"><a href="#9-modular-and-extensible-architecture"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">9.
-                        Modular and Extensible Architecture</a></li>
-                <li class="mb-2 "><a href="#feature-status"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors">Feature
-                        Status</a></li>
+        <aside class="hidden lg:block w-72 p-8 overflow-y-auto transition-colors duration-200">
+            <div class="border-l-2 border-gray-200 dark:border-gray-700 ml-4">
+                <div class="text-sm text-gray-700 dark:text-gray-300 mb-4 pl-4 pt-1">Table of Contents</div>
+                <ul class="text-sm pl-4 space-y-4">
+                <li class="mb-2 "><a href="#storage-calculations" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Storage Calculations</a></li><li class="mb-2 pl-4"><a href="#32-bit-data-4-bytes-sample-" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">32-bit Data (4 bytes/sample)</a></li><li class="mb-2 pl-4"><a href="#16-bit-data-2-bytes-sample-" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">16-bit Data (2 bytes/sample)</a></li><li class="mb-2 "><a href="#benefits-of-local-storage" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Benefits of Local Storage</a></li><li class="mb-2 pl-4"><a href="#standard-workflow" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Standard Workflow</a></li><li class="mb-2 pl-4"><a href="#store-and-forward-approach-wi-fi-failure-" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Store-and-Forward Approach (Wi-Fi Failure)</a></li><li class="mb-2 "><a href="#wi-fi-usage" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Wi-Fi Usage</a></li><li class="mb-2 "><a href="#server-uses" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Server Uses</a></li><li class="mb-2 "><a href="#infra-socket-node-architecture" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Infra Socket Node Architecture</a></li><li class="mb-2 "><a href="#multiple-locations-architecture" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 block transition-colors duration-200 leading-relaxed">Multiple Locations Architecture</a></li>
             </ul>
+            </div>
         </aside>
     </div>
 
@@ -1204,16 +1259,21 @@
     </script>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
+        
         // Simple dark mode detection for mermaid theme
         const isDark = document.documentElement.classList.contains('dark');
-
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: isDark ? 'dark' : 'neutral',
-            fontFamily: '"Inter", "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif'
+        
+        mermaid.initialize({ 
+            startOnLoad: false, 
+            theme: 'neutral',
+            fontFamily: '"Inter", sans-serif'
+        });
+        await mermaid.run();
+        document.querySelectorAll('.mermaid svg').forEach(svg => {
+            const width = svg.viewBox.baseVal.width;
+            if (width <= 0) throw new Error('Mermaid rendered an SVG without a usable viewBox.');
+            svg.setAttribute('width', String(width));
         });
     </script>
 </body>
-
 </html>
