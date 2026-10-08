@@ -1,0 +1,45 @@
+.markdown-body .mermaid,
+.mermaid {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5rem 0 2rem;
+    padding: 1rem;
+    border: 1px solid #bdd6d1;
+    border-radius: 8px;
+    background: #f4faf9;
+    color: #17343b;
+}
+
+.dark .markdown-body .mermaid,
+.dark .mermaid {
+    border-color: #35505a;
+    background: #111d27;
+    color: #e2e8f0;
+}
+
+.mermaid svg {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.mermaid .nodeLabel,
+.mermaid .edgeLabel,
+.mermaid .cluster-label,
+.mermaid .nodeLabel p,
+.mermaid .edgeLabel p {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.dark .mermaid svg {
+    filter: none !important;
+}
+
+@media (max-width: 640px) {
+    .mermaid {
+        padding: 0.75rem;
+    }
+}
