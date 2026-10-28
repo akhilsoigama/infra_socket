@@ -164,6 +164,7 @@ export default function Page07DataRawDataFormat() {
         </article>
       </div>
 
+
     </main>
   );
 }

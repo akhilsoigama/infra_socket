@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AlertTriangle } from 'lucide-react';
 
+
 export default function Page03HardwarePowerSystem() {
   return (
     <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
@@ -148,6 +149,7 @@ export default function Page03HardwarePowerSystem() {
           <p><em>See also: <Link to="/03-hardware/analog-front-end">Analog Front End</Link> | <Link to="/03-hardware/hardware-overview">Hardware Overview</Link></em></p>
         </article>
       </div>
+
 
     </main>
   );
