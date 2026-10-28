@@ -1,0 +1,15 @@
+{
+  "dataset_name": "InfraSocket Raw Baseline Infrasound Dataset",
+  "version": "1.0.0",
+  "sampling_rate_hz": 50,
+  "sensor_model": "MEMS Differential Pressure Sensor",
+  "digitizer": "16-bit SAR ADC Module",
+  "record_count": 50,
+  "duration_seconds": 1.0,
+  "units": {
+    "adc_value": "counts (16-bit signed/offset)",
+    "pressure_pa": "Pascals (Pa)",
+    "temperature_c": "Celsius (°C)"
+  },
+  "created_at": "2025-03-15T10:30:00.000Z"
+}
