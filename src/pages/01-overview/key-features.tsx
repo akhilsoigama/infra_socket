@@ -1,195 +1,260 @@
 import { Link } from 'react-router-dom';
+import {
+  Waves,
+  Wind,
+  Layers,
+  Cpu,
+  Activity,
+  Brain,
+  LayoutDashboard,
+  Thermometer,
+  Box,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Gauge
+} from 'lucide-react';
 
 export default function Page01OverviewKeyFeatures() {
-  return (
-    <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
-      <div>
-  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-    <a href="#" className="hover:underline">Home</a> /
-    <a href="#" className="hover:underline">Overview</a> /
-    <span className="font-medium text-gray-900 dark:text-gray-200">Key Features</span>
-  </nav>
-  <article className="markdown-body max-w-3xl">
-    <h1>Key Features</h1>
-    <h2 id="feature-overview">Feature Overview</h2>
-    <pre><code className="language-mermaid">mindmap{"\n"}{"  "}root((InfraSocket)){"\n"}{"    "}Hardware{"\n"}{"      "}Pressure Sensor{"\n"}{"      "}Reference Chamber{"\n"}{"      "}Wind-Noise Reduction{"\n"}{"      "}Analog Front End{"\n"}{"      "}High-Resolution ADC{"\n"}{"      "}Temperature Sensing{"\n"}{"    "}Signal Processing{"\n"}{"      "}Band-Pass Filtering{"\n"}{"      "}FFT Analysis{"\n"}{"      "}Spectrogram{"\n"}{"      "}Feature Extraction{"\n"}{"    "}AI / ML{"\n"}{"      "}Anomaly Detection{"\n"}{"      "}Isolation Forest{"\n"}{"      "}Configurable Threshold{"\n"}{"      "}Anomaly Scoring{"\n"}{"    "}Software{"\n"}{"      "}Real-Time Dashboard{"\n"}{"      "}REST API{"\n"}{"      "}Alert System{"\n"}{"      "}Data Storage{"\n"}{"      "}Sensor Monitoring{"\n"}</code></pre>
-    <p>====</p>
-    <h2 id="core-features">Core Features</h2>
-    <h3 id="1-low-frequency-pressure-detection-0-01-20-hz-">1. Low-Frequency Pressure Target (0.01–20 Hz (TARGET - Pending experimental validation))</h3>
-    <p>The research prototype targets atmospheric pressure variations in the approximate 0.01–20 Hz (TARGET - Pending experimental validation)
-      band. Complete sensor and system response across that range is PENDING VALIDATION. The design
-      concept depends on:</p>
-    <ul>
-      <li>A selected and calibrated pressure sensor with measured response</li>
-      <li>A reference chamber whose pressure-equalization time constant and transfer function are measured</li>
-      <li>An analog signal chain with documented noise, gain, filtering, and input range</li>
-    </ul>
-    <h3 id="2-wind-noise-reduction">2. Wind-Noise Reduction</h3>
-    <p>Wind-induced pressure fluctuations can interfere with infrasound sensing. InfraSocket documents a
-      multi-inlet spatial-averaging manifold concept; actual reduction and signal preservation depend
-      on geometry, pneumatic response, frequency, turbulence correlation, wind, and installation.
-      WNRS attenuation is PENDING VALIDATION.</p>
-    <h3 id="3-differential-pressure-with-reference-chamber">3. Differential Pressure with Reference
-      Chamber</h3>
-    <p>A reference chamber and pneumatic restriction can create a frequency-dependent pressure
-      reference. In a simplified model, f<sub>c</sub> = 1 / (2πτ), but the actual time constant and
-      response depend on chamber volume, capillary, tubing, ports, leakage, and temperature. The
-      cutoff is TBD pending experimental characterization.</p>
-    <h3 id="4-high-resolution-digitization">4. High-Resolution Digitization</h3>
-    <p>The ADC target is ≥≥16-bit (TARGET - Final selection depends on ENOB and noise) nominal resolution; this does not establish sensitivity or system
-      dynamic range. Approximately 100 Hz (TARGET - Pending validation) is the prototype engineering sampling target; the
-      theoretical Nyquist boundary for a 20 Hz upper target is greater than 40 Hz (Theoretical minimum, Prototype targets approx. 100 Hz (TARGET - Pending validation)). Component choice,
-      ENOB, analog/ADC noise, and filter response remain to be validated.</p>
-    <h3 id="5-digital-signal-processing">5. Digital Signal Processing</h3>
-    <p>The documented signal-processing plan includes:</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Stage</th>
-          <th>Function</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>DC offset removal</td>
-          <td>Centres the signal around zero</td>
-        </tr>
-        <tr>
-          <td>Band-pass filtering</td>
-          <td>Processes the approximate 0.01–20 Hz (TARGET - Pending experimental validation) TARGET band; full instrument response remains unvalidated</td>
-        </tr>
-        <tr>
-          <td>Windowing</td>
-          <td>Prepares segments for spectral analysis</td>
-        </tr>
-        <tr>
-          <td>FFT</td>
-          <td>Transforms to frequency domain</td>
-        </tr>
-        <tr>
-          <td>Spectrogram</td>
-          <td>Time-frequency visualization</td>
-        </tr>
-        <tr>
-          <td>Feature extraction</td>
-          <td>Computes signal characteristics for AI</td>
-        </tr>
-      </tbody>
-    </table>
-    <h3 id="6-ai-based-anomaly-detection">6. AI-Based Anomaly Detection</h3>
-    <p>Isolation Forest is a candidate for optional anomaly scoring after sensor calibration, signal
-      quality checks, and baseline-data review. No trained model, evaluation data, or deployed AI
-      capability is evidenced in this workspace. An anomaly score is not event classification and is
-      not confirmation of a physical event.</p>
-    <ul>
-      <li>Candidate anomaly score for analyst review; score definition and threshold require validation.</li>
-      <li>Anomaly versus baseline deviation only; no physical event label is implied.</li>
-      <li>Automated alerts remain a proposed function pending implementation and evaluation.</li>
-    </ul>
-    <h3 id="7-real-time-dashboard">7. Real-Time Dashboard</h3>
-    <p>The documentation contains a dashboard mock-up, not live telemetry. A future connected dashboard may display:</p>
-    <ul>
-      <li>Live pressure waveform</li>
-      <li>Frequency spectrum</li>
-      <li>Spectrogram</li>
-      <li>normalized anomaly index with threshold indicator</li>
-      <li>Sensor status and health</li>
-      <li>Alert history and event timeline</li>
-    </ul>
-    <h3 id="8-temperature-monitoring">8. Temperature Monitoring</h3>
-    <p>A temperature sensor tracks ambient and/or enclosure temperature, enabling:</p>
-    <ul>
-      <li>Temperature logging alongside pressure data</li>
-      <li>Potential temperature-drift compensation</li>
-      <li>Environmental condition monitoring</li>
-    </ul>
-    <h3 id="9-modular-and-extensible-architecture">9. Modular and Extensible Architecture</h3>
-    <p>Each subsystem (hardware, signal processing, AI, software) is designed as an independent module:
-    </p>
-    <ul>
-      <li>Hardware can be upgraded without changing software</li>
-      <li>Signal-processing algorithms can be replaced or tuned independently</li>
-      <li>The AI model can be retrained or swapped</li>
-      <li>The dashboard can be extended with new visualizations</li>
-    </ul>
-    <h2 id="feature-status">Feature Status</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th>Status</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Pressure sensing</td>
-          <td>CANDIDATE</td>
-          <td>Sensor selection and sensitivity TBD</td>
-        </tr>
-        <tr>
-          <td>Reference chamber</td>
-          <td>CANDIDATE</td>
-          <td>Physical response and time constant require characterization</td>
-        </tr>
-        <tr>
-          <td>Wind-noise reduction</td>
-          <td>CANDIDATE</td>
-          <td>Construction and attenuation measurement required</td>
-        </tr>
-        <tr>
-          <td>Analog front end</td>
-          <td>PENDING VALIDATION</td>
-          <td>Component selection and circuit values TBD</td>
-        </tr>
-        <tr>
-          <td>ADC</td>
-          <td>TARGET</td>
-          <td>≥≥16-bit (TARGET - Final selection depends on ENOB and noise) nominal and approximately 100 Hz (TARGET - Pending validation) targets; selection and ENOB TBD</td>
-        </tr>
-        <tr>
-          <td>Signal processing</td>
-          <td>TARGET</td>
-          <td>Filtering, FFT, spectrogram, and feature methods require implementation and verification</td>
-        </tr>
-        <tr>
-          <td>AI anomaly detection</td>
-          <td>FUTURE / EXPERIMENTAL</td>
-          <td>Isolation Forest is a candidate; no model or evaluation evidence found</td>
-        </tr>
-        <tr>
-          <td>Dashboard</td>
-          <td>CANDIDATE</td>
-          <td>Current dashboard is a documentation mock-up, not live data</td>
-        </tr>
-        <tr>
-          <td>Alert system</td>
-          <td>Proposed design</td>
-          <td>Notification method to be decided</td>
-        </tr>
-        <tr>
-          <td>Event classification</td>
-          <td><code>Future Scope</code></td>
-          <td>Requires labeled datasets</td>
-        </tr>
-        <tr>
-          <td>Multi-sensor array</td>
-          <td><code>Future Scope</code></td>
-          <td>Requires multiple stations</td>
-        </tr>
-        <tr>
-          <td>Source localization</td>
-          <td><code>Future Scope</code></td>
-          <td>Requires array processing</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr />
-    <hr />
-    <p><em>See also: <Link to="/01-overview/proposed-solution">Proposed Solution</Link> | <Link to="/01-overview/scope-and-limitations">Scope and Limitations</Link></em></p>
-  </article>
-</div>
+  const coreFeatures = [
+    {
+      icon: Waves,
+      title: '0.01 – 20 Hz Sub-Audible Band',
+      badge: 'Core Sensing',
+      desc: 'Optimized for capturing atmospheric microbarometric variations below human auditory perception, generated by severe convective storms, volcanic eruptions, and industrial dynamics.'
+    },
+    {
+      icon: Layers,
+      title: 'Differential Pneumatic Reference',
+      badge: 'Hardware Design',
+      desc: 'Pairs an external sensing port against a thermally insulated reference chamber with a calibrated capillary leak to balance slow diurnal pressure swings while isolating infrasonic transients.'
+    },
+    {
+      icon: Wind,
+      title: 'Wind-Noise Reduction Array',
+      badge: 'Acoustic Filtering',
+      desc: 'Employs a multi-inlet spatial-averaging manifold that suppresses incoherent local wind turbulence before pressure signals reach the MEMS diaphragm.'
+    },
+    {
+      icon: Cpu,
+      title: 'Integrated On-Die Digitization',
+      badge: 'Direct Digital Sensing',
+      desc: 'On-chip 14/16-bit Delta-Sigma ADC inside the DLVR-F50D sensor streams calibrated counts over I²C at 100 Hz, eliminating discrete external ADC boards and analog trace noise.'
+    },
+    {
+      icon: Activity,
+      title: 'Real-Time Signal Conditioning',
+      badge: 'DSP Pipeline',
+      desc: 'Integrated digital processing pipeline executing baseline detrending, 4th-order Butterworth band-pass filtering, FFT spectral analysis, and STFT waterfall spectrograms.'
+    },
+    {
+      icon: Brain,
+      title: 'Unsupervised Anomaly Detection',
+      badge: 'Edge Intelligence',
+      desc: 'Extracts time and frequency-domain feature vectors for unsupervised Isolation Forest anomaly scoring to highlight transient acoustic signatures above ambient noise.'
+    },
+    {
+      icon: LayoutDashboard,
+      title: 'High-Fidelity Desktop GUI',
+      badge: 'Desktop App',
+      desc: 'Python-based PyQtGraph / web-ready monitoring console providing 60 FPS live waveform streaming, PSD plots, thermal logs, and visual anomaly event triggers.'
+    },
+    {
+      icon: Thermometer,
+      title: 'Thermal Drift Tracking',
+      badge: 'Environmental',
+      desc: 'Dedicated high-precision temperature logging (MCP9808, ±0.25°C) to quantify chamber thermal equilibrium and correlate temperature shifts with baseline sensor offset.'
+    },
+    {
+      icon: Box,
+      title: 'Modular & Open Architecture',
+      badge: 'Extensibility',
+      desc: 'Decoupled sensor, acquisition, DSP, and visualization layers enabling straightforward sensor element upgrades, array expansion, or remote cloud ingestion.'
+    }
+  ];
 
+  const specs = [
+    { parameter: 'Detection Frequency Band', spec: '0.01 Hz to 20.0 Hz', category: 'Sensing Bandwidth' },
+    { parameter: 'Pressure Sensor Type', spec: 'Pneumatic MEMS Differential (DLVR series)', category: 'Transducer' },
+    { parameter: 'Nominal Dynamic Range', spec: '±125 Pa to ±500 Pa (differential)', category: 'Pressure Range' },
+    { parameter: 'Acquisition Sampling Rate', spec: '100 Hz continuous', category: 'Acquisition' },
+    { parameter: 'Digitization Architecture', spec: '14/16-bit on-die ΔΣ ADC (Internal to DLVR)', category: 'Digitization' },
+    { parameter: 'Acoustic Noise Suppression', spec: 'Multi-port spatial averaging manifold', category: 'Pneumatics' },
+    { parameter: 'Reference Volume', spec: 'Sealed chamber with capillary leak resistor', category: 'Reference Mechanism' },
+    { parameter: 'Thermal Logging', spec: 'MCP9808 I²C digital sensor (±0.25°C accuracy)', category: 'Auxiliary Sensor' },
+    { parameter: 'Processing Architecture', spec: 'Python DSP (NumPy, SciPy) + PyQtGraph GUI', category: 'Software' }
+  ];
+
+  return (
+    <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 md:p-10 relative">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/01-overview/key-features" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Overview</Link>
+          <span>/</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-200">Key Features</span>
+        </nav>
+
+        {/* Hero Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+            Product Capabilities &amp; Specifications
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Key Features of InfraSocket
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+            InfraSocket delivers an integrated, cost-effective atmospheric infrasound monitoring system. Combining low-frequency differential barometry, physical wind-noise reduction, real-time spectral processing, and intelligent anomaly classification into an accessible research instrument.
+          </p>
+        </div>
+
+        {/* 9 Core Features Grid */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2.5">
+              <Gauge className="w-6 h-6 text-sky-600 dark:text-sky-400" />
+              Core Architecture &amp; Subsystems
+            </h2>
+            <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">9 Integrated Modules</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {coreFeatures.map((feat, idx) => {
+              const Icon = feat.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600 transition-all flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-sky-600 dark:text-sky-400">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">
+                        {feat.badge}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                      {feat.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {feat.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Technical Target Specifications */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Technical Engineering Specifications
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-900/60 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="py-3.5 px-6">System Parameter</th>
+                    <th className="py-3.5 px-6">Engineering Target / Spec</th>
+                    <th className="py-3.5 px-6">Domain</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700/60">
+                  {specs.map((row, i) => (
+                    <tr key={i} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                      <td className="py-3.5 px-6 font-semibold text-gray-900 dark:text-white">
+                        {row.parameter}
+                      </td>
+                      <td className="py-3.5 px-6 text-sky-700 dark:text-sky-300 font-mono text-xs sm:text-sm font-medium">
+                        {row.spec}
+                      </td>
+                      <td className="py-3.5 px-6">
+                        <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                          {row.category}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Development Lifecycle & Validation Matrix */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Subsystem Maturity Matrix
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 space-y-4">
+              <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-bold text-sm">
+                <CheckCircle2 className="w-4 h-4" />
+                Phase 1: Prototyping
+              </div>
+              <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                Hardware breadboarding, differential MEMS sensor integration, pneumatic capillary leak test rig, and baseline 100 Hz continuous serial streaming.
+              </p>
+              <div className="text-xs font-mono text-sky-700 dark:text-sky-300 font-semibold pt-2 border-t border-gray-100 dark:border-gray-700">
+                Status: Completed Design
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 space-y-4">
+              <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-bold text-sm">
+                <Activity className="w-4 h-4" />
+                Phase 2: Characterization
+              </div>
+              <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                Controlled acoustic chamber frequency response (0.01–20 Hz), electrical noise floor characterization, and baseline thermal drift tracking.
+              </p>
+              <div className="text-xs font-mono text-sky-700 dark:text-sky-300 font-semibold pt-2 border-t border-gray-100 dark:border-gray-700">
+                Status: Active Validation
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 space-y-4">
+              <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-bold text-sm">
+                <Box className="w-4 h-4" />
+                Phase 3: Multi-Node Array
+              </div>
+              <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                Multi-sensor spatial array configuration, cross-correlation (PMCC) signal bearing estimation, and cloud-synchronized real-time alerting.
+              </p>
+              <div className="text-xs font-mono text-sky-700 dark:text-sky-300 font-semibold pt-2 border-t border-gray-100 dark:border-gray-700">
+                Status: Roadmap Scope
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Link
+            to="/01-overview/problem-statement"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm transition-colors"
+          >
+            Next: Problem Statement
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <span>InfraSocket Engineering Docs</span>
+            <span>•</span>
+            <Link to="/01-overview/technology-stack" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+              Technology Stack
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

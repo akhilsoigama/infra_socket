@@ -1,215 +1,157 @@
 import { Link } from 'react-router-dom';
+import {
+  Code2,
+  ArrowRight
+} from 'lucide-react';
 
 export default function Page02SystemArchitectureSoftwareArchitecture() {
-  return (
-    <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
-      <div>
-  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-    <a href="#" className="hover:underline">Home</a> /
-    <a href="#" className="hover:underline">System Architecture</a> /
-    <span className="font-medium text-gray-900 dark:text-gray-200">Software Architecture</span>
-  </nav>
-  <article className="markdown-body max-w-3xl">
-    <h1>Software Architecture</h1>
-    <h2 id="software-architecture-diagram">Software Architecture Diagram</h2>
-    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph ACQUISITION["Data Acquisition Layer"]{"\n"}{"        "}DAQ["DAQ Service\n(Reads ADC Data)"]{"\n"}{"        "}DAQ --&gt; BUFFER["Ring Buffer\n(Raw Samples)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph PROCESSING["Processing Layer"]{"\n"}{"        "}BUFFER --&gt; SP["Signal Processing Engine"]{"\n"}{"        "}SP --&gt; |"Filtered Data"| FFT_SVC["FFT / Spectral Service"]{"\n"}{"        "}SP --&gt; |"Filtered Data"| FE["Feature Extraction\nService"]{"\n"}{"        "}FFT_SVC --&gt; |"Spectrum, Spectrogram"| FE{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph AI_LAYER["AI Layer"]{"\n"}{"        "}FE --&gt;|"Feature Vectors"| INFERENCE["AI Inference Service\n(Isolation Forest)"]{"\n"}{"        "}INFERENCE --&gt;|"Raw Normalized Anomaly Index"| NORMALIZE["Project-defined\nNormalization"]{"\n"}{"        "}NORMALIZE --&gt;|"Anomaly Index"| DECISION["Decision Engine\n(Threshold Comparison)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph DATA_LAYER["Data Layer"]{"\n"}{"        "}DAQ --&gt; |"Raw Data"| DB["Database"]{"\n"}{"        "}SP --&gt; |"Processed Data"| DB{"\n"}{"        "}FE --&gt; |"Feature Data"| DB{"\n"}{"        "}INFERENCE --&gt; |"Anomaly Records"| DB{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph APPLICATION["Application Layer"]{"\n"}{"        "}DB --&gt; API["REST API\nService"]{"\n"}{"        "}API --&gt; DASH["Web Dashboard"]{"\n"}{"        "}DECISION --&gt; |"Anomaly Alert"| ALERT["Alert Service"]{"\n"}{"        "}ALERT --&gt; DASH{"\n"}{"        "}ALERT --&gt; NOTIFY["Notifications\n(Email / Webhook)"]{"\n"}{"        "}API --&gt; EXTERNAL["External\nConsumers"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph SYSTEM["System Services"]{"\n"}{"        "}HEALTH["Health Monitor"]{"\n"}{"        "}CONFIG["Configuration\nManager"]{"\n"}{"        "}LOG["Logging Service"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}HEALTH --&gt; DAQ{"\n"}{"    "}HEALTH --&gt; SP{"\n"}{"    "}HEALTH --&gt; INFERENCE{"\n"}{"    "}CONFIG --&gt; DAQ{"\n"}{"    "}CONFIG --&gt; SP{"\n"}{"    "}CONFIG --&gt; INFERENCE{"\n"}</code></pre>
-    <h2 id="service-descriptions">Service Descriptions</h2>
-    <h3 id="data-acquisition-service-daq-service-">Data Acquisition Service (DAQ Service)</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Interface with the ADC hardware, read raw digital samples,
-        buffer them, and make them available to downstream services</li>
-      <li><strong>Input:</strong> Digital samples from ADC (via serial, USB, SPI, or network)</li>
-      <li><strong>Output:</strong> Raw sample stream to ring buffer and database</li>
-      <li><strong>Key behaviours:</strong>
-        <ul>
-          <li>Continuous sampling at the configured rate</li>
-          <li>Timestamp each sample with a synchronized clock</li>
-          <li>Detect and log data gaps or hardware communication errors</li>
-          <li>Continue recording even if downstream processing fails</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="signal-processing-engine">Signal Processing Engine</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Apply digital filtering, DC offset removal, and prepare
-        data for spectral analysis</li>
-      <li><strong>Input:</strong> Raw samples from the ring buffer</li>
-      <li><strong>Output:</strong> Filtered signal data, passed to FFT and feature extraction</li>
-      <li><strong>Key operations:</strong>
-        <ul>
-          <li>DC offset removal (subtract running mean)</li>
-          <li>Band-pass filtering (0.01–20 Hz (TARGET - Pending experimental validation))</li>
-          <li>Signal windowing for spectral analysis</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="fft-spectral-service">FFT / Spectral Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Compute frequency-domain representations</li>
-      <li><strong>Input:</strong> Filtered, windowed signal segments</li>
-      <li><strong>Output:</strong> Power spectrum, spectrogram data</li>
-      <li><strong>Key operations:</strong>
-        <ul>
-          <li>FFT computation</li>
-          <li>Power spectral density estimation</li>
-          <li>Spectrogram generation (successive overlapping FFTs)</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="feature-extraction-service">Feature Extraction Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Compute numerical features from each signal window</li>
-      <li><strong>Input:</strong> Filtered signal data, spectral data</li>
-      <li><strong>Output:</strong> Feature vectors for AI inference</li>
-      <li><strong>Features computed:</strong> RMS amplitude, peak amplitude, spectral energy, dominant
-        frequency, spectral centroid, bandwidth</li>
-    </ul>
-    <h3 id="ai-inference-service">AI Inference Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Run the trained Isolation Forest model on incoming feature
-        vectors</li>
-      <li><strong>Input:</strong> Feature vectors from the feature extraction service</li>
-      <li><strong>Output:</strong> Normalized Anomaly Indices</li>
-      <li><strong>Key behaviours:</strong>
-        <ul>
-          <li>Load the trained model at startup</li>
-          <li>Process each feature vector and output a score</li>
-          <li>Handle model loading failures gracefully (log error, continue without AI)</li>
-          <li>Support model hot-reloading for updates</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="decision-engine">Decision Engine</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Compare Normalized Anomaly Indices against the configured
-        threshold</li>
-      <li><strong>Input:</strong> Normalized Anomaly Indices</li>
-      <li><strong>Output:</strong> NORMAL / ANOMALY classification, trigger alerts</li>
-      <li><strong>Configuration:</strong> Threshold value, cooldown period (to avoid repeated alerts
-        for the same event)</li>
-    </ul>
-    <h3 id="database">Database</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Persistent storage of all data</li>
-      <li><strong>Stored entities:</strong>
-        <ul>
-          <li>Raw measurements</li>
-          <li>Processed signal data</li>
-          <li>Feature vectors</li>
-          <li>Anomaly records</li>
-          <li>Sensor metadata</li>
-          <li>System logs</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="rest-api-service">REST API Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Provide HTTP endpoints for data access and system control
-      </li>
-      <li><strong>Consumers:</strong> Dashboard, external applications</li>
-      <li><strong>Endpoints:</strong> See <Link to="/06-software/api-design">API Design</Link></li>
-    </ul>
-    <h3 id="web-dashboard">Web Dashboard</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Real-time visualization of system state</li>
-      <li><strong>Displays:</strong> Waveform, spectrum, spectrogram, normalized anomaly index,
-        alerts, sensor health</li>
-      <li><strong>Technology:</strong> Web-based (accessible via browser)</li>
-    </ul>
-    <h3 id="alert-service">Alert Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Generate and deliver notifications when anomalies are
-        detected</li>
-      <li><strong>Channels:</strong> Dashboard notification, email, webhook (<code>Assumption</code>:
-        notification channels to be determined based on implementation)</li>
-    </ul>
-    <h3 id="health-monitor">Health Monitor</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Monitor the health of all services and hardware connections
-      </li>
-      <li><strong>Checks:</strong> DAQ connectivity, processing latency, AI service status, database
-        connectivity, disk space</li>
-    </ul>
-    <h3 id="configuration-manager">Configuration Manager</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Manage system configuration (sampling rate, filter
-        parameters, AI threshold, alert settings)</li>
-      <li><strong>Source:</strong> Configuration file or database</li>
-    </ul>
-    <h3 id="logging-service">Logging Service</h3>
-    <ul>
-      <li><strong>Responsibility:</strong> Centralized logging for debugging, auditing, and monitoring
-      </li>
-    </ul>
-    <h2 id="inter-service-communication">Inter-Service Communication</h2>
-    <p><code>Assumption</code>: The communication patterns below represent the proposed design. The
-      specific implementation (message queue, shared memory, direct function calls) depends on the
-      chosen technology stack.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Pattern</th>
-          <th>Used Between</th>
-          <th>Rationale</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>In-process (function calls)</td>
-          <td>Signal processing stages</td>
-          <td>Low latency, simple for monolithic prototype</td>
-        </tr>
-        <tr>
-          <td>Message queue / stream</td>
-          <td>DAQ → Processing → AI</td>
-          <td>Decoupled, buffered, supports backpressure</td>
-        </tr>
-        <tr>
-          <td>REST / HTTP</td>
-          <td>API → Dashboard</td>
-          <td>Standard web communication</td>
-        </tr>
-        <tr>
-          <td>Database writes/reads</td>
-          <td>All services → DB</td>
-          <td>Persistent storage</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>For the <strong>MVP prototype</strong>, a monolithic architecture (all services in one process)
-      is acceptable and simpler. Microservice separation is <code>Future Scope</code> for production
-      deployments.</p>
-    <h2 id="edge-computing-platform">Edge Computing Platform</h2>
-    <h3 id="primary-edge-processing-candidate-raspberry-pi-linux-sbc">Primary Edge Processing Candidate:
-      Raspberry Pi / Linux SBC</h3>
-    <p>Responsibilities:</p>
-    <ul>
-      <li>Data acquisition interface (ADC communication)</li>
-      <li>Signal processing (filtering, FFT, spectral analysis)</li>
-      <li>Feature extraction</li>
-      <li>AI anomaly detection (Isolation Forest inference)</li>
-      <li>Local dashboard / API server</li>
-      <li>Data storage (local database)</li>
-    </ul>
-    <h3 id="raspberry-pi-5-optional-">Raspberry Pi 5 (Optional)</h3>
-    <p>Position as:</p>
-    <ul>
-      <li>Optional low-level acquisition controller (direct ADC interfacing)</li>
-      <li>Low-power communication controller (e.g., LoRa telemetry)</li>
-      <li>Future embedded implementation for ultra-low-power deployments</li>
-    </ul>
-    <blockquote>
-      <p>The Raspberry Pi / Linux SBC is the primary candidate for the prototype because it can run
-        the full Python-based signal processing and AI stack. Raspberry Pi 5 is positioned as an optional
-        component, not a co-requirement. Do not assume both are simultaneously required unless the
-        architecture explicitly uses both.</p>
-    </blockquote>
-    <hr />
-    <p><em>See also: <Link to="/02-system-architecture/architecture">Architecture</Link> | <Link to="/02-system-architecture/data-flow">Data Flow</Link> |
-        <Link to="/06-software/backend">Backend</Link></em></p>
-  </article>
-</div>
+  const services = [
+    {
+      name: 'I²C Sensor DAQ Service',
+      stack: 'Python smbus2 / libgpiod (C-bindings)',
+      role: 'Polls Amphenol DLVR-F50D pressure sensor and MCP9808 temperature breakout over the hardware I²C bus at continuous 100 Hz. Applies monotonically increasing UTC timestamps and detects communication framing errors.'
+    },
+    {
+      name: 'Circular Memory Ring Buffer',
+      stack: 'NumPy Structured Circular Array',
+      role: 'Maintains an in-memory ring buffer of the latest 3,600 seconds of 100 Hz raw data, decoupling real-time hardware sample polling from downstream file I/O and display threads.'
+    },
+    {
+      name: 'Digital Signal Processing (DSP) Engine',
+      stack: 'SciPy Signal & NumPy',
+      role: 'Executes real-time baseline detrending, digital 4th-order Butterworth bandpass filtering (0.01 – 20.0 Hz), Fast Fourier Transform (FFT), and Welch Power Spectral Density (PSD) windowing.'
+    },
+    {
+      name: 'Unsupervised ML Anomaly Detector',
+      stack: 'scikit-learn (Isolation Forest)',
+      role: 'Extracts time and spectral statistical features (RMS amplitude, dominant frequency, spectral centroid, energy ratio) on sliding windows and generates normalized anomaly scores (0.0 to 1.0).'
+    },
+    {
+      name: 'Local Persistence Engine',
+      stack: 'SQLite / HDF5 / CSV Append',
+      role: 'Continuously writes raw sensor counts, calibrated Pascals, and ambient temperatures to the local microSD card, guaranteeing zero data loss during network disruptions.'
+    },
+    {
+      name: 'Desktop Visualization Telemetry',
+      stack: 'PyQtGraph / React-Electron UI',
+      role: 'High-performance 60 FPS graphical user interface rendering live pressure waveforms, dynamic power spectra, waterfall spectrograms, and threshold alert indicators.'
+    }
+  ];
 
+  return (
+    <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 md:p-10 relative">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/02-system-architecture/architecture" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">System Architecture</Link>
+          <span>/</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-200">Software Architecture</span>
+        </nav>
+
+        {/* Hero Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+            <Code2 className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+            Edge Compute &amp; Telemetry Stack
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Software &amp; Processing Architecture
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+            The InfraSocket software stack is organized as an asynchronous, multi-threaded pipeline running on the Raspberry Pi 5 Linux edge platform and streaming telemetry to a high-rate desktop console.
+          </p>
+        </div>
+
+        {/* Software Architecture Flowchart */}
+        <section className="space-y-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <Layers className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            Software Subsystem Pipeline Flowchart
+          </h2>
+
+            <pre><code className="language-mermaid">{`flowchart TD
+    subgraph ACQUISITION["I2C Acquisition Thread (100 Hz Loop)"]
+        I2C_BUS["Hardware I2C Bus (DLVR-F50D + MCP9808)"] --> DAQ["DAQ Service<br/>(I2C Readout and Timestamping)"]
+        DAQ --> RING["In-Memory Ring Buffer<br/>(NumPy Circular Array)"]
+    end
+
+    subgraph DSP_PIPELINE["DSP Processing Thread"]
+        RING --> DETREND["DC Baseline Detrending"]
+        DETREND --> FILTER["4th-Order Butterworth<br/>Bandpass (0.01-20 Hz)"]
+        FILTER --> FFT["Welch PSD and FFT Spectral Math"]
+        FILTER --> FEAT["Time and Spectral Feature Extraction"]
+    end
+
+    subgraph ML_PIPELINE["Edge Anomaly Detection Thread"]
+        FEAT -->|Normalized Feature Vector| IF["Isolation Forest Engine<br/>(Unsupervised Scoring)"]
+        IF --> THRESH["Score > Threshold?"]
+        THRESH -->|Yes| ALERT["Anomaly Alert Flag"]
+    end
+
+    subgraph PERSISTENCE["Storage Service (Asynchronous)"]
+        DAQ -->|Raw Integer Counts| DB[("microSD Ring Buffer<br/>(SQLite / CSV Time-Series)")]
+        FILTER -->|Filtered Pascals| DB
+        ALERT -->|Event Records| DB
+    end
+
+    subgraph GUI["Desktop Telemetry Console (60 FPS)"]
+        FILTER -->|USB / LAN Stream| TELEM["PyQtGraph Telemetry Visualizer"]
+        FFT --> TELEM
+        ALERT --> TELEM
+        TELEM --> DISP["Live Waveform + PSD Plot + STFT Waterfall"]
+    end`}</code></pre>
+        </section>
+
+        {/* Core Services Grid */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Core Software Services
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {services.map((svc, idx) => (
+              <div
+                key={idx}
+                className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-3 flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                      {svc.name}
+                    </h3>
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                      {svc.stack}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {svc.role}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer Navigation */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Link
+            to="/02-system-architecture/deployment-architecture"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm transition-colors"
+          >
+            Next: Deployment Architecture
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <span>InfraSocket Documentation</span>
+            <span>•</span>
+            <Link to="/02-system-architecture/data-flow" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+              Data Flow
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

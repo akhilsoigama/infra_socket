@@ -18,7 +18,7 @@ export default function Page05AiMlAiOverview() {
         waves. The AI analyzes the <strong>digitized, processed signal data</strong> to identify
         patterns that deviate from the learned baseline of normal atmospheric conditions.</p>
     </blockquote>
-    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}SENSOR["🔧 Hardware Sensor\n(Physical Detection)"] --&gt;|"Digital Signal"| SP["fa:fa-microchip{"  "}Signal Processing\n(Filtering, FFT)"]{"\n"}{"    "}SP --&gt;|"Feature Vector"| AI["fa:fa-brain{"  "}AI Model\n(Pattern Analysis)"]{"\n"}{"    "}AI --&gt;|"Normalized Anomaly Index"| DECISION["Normal /\nAnomaly"]{"\n"}</code></pre>
+    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}SENSOR["Hardware Sensor\n(Physical Transduction)"] --&gt;|"Digital Stream (I2C)"| SP["Signal Processing Core\n(Filtering, FFT, PSD)"]{"\n"}{"    "}SP --&gt;|"Feature Vector"| AI["AI Model Engine\n(Pattern Analysis)"]{"\n"}{"    "}AI --&gt;|"Normalized Anomaly Index"| DECISION["Normal /\nAnomaly State"]{"\n"}</code></pre>
     <h2 id="what-ai-does-in-this-system">What AI Does in This System</h2>
     <table>
       <thead>
@@ -95,7 +95,7 @@ export default function Page05AiMlAiOverview() {
       <p>See <Link to="/05-ai-ml/anomaly-detection">Anomaly Detection</Link> and <Link to="/05-ai-ml/model-selection">Model Selection</Link> for detailed Menu.</p>
     </blockquote>
     <h2 id="ai-pipeline">AI Pipeline</h2>
-    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph TRAINING["Training Phase (Offline)"]{"\n"}{"        "}COLLECT["Collect Normal\nBaseline Data\n(Hours/Days)"] --&gt; PROCESS_T["Signal Processing\n+ Feature Extraction"]{"\n"}{"        "}PROCESS_T --&gt; TRAIN["Train Isolation\nForest Model"]{"\n"}{"        "}TRAIN --&gt; MODEL["Trained Model\n(Saved to Disk)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph INFERENCE["Inference Phase (Real-Time)"]{"\n"}{"        "}NEW_DATA["New Sensor\nData"] --&gt; PROCESS_I["Signal Processing\n+ Feature Extraction"]{"\n"}{"        "}PROCESS_I --&gt; LOAD["Load Trained\nModel"]{"\n"}{"        "}LOAD --&gt; SCORE["Compute\nNormalized Anomaly Index"]{"\n"}{"        "}SCORE --&gt; THRESHOLD{"{"}"Score &gt;\nThreshold?"{"}"}{"\n"}{"        "}THRESHOLD --&gt;|"Yes"| ANOMALY["fa:fa-triangle-exclamation{"  "}ANOMALY"]{"\n"}{"        "}THRESHOLD --&gt;|"No"| NORMAL["fa:fa-check{"  "}NORMAL"]{"\n"}{"    "}end{"\n"}</code></pre>
+    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph TRAINING["Training Phase (Offline)"]{"\n"}{"        "}COLLECT["Collect Normal\nBaseline Data\n(Extended Field Runs)"] --&gt; PROCESS_T["Signal Processing\n+ Feature Extraction"]{"\n"}{"        "}PROCESS_T --&gt; TRAIN["Train Isolation\nForest Model"]{"\n"}{"        "}TRAIN --&gt; MODEL["Trained Model\n(Saved to Disk)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph INFERENCE["Inference Phase (Real-Time)"]{"\n"}{"        "}NEW_DATA["New Sensor\nData Stream"] --&gt; PROCESS_I["Signal Processing\n+ Feature Extraction"]{"\n"}{"        "}PROCESS_I --&gt; LOAD["Load Trained\nModel"]{"\n"}{"        "}LOAD --&gt; SCORE["Compute\nNormalized Anomaly Index"]{"\n"}{"        "}SCORE --&gt; THRESHOLD["Score  Threshold?"]{"\n"}{"        "}THRESHOLD --&gt;|"Yes"| ANOMALY["Potential Anomaly Flag"]{"\n"}{"        "}THRESHOLD --&gt;|"No"| NORMAL["Normal Telemetry"]{"\n"}{"    "}end{"\n"}</code></pre>
     <h2 id="relationship-between-signal-processing-and-ai">Relationship Between Signal Processing and AI
     </h2>
     <table>

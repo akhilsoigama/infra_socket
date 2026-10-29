@@ -23,7 +23,7 @@ export default function Page05AiMlDatasetStrategy() {
       <li>Publicly available infrasound data is primarily from research-grade stations, not prototype
         sensors</li>
     </ol>
-    <p>The dataset strategy must be realistic for a student/hackathon project.</p>
+    <p>The dataset strategy must be realistic for an exploratory research prototype.</p>
     <h2 id="three-level-data-strategy">Three-Level Data Strategy</h2>
     <h3 id="level-1-normal-baseline-primary-required-for-mvp-">Level 1: Normal Baseline (Primary —
       Required for MVP)</h3>

@@ -35,11 +35,11 @@ export default function Page03HardwareHardwareBom() {
       <tbody>
         <tr>
           <td><strong>Pressure Sensing</strong></td>
-          <td>Differential pressure sensor (MEMS)</td>
+          <td>Amphenol DLVR-F50D-E1ND-C-NI3F (Differential Digital I²C)</td>
           <td>1</td>
-          <td><code>To be determined</code></td>
-          <td>Electronics distributor</td>
-          <td>Selection pending; evaluate noise and frequency response</td>
+          <td>Medium</td>
+          <td>Electronics distributor (Amphenol)</td>
+          <td>Selected primary sensor: calibrated digital I²C output, regulated 3.3 V supply</td>
         </tr>
         <tr>
           <td><strong>Reference Chamber</strong></td>
@@ -93,60 +93,36 @@ export default function Page03HardwareHardwareBom() {
           <td>Prevent debris and insects</td>
         </tr>
         <tr>
-          <td><strong>Electronics</strong></td>
-          <td>Instrumentation amplifier IC</td>
+          <td><strong>Digital Bus Interface</strong></td>
+          <td>I²C Level Shifter &amp; Pull-ups (3.3V)</td>
           <td>1</td>
           <td>Low</td>
           <td>Electronics distributor</td>
-          <td>Select for low noise, low offset</td>
+          <td>Optional bidirectional level protection / pull-up network for Raspberry Pi 5 I²C lines</td>
         </tr>
         <tr>
           <td />
-          <td>Operational amplifier (for filter)</td>
-          <td>1–2</td>
+          <td>Shielded I²C Wiring Harness</td>
+          <td>1 set</td>
           <td>Low</td>
           <td>Electronics distributor</td>
-          <td>Low noise, rail-to-rail</td>
+          <td>4-wire connection (3.3V, GND, SDA, SCL) directly between DLVR-F50D and RPi 5 GPIO</td>
         </tr>
         <tr>
-          <td />
-          <td>Passive components (resistors, capacitors)</td>
-          <td>Assorted</td>
-          <td>Low</td>
-          <td>Electronics distributor</td>
-          <td>Precision resistors for gain setting</td>
-        </tr>
-        <tr>
-          <td />
-          <td>PCB / protoboard</td>
+          <td><strong>Compute / DAQ</strong></td>
+          <td>Raspberry Pi 5 Single Board Computer</td>
           <td>1</td>
-          <td>Low</td>
-          <td>Electronics distributor</td>
-          <td>Custom PCB or breadboard for prototype</td>
-        </tr>
-        <tr>
-          <td><strong>ADC</strong></td>
-          <td>External ADC module (≥≥16-bit (TARGET - Final selection depends on ENOB and noise))</td>
-          <td>1</td>
-          <td><code>To be determined</code></td>
-          <td>Electronics distributor</td>
-          <td>Sigma-Delta or SAR; evaluate resolution</td>
-        </tr>
-        <tr>
-          <td><strong>Microcontroller / DAQ</strong></td>
-          <td>Microcontroller board (e.g., Arduino, STM32) or DAQ board</td>
-          <td>1</td>
-          <td><code>To be determined</code></td>
-          <td>Electronics distributor</td>
-          <td>Must support ADC interface (SPI/I²C/USB)</td>
+          <td>Medium–High</td>
+          <td>Raspberry Pi authorized distributor</td>
+          <td>Selected acquisition &amp; processing platform: hardware I²C, sample timing &amp; USB telemetry</td>
         </tr>
         <tr>
           <td><strong>Temperature Sensor</strong></td>
-          <td>Digital temperature sensor (I²C)</td>
-          <td>1–2</td>
+          <td>MCP9808 Digital Temperature Sensor Breakout (I²C)</td>
+          <td>1</td>
           <td>Low</td>
-          <td>Electronics distributor</td>
-          <td>±0.5°C accuracy typical</td>
+          <td>Electronics distributor (Microchip)</td>
+          <td>Visual candidate for enclosure temperature logging and thermal characterization</td>
         </tr>
         <tr>
           <td><strong>Enclosure</strong></td>
@@ -173,12 +149,12 @@ export default function Page03HardwareHardwareBom() {
           <td>Screws, brackets, standoffs</td>
         </tr>
         <tr>
-          <td><strong>Power Supply</strong></td>
-          <td>AC/DC adapter (12V or 5V)</td>
+          <td><strong>Power Subsystem</strong></td>
+          <td>12V LiFePO4 Battery Pack + DC-DC Regulation</td>
           <td>1</td>
-          <td>Low</td>
-          <td>Electronics supply</td>
-          <td>Mains-powered</td>
+          <td>Medium</td>
+          <td>Battery / electronics supply</td>
+          <td>Clean low-noise DC source, regulated 3.3V DLVR sensor supply (3.135V–3.465V)</td>
         </tr>
         <tr>
           <td />
@@ -261,7 +237,7 @@ export default function Page03HardwareHardwareBom() {
         <tr>
           <td>Medium</td>
           <td>₹2,000–₹5,000 / $25–$60</td>
-          <td>Key components (SBC, ADC)</td>
+          <td>Key components (Raspberry Pi 5, DLVR Digital Sensor)</td>
         </tr>
         <tr>
           <td><code>To be determined</code></td>
@@ -271,19 +247,18 @@ export default function Page03HardwareHardwareBom() {
       </tbody>
     </table>
     <h2 id="total-estimated-prototype-cost">Total Estimated Prototype Cost</h2>
-    <p>The total prototype cost is expected to fall in the range of a student/hackathon budget. The
-      exact total depends on component selection decisions that are still pending.</p>
-    <p><code>Assumption</code>: The prototype budget target is to keep total component cost practical
-      for a student team. Exact total cost will be computed after component selection and sourcing.
+    <p>The total prototype cost is engineered to remain accessible for educational and open-science research. The
+      exact total depends on final casing, power pack, and component distributor selections.</p>
+    <p><code>Assumption</code>: The prototype budget target is to keep total component costs significantly lower
+      than institutional commercial microbarometers.
     </p>
     <h2 id="notes">Notes</h2>
     <ol>
-      <li>Costs do not include tools (soldering iron, multimeter, etc.) which are assumed to be
-        available</li>
-      <li>Costs do not include the processing computer if a team member's laptop is used instead of a
-        Raspberry Pi</li>
-      <li>Prices should be verified at the time of purchase from current supplier listings</li>
-      <li>Bulk purchasing or sponsor support may reduce costs</li>
+      <li><strong>Direct Digital Architecture:</strong> The Amphenol DLVR-F50D incorporates on-die front-end conditioning and a 14/16-bit Delta-Sigma ADC. External instrumentation amplifiers, op-amp filters, and discrete ADC boards are completely eliminated, reducing component count and trace noise.</li>
+      <li>Costs do not include general assembly tools (soldering station, multimeter, tubing crimpers)</li>
+      <li>Processing costs account for an onboard Raspberry Pi; direct tethering to an external lab workstation via USB-UART is also supported</li>
+      <li>Component pricing reflects single-quantity distributor listings and may vary with market availability</li>
+      <li>Volume procurement discounts apply for multi-station sensor array fabrications</li>
     </ol>
     <hr />
     <p><em>See also: <Link to="/03-hardware/hardware-overview">Hardware Overview</Link> | <Link to="/12-cost-and-feasibility/bill-of-materials">Bill of Materials</Link> | <Link to="/12-cost-and-feasibility/prototype-cost">Prototype Cost</Link></em></p>

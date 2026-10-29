@@ -13,6 +13,7 @@ import Page01OverviewProposedSolution from './pages/01-overview/proposed-solutio
 import Page01OverviewRealWorldUseCases from './pages/01-overview/real-world-use-cases';
 import Page01OverviewScopeAndLimitations from './pages/01-overview/scope-and-limitations';
 import Page01OverviewSocioEconomicImpact from './pages/01-overview/socio-economic-impact';
+import Page01OverviewTechnologyStack from './pages/01-overview/technology-stack';
 import Page02SystemArchitectureArchitecture from './pages/02-system-architecture/architecture';
 import Page02SystemArchitectureComponentInteraction from './pages/02-system-architecture/component-interaction';
 import Page02SystemArchitectureDataFlow from './pages/02-system-architecture/data-flow';
@@ -128,6 +129,7 @@ export default function App() {
         <Route path="/01-overview/project-objectives" element={<Layout><Page01OverviewProjectObjectives /></Layout>} />
         <Route path="/01-overview/project-status" element={<Layout><Page01OverviewProjectStatus /></Layout>} />
         <Route path="/01-overview/proposed-solution" element={<Layout><Page01OverviewProposedSolution /></Layout>} />
+        <Route path="/01-overview/technology-stack" element={<Layout><Page01OverviewTechnologyStack /></Layout>} />
         <Route path="/01-overview/real-world-use-cases" element={<Layout><Page01OverviewRealWorldUseCases /></Layout>} />
         <Route path="/01-overview/socio-economic-impact" element={<Layout><Page01OverviewSocioEconomicImpact /></Layout>} />
         <Route path="/01-overview/scope-and-limitations" element={<Layout><Page01OverviewScopeAndLimitations /></Layout>} />

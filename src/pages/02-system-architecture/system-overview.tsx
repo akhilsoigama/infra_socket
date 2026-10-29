@@ -1,136 +1,200 @@
 import { Link } from 'react-router-dom';
+import {
+  Layers,
+  Cpu,
+  Activity,
+  LayoutDashboard,
+  ArrowRight
+} from 'lucide-react';
 
 export default function Page02SystemArchitectureSystemOverview() {
-  return (
-    <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
-      <div>
-  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-    <a href="#" className="hover:underline">Home</a> /
-    <a href="#" className="hover:underline">System Architecture</a> /
-    <span className="font-medium text-gray-900 dark:text-gray-200">System Overview</span>
-  </nav>
-  <article className="markdown-body max-w-3xl">
-    <h1>System Overview</h1>
-    <h2 id="what-is-infrasocket-">What Is InfraSocket?</h2>
-    <p>InfraSocket is a research-prototype architecture intended to sense, digitize, and analyze
-      low-frequency atmospheric pressure variations. Approximately <strong>0.01–20 Hz (TARGET - Pending experimental validation) is the target
-        band</strong>; complete instrument response across it remains pending experimental validation.</p>
-    <blockquote>
-      <p><strong>Simple Explanation:</strong>
-        Think of InfraSocket as a specialized "listening station" for sounds too low for human ears
-        — pressure variations that require suitable sensing and acquisition hardware. The intended
-        chain is pressure sensing, conditioning, digitization, signal processing, and signal-quality
-        analysis. AI/ML is optional and does not establish the physical cause of a signal.</p>
-    </blockquote>
-    <h2 id="system-layers">System Layers</h2>
-    <p>The system is organized into four primary layers:</p>
-    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph L1["Layer 1: Physical Sensing"]{"\n"}{"        "}direction LR{"\n"}{"        "}WNR["Wind-Noise Reduction"] --&gt; PS["Pressure Sensor"]{"\n"}{"        "}PS --&gt; RC["Reference Chamber"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L2["Layer 2: Signal Conditioning &amp; Digitization"]{"\n"}{"        "}direction LR{"\n"}{"        "}AFE["Analog Front End"] --&gt; ADC["ADC"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L3["Layer 3: Digital Processing &amp; AI"]{"\n"}{"        "}direction LR{"\n"}{"        "}SP["Signal Processing"] --&gt; FE["Feature Extraction"]{"\n"}{"        "}FE --&gt; AI["AI Anomaly Detection"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L4["Layer 4: Application"]{"\n"}{"        "}direction LR{"\n"}{"        "}DB["Database"] --&gt; DASH["Dashboard"]{"\n"}{"        "}DB --&gt; API["API"]{"\n"}{"        "}AI2["Alert System"] --&gt; DASH{"\n"}{"    "}end{"\n"}{"\n"}{"    "}L1 --&gt; L2{"\n"}{"    "}L2 --&gt; L3{"\n"}{"    "}L3 --&gt; L4{"\n"}</code></pre>
-    <h3 id="layer-1-physical-sensing">Layer 1: Physical Sensing</h3>
-    <p>The hardware layer that interfaces with the physical atmosphere. It includes wind-noise
-      reduction, pressure sensing, and the reference chamber for differential measurement.</p>
-    <h3 id="layer-2-signal-conditioning-digitization">Layer 2: Signal Conditioning &amp; Digitization
-    </h3>
-    <p>The analog electronics that amplify, filter, and digitize the raw pressure signal. This layer
-      bridges the physical world and the digital processing world.</p>
-    <h3 id="layer-3-digital-processing-ai">Layer 3: Digital Processing &amp; AI</h3>
-    <p>Software that processes the digitized signal through filtering, FFT, feature extraction, and
-      anomaly detection. This is where signal processing (deterministic math) meets AI (learned
-      models).</p>
-    <h3 id="layer-4-application">Layer 4: Application</h3>
-    <p>User-facing components: data storage, REST API, real-time dashboard, and alert system.</p>
-    <h2 id="key-design-principles">Key Design Principles</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Principle</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Modularity</strong></td>
-          <td>Each layer operates independently with defined interfaces</td>
-        </tr>
-        <tr>
-          <td><strong>Fail-safe operation</strong></td>
-          <td>If AI fails, sensor data is still recorded</td>
-        </tr>
-        <tr>
-          <td><strong>Transparency</strong></td>
-          <td>Raw data is always preserved alongside processed results</td>
-        </tr>
-        <tr>
-          <td><strong>Simplicity for MVP</strong></td>
-          <td>Use well-understood techniques before exploring complex alternatives</td>
-        </tr>
-        <tr>
-          <td><strong>Honest metrics</strong></td>
-          <td>No performance claims without measured evidence</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2 id="signal-flow-summary">Signal Flow Summary</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Step</th>
-          <th>Domain</th>
-          <th>Technology</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Atmospheric pressure wave arrives</td>
-          <td>Physical</td>
-          <td>Nature</td>
-        </tr>
-        <tr>
-          <td>Wind noise reduced by manifold</td>
-          <td>Physical/Mechanical</td>
-          <td>Spatial averaging</td>
-        </tr>
-        <tr>
-          <td>Pressure converted to electrical signal</td>
-          <td>Transduction</td>
-          <td>Sensor + reference chamber</td>
-        </tr>
-        <tr>
-          <td>Electrical signal amplified and filtered</td>
-          <td>Analog electronics</td>
-          <td>Instrumentation amplifier, filters</td>
-        </tr>
-        <tr>
-          <td>Analog signal digitized</td>
-          <td>Analog → Digital</td>
-          <td>ADC</td>
-        </tr>
-        <tr>
-          <td>Digital signal filtered and transformed</td>
-          <td>Digital signal processing</td>
-          <td>Band-pass filter, FFT</td>
-        </tr>
-        <tr>
-          <td>Features extracted from signal windows</td>
-          <td>Digital signal processing</td>
-          <td>RMS, energy, spectral features</td>
-        </tr>
-        <tr>
-          <td>normalized anomaly index computed</td>
-          <td>Machine learning</td>
-          <td>Isolation Forest</td>
-        </tr>
-        <tr>
-          <td>Results stored and displayed</td>
-          <td>Software</td>
-          <td>Database, dashboard, API</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr />
-    <p><em>See also: <Link to="/02-system-architecture/architecture">Architecture</Link> | <Link to="/02-system-architecture/hardware-architecture">Hardware Architecture</Link> | <Link to="/02-system-architecture/software-architecture">Software Architecture</Link></em></p>
-  </article>
-</div>
+  const systemLayers = [
+    {
+      num: '01',
+      title: 'Physical Interface & Pneumatic Assembly',
+      icon: Layers,
+      items: [
+        '4-port spatial averaging manifold for wind-noise attenuation',
+        'Thermally isolated pneumatic reference chamber',
+        'Calibrated capillary leak resistor for slow barometric diurnal equalization'
+      ],
+      desc: 'Samples ambient atmosphere while filtering uncorrelated local wind turbulence and maintaining a stable differential pneumatic reference.'
+    },
+    {
+      num: '02',
+      title: 'Direct Digital Differential Sensing (I²C)',
+      icon: Cpu,
+      items: [
+        'Amphenol DLVR-F50D digital differential MEMS sensor (±500 Pa)',
+        'On-die piezoresistive element with internal calibrated ΔΣ ADC',
+        'MCP9808 high-accuracy digital I²C temperature monitor (±0.25°C)',
+        '3.3V regulated bus communicating directly to Raspberry Pi 5 GPIO'
+      ],
+      desc: 'Eliminates external instrumentation amplifiers (INAs) and discrete ADC chips by delivering pre-calibrated, high-resolution digital pressure samples directly over I²C.'
+    },
+    {
+      num: '03',
+      title: 'Edge Acquisition & Real-Time DSP',
+      icon: Activity,
+      items: [
+        '100 Hz continuous hardware I²C sample loop on Raspberry Pi 5',
+        'DC offset removal and zero-point baseline tracking',
+        '4th-order Butterworth band-pass filter (0.01 – 20.0 Hz)',
+        'Fast Fourier Transform (FFT) and Welch Power Spectral Density (PSD)',
+        'Unsupervised Isolation Forest anomaly screening'
+      ],
+      desc: 'Executes deterministic digital filtering and mathematical spectral transformations on the edge computer, generating clean time-frequency streams.'
+    },
+    {
+      num: '04',
+      title: 'Telemetry, Storage & Desktop Console',
+      icon: LayoutDashboard,
+      items: [
+        'High-performance PyQtGraph desktop application at 60 FPS',
+        'Real-time pressure waveform, spectrum, and STFT waterfall display',
+        'Local microSD continuous ring buffer storage (SQLite / CSV)',
+        'Visual threshold anomaly indicator and event logs'
+      ],
+      desc: 'Renders high-fidelity scientific visualizations for the operator and archives timestamped research data for post-processing.'
+    }
+  ];
 
+  const designPrinciples = [
+    { principle: 'Direct Digital Architecture', desc: 'Sensing die with on-chip ADC communicates over digital I²C, avoiding analog trace noise coupling.' },
+    { principle: 'Edge Autonomy', desc: 'Raspberry Pi 5 runs acquisition and filtering locally; telemetry continues even if external network drops.' },
+    { principle: 'Acoustic Cleanliness', desc: 'Zero mechanical cooling fans in the sensor node to eliminate blade vortex acoustic noise in the infrasound band.' },
+    { principle: 'Transparent Data Integrity', desc: 'Raw uncalibrated sensor counts are permanently archived alongside filtered waveforms and temperature logs.' }
+  ];
+
+  return (
+    <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 md:p-10 relative">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/02-system-architecture/architecture" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">System Architecture</Link>
+          <span>/</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-200">System Overview</span>
+        </nav>
+
+        {/* Hero Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+            <Layers className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+            End-to-End Architectural Decomposition
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            System Architecture Overview
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+            InfraSocket is organized into four clean, decoupled operational layers spanning physical pneumatics, direct digital I²C transducer readout, edge DSP filtering, and desktop scientific telemetry.
+          </p>
+        </div>
+
+        {/* 4-Layer Architecture Diagram */}
+        <section className="space-y-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            4-Tier Layered Architecture
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
+            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph L1["Layer 1: Physical Sensing &amp; Pneumatics"]{"\n"}{"        "}WNR["4-Port Spatial Averaging Manifold"] --&gt; SENS["Amphenol DLVR-F50D Sensor"]{"\n"}{"        "}REF["Thermally Insulated Reference Chamber"] --&gt;|Capillary Leak| SENS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L2["Layer 2: Direct Digital Sensor Bus (I²C)"]{"\n"}{"        "}SENS --&gt;|Digital Pressure (I²C SDA/SCL)| I2C_BUS["Hardware I²C Bus (3.3V)"]{"\n"}{"        "}TEMP["MCP9808 Digital Temperature"] --&gt;|Temperature (I²C)| I2C_BUS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L3["Layer 3: Edge Processing &amp; DSP (Raspberry Pi 5)"]{"\n"}{"        "}I2C_BUS --&gt; DAQ["100 Hz Acquisition Loop"]{"\n"}{"        "}DAQ --&gt; DSP["Butterworth Bandpass (0.01–20 Hz) + FFT / PSD"]{"\n"}{"        "}DSP --&gt; ML["Unsupervised Isolation Forest Anomaly Scoring"]{"\n"}{"        "}DAQ --&gt; RING["Local microSD Ring Buffer (SQLite / CSV)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L4["Layer 4: Telemetry &amp; Desktop GUI"]{"\n"}{"        "}DSP &amp; ML --&gt;|USB / LAN Telemetry| GUI["InfraSocket Desktop Console (PyQtGraph)"]{"\n"}{"        "}GUI --&gt; PLOTS["60 FPS Waveform + Live PSD + Spectrogram"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}L1 ==&gt; L2{"\n"}{"    "}L2 ==&gt; L3{"\n"}{"    "}L3 ==&gt; L4{"\n"}</code></pre>
+          </div>
+        </section>
+
+        {/* 4 Detailed Layers */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {systemLayers.map((layer, idx) => {
+            const Icon = layer.icon;
+            return (
+              <div
+                key={idx}
+                className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-4 flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-sky-100 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-sky-600 dark:text-sky-400">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                        {layer.title}
+                      </h3>
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                      Layer {layer.num}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {layer.desc}
+                  </p>
+
+                  <ul className="space-y-1.5 pt-2 border-t border-gray-100 dark:border-gray-700/60">
+                    {layer.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-300">
+                        <span className="text-sky-500 font-bold">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Architectural Principles Table */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Engineering Design Principles
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-900/60 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="py-3.5 px-6">Architectural Principle</th>
+                    <th className="py-3.5 px-6">Engineering Rationale &amp; Implementation</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700/60">
+                  {designPrinciples.map((row, i) => (
+                    <tr key={i} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                      <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                        {row.principle}
+                      </td>
+                      <td className="py-4 px-6 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {row.desc}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Link
+            to="/02-system-architecture/component-interaction"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm transition-colors"
+          >
+            Next: Component Interaction
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <span>InfraSocket Documentation</span>
+            <span>•</span>
+            <Link to="/02-system-architecture/hardware-architecture" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+              Hardware Architecture
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

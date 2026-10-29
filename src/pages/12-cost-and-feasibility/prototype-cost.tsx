@@ -63,11 +63,11 @@ export default function Page12CostAndFeasibilityPrototypeCost() {
     </table>
     <h2 id="cost-reduction-options">Cost Reduction Options</h2>
     <ul>
-      <li>Use team members' laptops instead of purchasing an SBC</li>
-      <li>Use breadboard instead of custom PCB</li>
-      <li>Source components from educational/maker discounts</li>
-      <li>Use 3D printing for custom mechanical parts if available</li>
-      <li>Leverage hackathon/sponsor hardware provisions</li>
+      <li>Connect directly to a host workstation/PC via USB-to-UART rather than dedicated onboard SBC</li>
+      <li>Use breadboard/prototyping shields instead of custom milled PCB during early bench validation</li>
+      <li>Source components through commercial volume distributor tiers</li>
+      <li>Use 3D printing for rapid iteration of enclosure fittings</li>
+      <li>Leverage open-source signal processing stacks to avoid proprietary software licensing</li>
     </ul>
     <h2 id="budget-planning-template">Budget Planning Template</h2>
     <table>

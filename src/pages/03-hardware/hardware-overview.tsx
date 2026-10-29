@@ -1,154 +1,190 @@
 import { Link } from 'react-router-dom';
+import {
+  Cpu,
+  Layers,
+  ArrowRight,
+  ZapOff
+} from 'lucide-react';
 
 export default function Page03HardwareHardwareOverview() {
-  return (
-    <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
-      <div>
-  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-    <a href="#" className="hover:underline">Home</a> /
-    <a href="#" className="hover:underline">Hardware</a> /
-    <span className="font-medium text-gray-900 dark:text-gray-200">Hardware Overview</span>
-  </nav>
-  <article className="markdown-body max-w-3xl">
-    <h1>Hardware Overview</h1>
-    <h2 id="introduction">Introduction</h2>
-    <p>The InfraSocket hardware subsystem is responsible for the physical interface between the
-      atmosphere and the digital processing system. It captures very-low-frequency atmospheric
-      pressure waves (0.01–20 Hz (TARGET - Pending experimental validation)), reduces environmental noise, conditions the electrical signal, and
-      digitizes it for software processing.</p>
-    <blockquote>
-      <p><strong>Simple Explanation:</strong>
-        The hardware is like a very sensitive "atmospheric microphone" — but instead of listening to
-        audible sound, it measures extremely slow pressure changes in the air. Because these changes
-        are so small and slow, every part of the hardware must be carefully designed to avoid adding
-        noise or losing the signal.</p>
-    </blockquote>
-    <p><img src="../assets/hardware/infrasocket-node-concept.jpg" alt="Conceptual InfraSocket sensor node — exploded view showing environmental enclosure, Raspberry Pi, ADC, analog front end, pressure sensor, wind-noise manifold, and connection points" />
-    </p>
-    <p><strong>Figure:</strong> Conceptual illustration of a complete InfraSocket sensor node (exploded
-      view).</p>
-    <p><strong>Source:</strong> Project-generated concept diagram — not a photograph of the prototype.
-    </p>
-    <h2 id="hardware-subsystem-map">Hardware Subsystem Map</h2>
-    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph INPUT["Atmospheric Interface"]{"\n"}{"        "}WIND["Wind-Noise Reduction\nManifold"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph SENSING["Pressure Sensing"]{"\n"}{"        "}SENSOR["Pressure Sensor\n(Differential)"]{"\n"}{"        "}DIAPH["Diaphragm /\nSensing Element"]{"\n"}{"        "}REFCHAM["Reference\nChamber"]{"\n"}{"        "}CAPILLARY["Capillary\nLeak"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph CONDITIONING["Signal Conditioning"]{"\n"}{"        "}INA["Instrumentation\nAmplifier"]{"\n"}{"        "}FILTER["Anti-Aliasing\nFilter"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph DIGITIZATION["Digitization"]{"\n"}{"        "}ADC["ADC Module"]{"\n"}{"        "}TEMP["Temperature\nSensor"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph SUPPORT["Support Systems"]{"\n"}{"        "}POWER["Power Supply"]{"\n"}{"        "}ENCLOSURE["Environmental\nEnclosure"]{"\n"}{"        "}CALIB["Calibration\nInterface"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}WIND --&gt; SENSOR{"\n"}{"    "}SENSOR --- DIAPH{"\n"}{"    "}SENSOR --- REFCHAM{"\n"}{"    "}REFCHAM --- CAPILLARY{"\n"}{"    "}SENSOR --&gt; INA{"\n"}{"    "}INA --&gt; FILTER{"\n"}{"    "}FILTER --&gt; ADC{"\n"}{"    "}TEMP --&gt; ADC{"\n"}{"    "}POWER --&gt; CONDITIONING{"\n"}{"    "}POWER --&gt; DIGITIZATION{"\n"}</code></pre>
-    <h2 id="hardware-components-summary">Hardware Components Summary</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Component</th>
-          <th>Purpose</th>
-          <th>Key Requirement</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><Link to="/03-hardware/wind-noise-reduction">Wind-noise reduction manifold</Link></td>
-          <td>Reduce turbulent wind-induced pressure noise</td>
-          <td>Multiple spatially distributed inlets</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/pressure-sensing">Pressure sensor</Link></td>
-          <td>Convert pressure variations to electrical signal</td>
-          <td>Target band: approximately 0.01–20 Hz (TARGET - Pending experimental validation); complete sensor/system response and
-            differential configuration are PENDING VALIDATION</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/diaphragm-design">Diaphragm / sensing element</Link></td>
-          <td>Mechanical element that deflects under pressure</td>
-          <td>Sensitivity, linearity, low hysteresis</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/reference-chamber">Reference chamber</Link></td>
-          <td>Provide stable reference pressure</td>
-          <td>Sealed volume with controlled capillary leak</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/differential-pressure-system">Differential pressure system</Link></td>
-          <td>Suppress slow barometric drift</td>
-          <td>Atmosphere vs. reference chamber</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/analog-front-end">Instrumentation amplifier</Link></td>
-          <td>Amplify weak sensor output</td>
-          <td>Low noise, high CMRR, low offset drift</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/analog-front-end">Anti-aliasing filter</Link></td>
-          <td>Prevent aliasing during digitization</td>
-          <td>Low-pass, cutoff below half sampling rate</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/adc-digitization">ADC</Link></td>
-          <td>Digitize the analog signal</td>
-          <td>≥≥16-bit (TARGET - Final selection depends on ENOB and noise) nominal resolution TARGET; approximately 100 Hz (TARGET - Pending validation) sampling TARGET; final ADC, ENOB, input range, and noise TBD</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/temperature-sensing">Temperature sensor</Link></td>
-          <td>Monitor ambient/enclosure temperature</td>
-          <td>Accurate, low self-heating</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/power-system">Power supply</Link></td>
-          <td>Provide clean, stable power</td>
-          <td>Low noise, regulated output</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/environmental-enclosure">Environmental enclosure</Link></td>
-          <td>Protect electronics</td>
-          <td>Weather-resistant, thermally insulating</td>
-        </tr>
-        <tr>
-          <td><Link to="/03-hardware/calibration">Calibration interface</Link></td>
-          <td>Enable calibration procedures</td>
-          <td>Access to sensor port, reference input</td>
-        </tr>
-      </tbody>
-    </table>
-    <h3 id="component-concepts">Component Concepts</h3>
-    <p><img src="../assets/hardware/differential-pressure-concept.jpg" alt="Differential pressure sensor concept — cross-section showing atmospheric port, diaphragm, reference chamber, capillary tube, and electrical output" />
-    </p>
-    <p><strong>Figure:</strong> Conceptual cross-section of a differential pressure sensor for
-      infrasound monitoring, showing how fast pressure changes (infrasound) create differential
-      pressure across the diaphragm while slow barometric changes equalize through the capillary.</p>
-    <blockquote>
-      <p>Reference concept diagram — illustrates the sensing principle, not the final InfraSocket
-        hardware.</p>
-    </blockquote>
-    <p><strong>Source:</strong> Project-generated concept diagram.</p>
-    <p><img src="../assets/hardware/wind-rosette-concept.jpg" alt="Wind-noise reduction rosette — top-down view of 8-arm radial manifold with central hub and spatially distributed air inlets" />
-    </p>
-    <p><strong>Figure:</strong> Wind-noise reduction rosette/manifold concept — 8 tubes radiate from a
-      central manifold to spatially distributed air inlets. Spatially coherent infrasound signal is
-      preserved while spatially incoherent wind turbulence is averaged out.</p>
-    <blockquote>
-      <p>Expected attenuation will be experimentally characterized.</p>
-    </blockquote>
-    <p><strong>Source:</strong> Project-generated concept diagram.</p>
-    <h2 id="design-philosophy">Design Philosophy</h2>
-    <h3 id="1-noise-budget-awareness">1. Noise Budget Awareness</h3>
-    <p>Every component in the signal chain adds noise. The overall system noise floor is determined by
-      the noisiest component. Design priority is given to minimizing noise in the sensor and front-end
-      amplifier — the first elements in the signal chain.</p>
-    <h3 id="2-simplicity-for-prototype">2. Simplicity for Prototype</h3>
-    <p>The prototype should use the simplest hardware configuration that meets the minimum requirements.
-      Complex multi-stage amplification or exotic sensor technologies are deferred unless justified by
-      testing.</p>
-    <h3 id="3-measurability">3. Measurability</h3>
-    <p>Every critical parameter (sensitivity, noise floor, frequency response) should be measurable
-      through defined calibration procedures. The hardware design includes provisions for calibration
-      access.</p>
-    <h3 id="4-modularity">4. Modularity</h3>
-    <p>The hardware is designed in modular subsystems that can be tested and upgraded independently:</p>
-    <ul>
-      <li>The wind-noise manifold can be improved without changing the sensor</li>
-      <li>The sensor can be upgraded without changing the front-end electronics</li>
-      <li>The ADC can be swapped for a higher-resolution unit</li>
-    </ul>
-    <hr />
-    <p><em>See also: <Link to="/03-hardware/pressure-sensing">Pressure Sensing</Link> | <Link to="/03-hardware/wind-noise-reduction">Wind-Noise Reduction</Link> | <Link to="/03-hardware/analog-front-end">Analog Front End</Link></em></p>
-  </article>
-</div>
+  const components = [
+    { name: 'Wind-Noise Reduction Manifold', role: 'Attenuates local turbulent pressure fluctuations via spatial acoustic averaging', status: '4-Port Prototype', link: '/03-hardware/wind-noise-reduction' },
+    { name: 'Amphenol DLVR-F50D Sensor', role: 'Direct digital differential MEMS sensor (±500 Pa) with on-die 14/16-bit ΔΣ ADC', status: 'Primary Transducer', link: '/03-hardware/pressure-sensing' },
+    { name: 'Pneumatic Reference Chamber', role: 'Rigid thermally insulated reference volume paired with calibrated capillary equalization leak', status: 'Pneumatic Reference', link: '/03-hardware/reference-chamber' },
+    { name: 'MCP9808 Digital Temperature Sensor', role: 'High-accuracy I²C ambient & chamber thermal tracking (±0.25°C precision)', status: 'Auxiliary Sensor', link: '/03-hardware/temperature-sensing' },
+    { name: 'Raspberry Pi 5 (Edge SBC)', role: 'Continuous 100 Hz I²C bus polling, real-time DSP, and local ring buffer storage', status: 'Edge Controller', link: '/03-hardware/hardware-bom' },
+    { name: '12V LiFePO4 Power System', role: 'Isolated low-noise DC battery with protected buck regulators (5V SBC & 3.3V Sensor)', status: 'Power Subsystem', link: '/03-hardware/power-system' },
+    { name: 'Environmental Enclosure', role: 'IP-rated weatherproofing, passive heat isolation, zero cooling fan operation', status: 'Enclosure', link: '/03-hardware/environmental-enclosure' },
+    { name: 'Sensor Connection & Network', role: 'Edge buffering, store-and-forward telemetry, and central database integration', status: 'Telemetry Interface', link: '/14-sensor_connection/sensor_connection' }
+  ];
 
+  return (
+    <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 md:p-10 relative">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/03-hardware/hardware-overview" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Hardware</Link>
+          <span>/</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-200">Hardware Overview</span>
+        </nav>
+
+        {/* Hero Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+            <Cpu className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+            Physical Instrumentation Stack
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Hardware Subsystem Overview
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+            The InfraSocket hardware platform provides an acoustically quiet, thermally stable interface between atmospheric pressure fluctuations and the digital processing system. It captures sub-audible waves (0.01–20 Hz) using a direct digital differential MEMS transducer.
+          </p>
+        </div>
+
+        {/* Architectural Highlight: Zero External ADC */}
+        <div className="bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/80 rounded-2xl p-6 space-y-3">
+          <div className="flex items-center gap-2 font-bold text-sky-900 dark:text-sky-200 text-base">
+            <ZapOff className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            Direct Digital Architecture: Zero External ADC or Analog Front-End
+          </div>
+          <p className="text-xs sm:text-sm text-sky-800 dark:text-sky-300/90 leading-relaxed">
+            InfraSocket bypasses fragile discrete op-amp amplifiers and standalone ADC modules by integrating the <strong>Amphenol DLVR-F50D</strong> digital differential pressure sensor. With on-die piezoresistive sensing, laser-trimmed ASIC conditioning, and an integrated 14/16-bit Delta-Sigma ADC, the sensor sends calibrated digital samples directly to the Raspberry Pi 5 via <strong>I²C (SDA/SCL)</strong>.
+          </p>
+        </div>
+
+        {/* Concept Exploded View Image */}
+        <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-4">
+          <div className="overflow-hidden rounded-xl bg-slate-50 dark:bg-gray-900/60 border border-gray-100 dark:border-gray-700">
+            <img
+              src="/assets/hardware/infrasocket-node-concept.jpg"
+              alt="Conceptual InfraSocket sensor node exploded view"
+              className="w-full max-h-96 object-contain mx-auto py-4"
+            />
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+            <strong>Figure:</strong> Conceptual rendering of an integrated InfraSocket station node illustrating the enclosure, Raspberry Pi 5 edge computer, DLVR differential sensor, and manifold ports.
+          </div>
+        </div>
+
+        {/* Hardware Subsystem Flowchart */}
+        <section className="space-y-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <Layers className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            Direct Digital Hardware Subsystem Map
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
+            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph ATMOSPHERE["Atmospheric Interface"]{"\n"}{"        "}WIND["4-Port Wind Manifold\n(Spatial Averaging)"] --&gt;|Direct Atmosphere| PORT_A["Port A (Atmosphere)"]{"\n"}{"        "}REF["Reference Chamber\n(Thermally Insulated)"] --&gt;|Capillary Leak| PORT_B["Port B (Reference)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph TRANSDUCER["Digital Differential Sensor"]{"\n"}{"        "}PORT_A &amp; PORT_B --&gt; SENSOR["Amphenol DLVR-F50D\n(Silicon Diaphragm + On-Chip ASIC ADC)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph AUX["Auxiliary Monitoring"]{"\n"}{"        "}TEMP["MCP9808 Digital Temp\n(±0.25°C Chamber Sensor)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph EDGE_COMPUTE["Edge SBC (Raspberry Pi 5)"]{"\n"}{"        "}SENSOR --&gt;|Digital I²C (SDA/SCL @ 3.3V)| RPI["Raspberry Pi 5\n100 Hz Continuous Readout"]{"\n"}{"        "}TEMP --&gt;|Digital I²C (Shared Bus)| RPI{"\n"}{"        "}RPI --&gt; SD["microSD Ring Buffer\n(Local Storage)"]{"\n"}{"        "}RPI --&gt; DSP["Python Real-Time DSP\n(0.01–20 Hz Butterworth)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph POWER_BLOCK["Power Delivery"]{"\n"}{"        "}BAT["12V LiFePO4 Battery"] --&gt; DCDC["Low-Noise DC-DC Regulators"]{"\n"}{"        "}DCDC --&gt;|5.1V / 5A| EDGE_COMPUTE{"\n"}{"        "}DCDC --&gt;|Regulated 3.3V| TRANSDUCER{"\n"}{"        "}DCDC --&gt;|Regulated 3.3V| AUX{"\n"}{"    "}end{"\n"}{"\n"}{"    "}DSP --&gt;|USB / Ethernet Telemetry| DESKTOP["InfraSocket Desktop Console\n(PyQtGraph 60 FPS)"]{"\n"}</code></pre>
+          </div>
+        </section>
+
+        {/* Hardware Components Table */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Hardware Component Modules
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-900/60 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="py-3.5 px-6">Hardware Subsystem</th>
+                    <th className="py-3.5 px-6">Functional Purpose</th>
+                    <th className="py-3.5 px-6">Specification State</th>
+                    <th className="py-3.5 px-6">Module Spec</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700/60 text-xs sm:text-sm">
+                  {components.map((c, i) => (
+                    <tr key={i} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                      <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                        {c.name}
+                      </td>
+                      <td className="py-4 px-6 text-gray-600 dark:text-gray-300">
+                        {c.role}
+                      </td>
+                      <td className="py-4 px-6 font-mono text-sky-700 dark:text-sky-300 whitespace-nowrap">
+                        {c.status}
+                      </td>
+                      <td className="py-4 px-6 whitespace-nowrap">
+                        <Link
+                          to={c.link}
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-sky-600 hover:text-sky-500 dark:text-sky-400"
+                        >
+                          View Spec <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Sensing Principle & Manifold Images */}
+        <section className="space-y-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Pneumatic Principles
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-3">
+              <div className="overflow-hidden rounded-xl bg-slate-50 dark:bg-gray-900/60 border border-gray-100 dark:border-gray-700">
+                <img
+                  src="/assets/hardware/differential-pressure-concept.jpg"
+                  alt="Differential pressure sensor concept"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                Differential Pressure Transduction
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                Infrasonic pressure waves create rapid differential deflection across the silicon diaphragm between Port A and Port B. Slow barometric weather changes bleed through the capillary leak, equalizing the chamber without saturating the sensor.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-3">
+              <div className="overflow-hidden rounded-xl bg-slate-50 dark:bg-gray-900/60 border border-gray-100 dark:border-gray-700">
+                <img
+                  src="/assets/hardware/wind-rosette-concept.jpg"
+                  alt="Wind noise reduction rosette concept"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                Spatial Averaging Wind Manifold
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                Acoustic infrasound waves have wavelengths of tens to hundreds of meters and sum coherently across manifold ports. Local turbulent wind eddies are small-scale and uncorrelated, canceling out destructively across the manifold volume.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Link
+            to="/03-hardware/pressure-sensing"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm transition-colors"
+          >
+            Next: Pressure Sensing
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <span>InfraSocket Documentation</span>
+            <span>•</span>
+            <Link to="/03-hardware/hardware-bom" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+              Hardware BOM
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

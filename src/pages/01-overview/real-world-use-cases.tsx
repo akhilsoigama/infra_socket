@@ -1,181 +1,216 @@
 import { Link } from 'react-router-dom';
+import {
+  Waves,
+  CloudRain,
+  Factory,
+  GraduationCap,
+  Compass,
+  ArrowRight,
+  ShieldAlert
+} from 'lucide-react';
 
 export default function Page01OverviewRealWorldUseCases() {
-  return (
-    <main className="flex-1 min-w-0 overflow-y-auto  p-6 md:p-12 relative">
-      <div>
-  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-8">
-    <a href="#" className="hover:underline">Home</a> /
-    <a href="#" className="hover:underline">Overview</a> /
-    <span className="font-medium text-gray-900 dark:text-gray-200">Real-World Use Cases</span>
-  </nav>
-  <article className="markdown-body max-w-3xl">
-    <h1>Real-World Use Cases</h1>
-    <h2 id="important-disclaimer">Important Disclaimer</h2>
-    <blockquote>
-      <p>InfraSocket is a prototype/research system. It is <strong>not</strong> a certified safety
-        system, early-warning system, or government-grade monitoring instrument. The use cases below
-        describe areas where infrasound monitoring <strong>can support</strong> research and
-        observation. The system's ability to contribute meaningfully to any specific use case
-        depends on calibration, validation, and the specific deployment environment.</p>
-    </blockquote>
-    <h2 id="use-case-1-atmospheric-monitoring-and-research">Use Case 1: Atmospheric Monitoring and
-      Research</h2>
-    <p><strong>Description:</strong> Continuous monitoring of the local infrasound environment to
-      establish baseline conditions and observe natural variations.</p>
-    <p><strong>How InfraSocket Supports This:</strong></p>
-    <ul>
-      <li>Records long-term pressure waveform data</li>
-      <li>Provides FFT and spectrogram analysis of the ambient infrasound field</li>
-      <li>AI flags unusual deviations from the established baseline</li>
-    </ul>
-    <p><strong>Value:</strong> Provides hands-on learning about atmospheric acoustics and environmental
-      monitoring.</p>
-    <h2 id="use-case-2-volcanic-activity-monitoring-support">Use Case 2: Volcanic Activity Monitoring
-      Support</h2>
-    <p><strong>Description:</strong> Active volcanoes produce sustained infrasound signals from
-      eruptions, gas venting, and tremor. Research institutions use infrasound networks to monitor
-      volcanic activity remotely.</p>
-    <p><strong>How InfraSocket Could Support This:</strong></p>
-    <ul>
-      <li>A low-cost sensor deployed near (but at safe distance from) an active volcano could provide
-        additional data points</li>
-      <li>Anomaly detection could flag changes in the infrasound signature</li>
-      <li>Time-frequency analysis could reveal spectral changes associated with activity changes</li>
-    </ul>
-    <p><strong>Limitations:</strong></p>
-    <ul>
-      <li>A single sensor cannot determine the direction or distance of a source</li>
-      <li>Sensitivity and noise floor of the prototype may not be sufficient for weak volcanic signals
-        at large distances</li>
-      <li>Event identification (e.g., distinguishing volcanic tremor from wind) requires additional
-        validation</li>
-    </ul>
-    <h2 id="use-case-3-meteor-entry-detection-support">Use Case 3: Meteor Entry Detection Support</h2>
-    <p><strong>Description:</strong> Large meteors entering the atmosphere produce strong infrasound
-      signals that can travel thousands of kilometres.</p>
-    <p><strong>How InfraSocket Could Support This:</strong></p>
-    <ul>
-      <li>A bright meteor event may produce a signal strong enough for a nearby prototype sensor to
-        detect</li>
-      <li>Anomaly detection would flag the unusual signal</li>
-      <li>Correlation with visual observations or other data sources could confirm the event</li>
-    </ul>
-    <p><strong>Limitations:</strong></p>
-    <ul>
-      <li>Most meteor infrasound signals require sensitive instruments and quiet environments</li>
-      <li>A single prototype sensor cannot localize the source</li>
-      <li>Confirmation requires external data (e.g., fireball reports, satellite data)</li>
-    </ul>
-    <h2 id="use-case-4-severe-weather-research">Use Case 4: Severe Weather Research</h2>
-    <p><strong>Description:</strong> Severe storms, tornadoes, and large-scale weather systems generate
-      infrasound through mechanisms including turbulence, convective activity, and pressure
-      fluctuations.</p>
-    <p><strong>How InfraSocket Could Support This:</strong></p>
-    <ul>
-      <li>Continuous recording during storm seasons could capture weather-related infrasound</li>
-      <li>Spectral analysis may reveal characteristic frequency patterns</li>
-      <li>Correlation with meteorological data could provide research insights</li>
-    </ul>
-    <p><strong>Limitations:</strong></p>
-    <ul>
-      <li>Wind noise during storms may overwhelm the sensor</li>
-      <li>Separating weather-generated infrasound from weather-generated wind noise is challenging
-      </li>
-    </ul>
-    <h2 id="use-case-5-industrial-monitoring">Use Case 5: Industrial Monitoring</h2>
-    <p><strong>Description:</strong> Large industrial facilities (power plants, factories, mining
-      operations) can produce infrasound through machinery vibration, explosions, or large-scale
-      processes.</p>
-    <p><strong>How InfraSocket Could Support This:</strong></p>
-    <ul>
-      <li>Monitoring the infrasound environment near industrial sites</li>
-      <li>Detecting changes in the infrasound signature that may indicate equipment issues</li>
-      <li>Providing continuous, unattended monitoring data</li>
-    </ul>
-    <p><strong>Limitations:</strong></p>
-    <ul>
-      <li>Urban/industrial environments have high ambient noise</li>
-      <li>Source identification requires additional information</li>
-    </ul>
-    <h2 id="use-case-6-educational-and-academic-use">Use Case 6: Educational and Academic Use</h2>
-    <p><strong>Description:</strong> Infrasound is an excellent teaching topic spanning physics, signal
-      processing, electronics, and machine learning.</p>
-    <p><strong>How InfraSocket Supports This:</strong></p>
-    <ul>
-      <li>Provides a hands-on project for learning about atmospheric pressure waves</li>
-      <li>Demonstrates real-world application of FFT, filtering, and spectral analysis</li>
-      <li>Introduces students to anomaly detection and machine learning concepts</li>
-      <li>Covers hardware design, embedded systems, and full-stack software</li>
-    </ul>
-    <p><strong>Value:</strong> This is one of the strongest use cases for the prototype. The system is
-      designed to be educational and reproducible.</p>
-    <h2 id="use-case-7-rocket-launch-monitoring">Use Case 7: Rocket Launch Monitoring</h2>
-    <p><strong>Description:</strong> Rocket launches produce powerful infrasound signals that can be
-      detected at large distances.</p>
-    <p><strong>How InfraSocket Could Support This:</strong></p>
-    <ul>
-      <li>A sensor deployed within a reasonable distance of a launch site could capture the infrasound
-        signature</li>
-      <li>Signal analysis could reveal the spectral characteristics of launch events</li>
-    </ul>
-    <p><strong>Limitations:</strong></p>
-    <ul>
-      <li>Distance and atmospheric conditions affect signal strength</li>
-      <li>Access to launch sites may be restricted</li>
-    </ul>
-    <h2 id="use-case-summary">Use Case Summary</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Use Case</th>
-          <th>Prototype Suitability</th>
-          <th>Confidence Level</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Atmospheric monitoring/research</td>
-          <td>High</td>
-          <td>Achievable with prototype</td>
-        </tr>
-        <tr>
-          <td>Educational/academic</td>
-          <td>High</td>
-          <td>Primary target use case</td>
-        </tr>
-        <tr>
-          <td>Volcanic monitoring support</td>
-          <td>Medium</td>
-          <td>Depends on distance and signal strength</td>
-        </tr>
-        <tr>
-          <td>Severe weather research</td>
-          <td>Medium</td>
-          <td>Wind noise is a challenge</td>
-        </tr>
-        <tr>
-          <td>Industrial monitoring</td>
-          <td>Medium</td>
-          <td>Urban noise environment</td>
-        </tr>
-        <tr>
-          <td>Meteor detection support</td>
-          <td>Low–Medium</td>
-          <td>Requires strong events and quiet site</td>
-        </tr>
-        <tr>
-          <td>Rocket launch monitoring</td>
-          <td>Low–Medium</td>
-          <td>Depends on proximity</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr />
-    <p><em>See also: <Link to="/01-overview/problem-statement">Problem Statement</Link> | <Link to="/01-overview/scope-and-limitations">Scope and Limitations</Link></em></p>
-  </article>
-</div>
+  const primaryCategories = [
+    {
+      title: '1. Natural Pressure Waves',
+      icon: Waves,
+      tag: '0.01 – 1.0 Hz Band',
+      desc: 'Naturally occurring continuous and transient atmospheric acoustic energy propagating over regional and global distances.',
+      cases: [
+        {
+          name: 'Ocean Microbaroms (0.1 – 0.5 Hz)',
+          detail: 'Continuous low-frequency acoustic waves generated by non-linear standing wave interactions between counter-propagating ocean storm swell systems. Serves as a persistent natural calibration source.',
+          detection: 'Continuous 100 Hz sampling and Welch Power Spectral Density (PSD) averaging resolve the characteristic 0.2 Hz spectral peak.',
+          status: 'Directly Measurable'
+        },
+        {
+          name: 'Atmospheric Acoustic Gravity Waves',
+          detail: 'Very slow, buoyant atmospheric oscillations generated by mountain airflow disturbances, frontal boundaries, and thermal air currents.',
+          detection: 'Differential pressure sensing across the sealed reference chamber preserves signals in the 0.01 – 0.1 Hz band while rejecting static barometric drift.',
+          status: 'Target Band'
+        }
+      ]
+    },
+    {
+      title: '2. Atmospheric & Weather-Related Signals',
+      icon: CloudRain,
+      tag: '0.1 – 10.0 Hz Band',
+      desc: 'Dynamic pressure disturbances produced by high-energy convective storm systems and meteorology.',
+      cases: [
+        {
+          name: 'Severe Convective Thunderstorm Systems',
+          detail: 'Intense storm fronts and squall lines produce powerful infrasound pulses via convective turbulence, air mass collision, and cyclonic vortex dynamics.',
+          detection: 'Spatial-averaging wind-noise manifold suppresses local turbulent wind gusts, isolating coherent low-frequency pressure pulses.',
+          status: 'Primary Target'
+        },
+        {
+          name: 'Lightning Thunder Infrasound Reverberation',
+          detail: 'Rapid thermal expansion along lightning discharge channels generates acoustic energy across audible and sub-audible frequencies down to 1 Hz.',
+          detection: 'High-speed 100 Hz I²C digital capture records the sub-audible impulse signature and secondary atmospheric duct reverberation.',
+          status: 'High Feasibility'
+        }
+      ]
+    },
+    {
+      title: '3. Human-Made & Industrial Acoustic Sources',
+      icon: Factory,
+      tag: '1.0 – 20.0 Hz Band',
+      desc: 'Acoustic emissions and pressure pulses generated by large-scale mechanical operations and engineering infrastructure.',
+      cases: [
+        {
+          name: 'Quarry & Open-Cast Mining Blasting',
+          detail: 'Controlled surface explosive detonations generate distinct, high-amplitude infrasonic shockwaves that travel tens of kilometers without audible signature.',
+          detection: 'Isolation Forest anomaly scoring flags rapid microbarometric energy spikes exceeding the ambient 3-sigma noise threshold.',
+          status: 'High Feasibility'
+        },
+        {
+          name: 'Heavy Industrial Machinery & Plant Dynamics',
+          detail: 'Continuous low-frequency vibration and pressure fluctuations from large power plants, cooling towers, industrial air compressors, and wind turbines.',
+          detection: 'Short-Time Fourier Transform (STFT) waterfall spectrogram highlights steady machine harmonic lines below 20 Hz.',
+          status: 'High Feasibility'
+        },
+        {
+          name: 'Aerospace & Rocket Propulsion Signatures',
+          detail: 'Multi-ton rocket engine thrust plumes and supersonic atmospheric launches produce long-range infrasonic acoustic waves detectable at regional distances.',
+          detection: 'Wideband 0.01–20 Hz bandpass capture records prolonged acoustic engine rumblings and stratospheric ducted arrivals.',
+          status: 'Field Validatable'
+        }
+      ]
+    },
+    {
+      title: '4. Academic Instruction & Open Research',
+      icon: GraduationCap,
+      tag: 'Laboratory & Campus',
+      desc: 'Democratizing wave physics and experimental geophysics through an affordable, accessible digital microbarometer.',
+      cases: [
+        {
+          name: 'University Geophysics & Physics Laboratory',
+          detail: 'Provides university departments with a tangible, low-cost platform to teach acoustic wave propagation, pneumatic filtering, and digital signal processing.',
+          detection: 'Students analyze real-time live telemetry, Fourier transforms, and digital filtering directly on their workstations via the PyQtGraph desktop console.',
+          status: 'Primary Mission'
+        },
+        {
+          name: 'Environmental Infrasonic Baseline Mapping',
+          detail: 'Establishing local baseline background noise profiles in urban vs rural environments prior to siting vibration-sensitive scientific equipment.',
+          detail2: 'Long-term continuous logging with the onboard Raspberry Pi 5 to microSD stores years of baseline data for ambient noise studies.',
+          status: 'Primary Mission'
+        }
+      ]
+    }
+  ];
 
+  return (
+    <main className="flex-1 min-w-0 overflow-y-auto p-4 sm:p-6 md:p-10 relative">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/01-overview/key-features" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Overview</Link>
+          <span>/</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-200">Real-World Use Cases</span>
+        </nav>
+
+        {/* Hero Header */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+            <Compass className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+            Applied Research &amp; Observation Domains
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Real-World Use Cases &amp; Applications
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
+            Infrasound waves propagate across vast distances with minimal atmospheric attenuation. InfraSocket focuses on three core physical observation domains identified in the system specification: <strong>Natural Pressure Waves</strong>, <strong>Atmospheric &amp; Weather Signals</strong>, and <strong>Human-Made Acoustic Sources</strong>.
+          </p>
+        </div>
+
+        {/* Research Disclaimer */}
+        <div className="bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/80 rounded-2xl p-5 flex items-start gap-4">
+          <ShieldAlert className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
+          <div className="space-y-1 text-xs sm:text-sm">
+            <h4 className="font-bold text-sky-900 dark:text-sky-200">
+              Research Prototype Scope Note
+            </h4>
+            <p className="text-sky-800 dark:text-sky-300/90 leading-relaxed">
+              InfraSocket is an accessible research instrument engineered for scientific experimentation, sensor characterization, and academic geophysics. It provides continuous low-frequency pressure data for research, not certified statutory life-safety warning systems.
+            </p>
+          </div>
+        </div>
+
+        {/* 4 Primary Observation Domains */}
+        <div className="space-y-8">
+          {primaryCategories.map((cat, catIdx) => {
+            const Icon = cat.icon;
+            return (
+              <section key={catIdx} className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-200 dark:border-gray-800">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-sky-100 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-sky-600 dark:text-sky-400">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                      {cat.title}
+                    </h2>
+                  </div>
+                  <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+                    {cat.tag}
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {cat.desc}
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {cat.cases.map((cs, i) => (
+                    <div
+                      key={i}
+                      className="bg-white dark:bg-gray-800/80 rounded-2xl p-5 border border-gray-200 dark:border-gray-700/80 shadow-sm space-y-3 flex flex-col justify-between"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+                            {cs.name}
+                          </h3>
+                          <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                            {cs.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                          {cs.detail}
+                        </p>
+                      </div>
+
+                      <div className="pt-2.5 border-t border-gray-100 dark:border-gray-700/60 text-xs text-gray-500 dark:text-gray-400">
+                        <strong className="text-gray-700 dark:text-gray-300">InfraSocket Implementation: </strong>
+                        {cs.detection}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+
+        {/* Footer Navigation */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Link
+            to="/01-overview/socio-economic-impact"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm transition-colors"
+          >
+            Next: Socio-Economic Impact &amp; Viability
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            <span>InfraSocket Documentation</span>
+            <span>•</span>
+            <Link to="/01-overview/problem-statement" className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+              Return to Problem Statement
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

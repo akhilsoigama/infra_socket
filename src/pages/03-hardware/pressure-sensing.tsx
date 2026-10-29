@@ -145,9 +145,9 @@ export default function Page03HardwarePressureSensing() {
     </ul>
     <p><strong>Limitations:</strong></p>
     <ul>
-      <li>Significantly higher cost</li>
-      <li>May be difficult to source for student projects</li>
-      <li>Not necessary for a prototype demonstration</li>
+      <li>Significantly higher cost (often exceeding $10,000+ USD)</li>
+      <li>Long lead times and export control barriers for standard research setups</li>
+      <li>Not necessary for a baseline prototype validation</li>
     </ul>
     <h2 id="prototype-recommendation">Prototype Recommendation</h2>
     <p>For the MVP prototype, a <strong>MEMS differential pressure sensor</strong> is recommended as a
@@ -155,7 +155,7 @@ export default function Page03HardwarePressureSensing() {
     </p>
     <ol>
       <li><strong>Availability</strong> — widely stocked by electronics distributors</li>
-      <li><strong>Cost</strong> — affordable for student/hackathon budgets</li>
+      <li><strong>Cost</strong> — cost-effective for accessible laboratory research builds</li>
       <li><strong>Interface</strong> — many offer digital (I²C/SPI) interfaces, simplifying the analog
         front end</li>
       <li><strong>Menu</strong> — extensive application notes and community support</li>

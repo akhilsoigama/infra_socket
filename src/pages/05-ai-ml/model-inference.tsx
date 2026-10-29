@@ -14,7 +14,7 @@ export default function Page05AiMlModelInference() {
     <h2 id="inference-pipeline">Inference Pipeline</h2>
     <p>Model inference is the process of using the trained Isolation Forest model to score new, unseen
       data in real-time.</p>
-    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}NEW["New Signal\nWindow"] --&gt; FE["Feature\nExtraction"]{"\n"}{"    "}FE --&gt; NORM["Normalize\n(Using training params)"]{"\n"}{"    "}NORM --&gt; MODEL["Isolation Forest\n.predict()"]{"\n"}{"    "}MODEL --&gt; RAWSCORE["Raw Anomaly\nScore"]{"\n"}{"    "}RAWSCORE --&gt; NORMSCORE["Normalized\nAnomaly Index"]{"\n"}{"    "}NORMSCORE --&gt; DECISION{"{"}"Index &gt;\nThreshold?"{"}"}{"\n"}{"    "}DECISION --&gt;|Yes| ALERT["fa:fa-triangle-exclamation{"  "}Alert"]{"\n"}{"    "}DECISION --&gt;|No| LOG["fa:fa-check{"  "}Log"]{"\n"}</code></pre>
+    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}NEW["New Signal\nWindow"] --&gt; FE["Feature\nExtraction"]{"\n"}{"    "}FE --&gt; NORM["Normalize\n(Using training params)"]{"\n"}{"    "}NORM --&gt; MODEL["Isolation Forest\n.predict()"]{"\n"}{"    "}MODEL --&gt; RAWSCORE["Raw Anomaly\nScore"]{"\n"}{"    "}RAWSCORE --&gt; NORMSCORE["Normalized\nAnomaly Index"]{"\n"}{"    "}NORMSCORE --&gt; DECISION["Threshold Check\n(Index  Threshold?)"]{"\n"}{"    "}DECISION --&gt;|Yes| ALERT["Anomaly Alert Triggered"]{"\n"}{"    "}DECISION --&gt;|No| LOG["Normal State Logged"]{"\n"}</code></pre>
     <h2 id="inference-steps">Inference Steps</h2>
     <ol>
       <li><strong>Feature extraction:</strong> Compute the same features as during training, in the

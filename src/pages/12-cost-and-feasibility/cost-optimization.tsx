@@ -15,9 +15,8 @@ export default function Page12CostAndFeasibilityCostOptimization() {
     <ol>
       <li><strong>Use digital-output sensors:</strong> Eliminates the need for external amplifier and
         filter circuitry</li>
-      <li><strong>Use on-chip ADC:</strong> Many microcontrollers include 12-bit ADCs; may be
-        sufficient for initial testing</li>
-      <li><strong>Use existing hardware:</strong> Team laptops instead of purchasing SBCs</li>
+      <li><strong>Integrated transducer ADC:</strong> The Amphenol DLVR-F50D sensor embeds a calibrated 14/16-bit Delta-Sigma ADC on-chip, eliminating external discrete ADC converter boards entirely</li>
+      <li><strong>Use existing hardware:</strong> Host PC/workstation interface instead of dedicated SBC for bench testing</li>
       <li><strong>Open-source software:</strong> Python + scikit-learn + Flask — all free</li>
       <li><strong>Minimal manifold:</strong> Start with 4 inlets instead of 8–12; expand if effective
       </li>

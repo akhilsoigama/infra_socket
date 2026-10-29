@@ -46,8 +46,7 @@ export default function Page13ResearchExistingSolutions() {
     <ul>
       <li><strong>Instructables / maker community:</strong> DIY microbarometer projects using MEMS
         pressure sensors</li>
-      <li><strong>University student projects:</strong> Various prototype systems for educational
-        purposes</li>
+      <li><strong>University &amp; academic lab initiatives:</strong> Prototype systems for laboratory experimentation and geophysics coursework</li>
       <li><strong>Open-source weather station networks:</strong> Some incorporate low-frequency
         pressure sensing</li>
     </ul>

@@ -167,7 +167,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex items-center gap-2 shrink-0">
-              <img src="../logo.png" alt="" className="logo h-6 w-auto md:h-8" />
+              <img src="/logo.png" alt="" className="logo h-6 w-auto md:h-8" />
               <span className="whitespace-nowrap">InfraSocket</span>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div>
             <div className="flex items-center justify-between md:hidden mb-6">
               <div className="flex items-center gap-2 font-bold text-lg text-gray-900 dark:text-gray-100">
-                <img src="../logo.png" alt="" className="w-8 h-8 object-contain" /> InfraSocket
+                <img src="/logo.png" alt="" className="w-8 h-8 object-contain" /> InfraSocket
               </div>
               <button onClick={toggleSidebar} className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                 <X className="w-6 h-6" />
@@ -240,9 +240,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   Objectives</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/proposed-solution">Proposed
                   Solution</NavLink></li>
+                <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/technology-stack">Technology Stack &amp; Feasibility</NavLink></li>
+                <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/socio-economic-impact">Socio-Economic Impact &amp; Viability</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/real-world-use-cases">Real-World
                   Use Cases</NavLink></li>
-                <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/socio-economic-impact">Socio-Economic Impact &amp; Viability</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/scope-and-limitations">Scope
                   and Limitations</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/project-status">Project Status</NavLink></li><li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/engineering-claims">Engineering Claims &amp; Evidence</NavLink></li><li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/01-overview/glossary">Glossary</NavLink></li></ul>
@@ -269,7 +270,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   Overview</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/02-system-architecture/time-synchronization">Time Synchronization</NavLink></li></ul>
             </details>
-            <details className="mb-1 group" open={isGroupActive('/03-hardware')}>
+            <details className="mb-1 group" open={isGroupActive('/03-hardware') || isGroupActive('/14-sensor_connection')}>
               <summary className="cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <div className="flex items-center gap-2"><Cpu className="w-4 h-4 text-gray-500 dark:text-gray-400" /> Hardware
                 </div><ChevronRight className="w-3 h-3 text-gray-400 transition-transform duration-200 group-open:rotate-90" />
@@ -301,6 +302,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   Sensing</NavLink></li>
                 <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/03-hardware/wind-noise-reduction">Wind-Noise
                   Reduction</NavLink></li>
+                <li><NavLink className={({ isActive }) => `block px-2 py-1.5 text-sm rounded transition-colors ${isActive ? 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-400 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'}`} to="/14-sensor_connection/sensor_connection">Sensor Connection &amp; Storage</NavLink></li>
               </ul>
             </details>
             <details className="mb-1 group" open={isGroupActive('/04-signal-processing')}>

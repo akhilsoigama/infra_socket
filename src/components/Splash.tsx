@@ -30,7 +30,7 @@ export default function Splash({ onComplete }: { onComplete: () => void }) {
         <div className="absolute inset-0 bg-sky-500/20 blur-[100px] rounded-full animate-pulse" />
 
         {/* Animated Icon */}
-        <img src='../logo.png' className="w-50 h-35 text-sky-400" />
+        <img src="/logo.png" alt="InfraSocket Logo" className="w-48 h-auto object-contain mb-4" />
 
         {/* Title */}
         <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500 tracking-wider">
