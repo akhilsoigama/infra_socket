@@ -12,7 +12,7 @@ export default function Page02SystemArchitectureTimeSynchronization() {
     <h1>Time Synchronization</h1>
     <p>Accurate timestamping is crucial for signal analysis, especially for future multi-node deployment.</p>
     <h3>Architecture</h3>
-    <pre><code>Sensor → ADC → Acquisition timestamp → ESP32 / Node → Local storage + Wi-Fi → Server</code></pre>
+    <pre><code>Sensor → ADC → Acquisition timestamp → Raspberry Pi 5 / Node → Local storage + Wi-Fi → Server</code></pre>
     <p>Timestamping occurs as close to data acquisition as practical. Server packet-arrival time is not used as the primary measurement timestamp.</p>
     <h3>Approaches</h3>
     <ul>

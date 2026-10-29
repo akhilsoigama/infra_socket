@@ -42,9 +42,9 @@ export default function Page14SensorConnectionSensorConnection() {
 <h2>Benefits of Local Storage</h2>
 <p>A better architecture leverages both local and remote storage:</p>
 <pre><code class="language-mermaid">graph TD
-    Sensor[Sensor] --&gt; ESP32[ESP32]
-    ESP32 --&gt; SD[microSD&lt;br/&gt;Local backup]
-    ESP32 --&gt; WiFi[Wi-Fi]
+    Sensor[Sensor] --&gt; RPi5[Raspberry Pi 5]
+    RPi5 --&gt; SD[microSD&lt;br/&gt;Local backup]
+    RPi5 --&gt; WiFi[Wi-Fi]
     WiFi --&gt; Server[Server]
     Server --&gt; DB[(Database)]
 </code></pre>
@@ -54,7 +54,7 @@ export default function Page14SensorConnectionSensorConnection() {
 </ul>
 <h3>Standard Workflow</h3>
 <ol>
-<li><strong>ESP32</strong> records data from the sensor.</li>
+<li><strong>Raspberry Pi 5</strong> records data from the sensor.</li>
 <li>Data is saved to the <strong>microSD</strong> card.</li>
 <li>Data is sent through <strong>Wi-Fi</strong>.</li>
 <li><strong>Server</strong> receives the data.</li>
@@ -64,13 +64,13 @@ export default function Page14SensorConnectionSensorConnection() {
 <p>If Wi-Fi fails:</p>
 <ol>
 <li>Wi-Fi connection is lost (❌).</li>
-<li><strong>Sensor</strong> continues to send data to the <strong>ESP32</strong>.</li>
-<li><strong>ESP32</strong> continues recording to the <strong>microSD</strong> card.</li>
+<li><strong>Sensor</strong> continues to send data to the <strong>Raspberry Pi 5</strong>.</li>
+<li><strong>Raspberry Pi 5</strong> continues recording to the <strong>microSD</strong> card.</li>
 </ol>
 <p>When Wi-Fi comes back:</p>
 <ol>
-<li><strong>ESP32</strong> retrieves missing data from the <strong>microSD</strong> card.</li>
-<li><strong>ESP32</strong> uploads the missing data to the <strong>Server</strong>.</li>
+<li><strong>Raspberry Pi 5</strong> retrieves missing data from the <strong>microSD</strong> card.</li>
+<li><strong>Raspberry Pi 5</strong> uploads the missing data to the <strong>Server</strong>.</li>
 </ol>
 <hr>
 <h2>Wi-Fi Usage</h2>
@@ -115,11 +115,11 @@ export default function Page14SensorConnectionSensorConnection() {
         Pressure[Pressure Sensor] --&gt; Noise[Wind Noise Reduction]
         Noise --&gt; AFE[Analog Front End]
         AFE --&gt; ADC[ADC]
-        ADC --&gt; ESP32[ESP32]
+        ADC --&gt; RPi5[Raspberry Pi 5]
         
-        GPS[GPS/RTC time] --&gt; ESP32
-        ESP32 --&gt; SD[microSD]
-        ESP32 --&gt; WiFi[Wi-Fi]
+        GPS[GPS/RTC time] --&gt; RPi5
+        RPi5 --&gt; SD[microSD]
+        RPi5 --&gt; WiFi[Wi-Fi]
     end
     
     WiFi --&gt; ServerMain[SERVER]

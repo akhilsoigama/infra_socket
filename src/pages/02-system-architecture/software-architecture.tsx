@@ -191,7 +191,7 @@ export default function Page02SystemArchitectureSoftwareArchitecture() {
       <li>Local dashboard / API server</li>
       <li>Data storage (local database)</li>
     </ul>
-    <h3 id="esp32-optional-">ESP32 (Optional)</h3>
+    <h3 id="raspberry-pi-5-optional-">Raspberry Pi 5 (Optional)</h3>
     <p>Position as:</p>
     <ul>
       <li>Optional low-level acquisition controller (direct ADC interfacing)</li>
@@ -200,7 +200,7 @@ export default function Page02SystemArchitectureSoftwareArchitecture() {
     </ul>
     <blockquote>
       <p>The Raspberry Pi / Linux SBC is the primary candidate for the prototype because it can run
-        the full Python-based signal processing and AI stack. ESP32 is positioned as an optional
+        the full Python-based signal processing and AI stack. Raspberry Pi 5 is positioned as an optional
         component, not a co-requirement. Do not assume both are simultaneously required unless the
         architecture explicitly uses both.</p>
     </blockquote>
