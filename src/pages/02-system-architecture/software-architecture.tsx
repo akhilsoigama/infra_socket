@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import {
   Code2,
-  ArrowRight
+  ArrowRight,
+  Layers
 } from 'lucide-react';
 
 export default function Page02SystemArchitectureSoftwareArchitecture() {
