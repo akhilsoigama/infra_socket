@@ -275,7 +275,7 @@ export default function Page03HardwareWindNoiseReduction() {
         limitation.</p>
     </blockquote>
     <hr />
-    <p><em>See also: <Link to="/03-hardware/hardware-overview">Hardware Overview</Link> | <Link to="/03-hardware/pressure-sensing">Pressure Sensing</Link> | <Link to="/03-hardware/environmental-enclosure">Environmental Enclosure</Link></em></p>
+    <p><em>See also: <Link to="/03-hardware/hardware-overview">Hardware Overview</Link> | <Link to="/03-hardware/pressure-sensing">Pressure Sensing</Link> | <Link to="/03-hardware/environmental-enclosure">Environmental Enclosure</Link> | <Link to="/13-research/sandia-wind-noise-study" className="text-sky-600 dark:text-sky-400 font-medium">Sandia Wind Noise Reduction Systems Study</Link></em></p>
   </article>
 </div>
 

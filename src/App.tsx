@@ -108,6 +108,7 @@ import Page13ResearchExistingSolutions from './pages/13-research/existing-soluti
 import Page13ResearchGlossary from './pages/13-research/glossary';
 import Page13ResearchProposedVsExisting from './pages/13-research/proposed-vs-existing';
 import Page13ResearchReferences from './pages/13-research/references';
+import Page13ResearchSandiaWindNoiseStudy from './pages/13-research/sandia-wind-noise-study';
 import Page13ResearchTechnicalAssumptions from './pages/13-research/technical-assumptions';
 import Page14SensorConnectionSensorConnection from './pages/14-sensor_connection/sensor_connection';
 import Page16RoadmapContributionGuide from './pages/16-roadmap/contribution-guide';
@@ -227,6 +228,7 @@ export default function App() {
         <Route path="/13-research/glossary" element={<Layout><Page13ResearchGlossary /></Layout>} />
         <Route path="/13-research/proposed-vs-existing" element={<Layout><Page13ResearchProposedVsExisting /></Layout>} />
         <Route path="/13-research/references" element={<Layout><Page13ResearchReferences /></Layout>} />
+        <Route path="/13-research/sandia-wind-noise-study" element={<Layout><Page13ResearchSandiaWindNoiseStudy /></Layout>} />
         <Route path="/13-research/technical-assumptions" element={<Layout><Page13ResearchTechnicalAssumptions /></Layout>} />
         <Route path="/14-sensor_connection/sensor_connection" element={<Layout><Page14SensorConnectionSensorConnection /></Layout>} />
         <Route path="/16-roadmap/contribution-guide" element={<Layout><Page16RoadmapContributionGuide /></Layout>} />

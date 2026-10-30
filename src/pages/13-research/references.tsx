@@ -66,6 +66,12 @@ export default function Page13ResearchReferences() {
           <li><em>Design principles for pipe-array spatial filters used at IMS stations.</em></li>
         </ul>
       </li>
+      <li>
+        <p><strong>Albert, S., Pankow, K., and Berg, E.</strong> "Comparison of Infrasound Wind Noise Reduction Systems for Use in Temporary Deployments." <em>Sandia National Laboratories Technical Report</em>, SAND2021-10136, August 2021.</p>
+        <ul>
+          <li><em>Rigorous empirical comparison of porous hoses, 1m metal mesh dome, and 5-gallon bucket against bare sensors. See our dedicated sub-module: <Link to="/13-research/sandia-wind-noise-study" className="text-sky-600 dark:text-sky-400 font-medium hover:underline">Sandia WNRS Study</Link>.</em></li>
+        </ul>
+      </li>
     </ol>
     <h3 id="microbarometer-design">Microbarometer Design</h3>
     <ol start={6}>
