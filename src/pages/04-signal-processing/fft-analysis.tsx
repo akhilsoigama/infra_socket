@@ -169,11 +169,34 @@ export default function Page04SignalProcessingFftAnalysis() {
     </table>
     <p><strong>Recommendation:</strong> Use the <strong>Hanning window</strong> as the default — it
       provides a good balance of frequency resolution and spectral leakage suppression.</p>
-    <h2 id="power-spectral-density-psd-">Power Spectral Density (PSD)</h2>
-    <p>The PSD shows how signal power is distributed across frequencies:</p>
-    <pre><code>PSD[k] = |FFT[k]|² / (fs × N){"    "}(units: Pa²/Hz, if signal is in Pa){"\n"}</code></pre>
-    <p>The PSD is more useful than the raw FFT magnitude for comparing signals of different lengths or
-      sampling rates, because it normalizes by frequency resolution.</p>
+    <h2 id="power-spectral-density-psd-">Power Spectral Density (PSD) &amp; Welch Estimation</h2>
+    <p>The Power Spectral Density (PSD) describes how signal power is distributed across the frequency spectrum. Unlike raw FFT magnitude, the PSD normalizes for frequency resolution and window duration, making it the standard metric for quantifying background noise and comparing sensor configurations:</p>
+    <pre><code>PSD[k] = |FFT[k]|² / (fs × N)    (units: Pa²/Hz, where pressure is measured in Pascals){"\n"}</code></pre>
+    <p>To express noise power in logarithmic decibels relative to acoustic pressure:</p>
+    <pre><code>PSD (dB) = 10 × log10(PSD_Pa²_per_Hz)    [dB rel 1 Pa²/Hz]{"\n"}</code></pre>
+
+    <h3 id="welch-psd-estimation">Welch's Method for Noise Floor Estimation</h3>
+    <p>Computing a single raw periodogram on a continuous time series results in high variance. Welch's averaged modified periodogram method reduces spectral noise through three steps:</p>
+    <ol>
+      <li><strong>Segmentation:</strong> Dividing the continuous data record of length L into overlapping sub-segments of length N.</li>
+      <li><strong>Windowing:</strong> Multiplying each sub-segment by a smooth taper (typically a <strong>Hann / Hanning window</strong>) to suppress spectral leakage at segment boundaries.</li>
+      <li><strong>Overlapping &amp; Averaging:</strong> Applying a <strong>50% overlap</strong> between successive windows to recover information attenuated at window edges, followed by averaging the squared magnitude spectra across all sub-segments.</li>
+    </ol>
+
+    <h3 id="frequency-dependent-noise-comparison">Frequency-Dependent Comparative Analysis (Sandia Methodology)</h3>
+    <p>In comparative infrasound experiments, such as the wind filter study conducted by <strong>Sandia National Laboratories (Albert, Pankow, &amp; Berg, 2021; SAND2021-10136)</strong>, PSD analysis is used to directly quantify noise reduction across different inlet configurations:</p>
+    <ul>
+      <li><strong>Wind-Speed Interval Binning:</strong> Continuous records are partitioned into wind speed bins (0–0.5 m/s, 1–1.5 m/s, 2–2.5 m/s, 3–3.5 m/s, 4–4.5 m/s, and 5–5.5 m/s) to isolate velocity-driven turbulence from calm diurnal acoustic baselines.</li>
+      <li><strong>Research Reference Settings:</strong> In the Sandia study, PSDs were computed using a <strong>20-minute Hann window with 50% overlap</strong>, sampled at 100 Hz, with mean spectral power averaged within each wind speed bin.</li>
+      <li><strong>Decibel Noise Reduction Metric:</strong> The noise reduction achieved by a wind filter is determined across frequency by subtracting the candidate filter's mean PSD from the bare sensor baseline reference:
+        <pre><code>Noise Reduction (dB) = PSD_bare(f) [dB] − PSD_filter(f) [dB]{"\n"}</code></pre>
+        Positive decibel values indicate effective wind noise attenuation; negative values reveal frequency bands where the enclosure or filter amplifies turbulence or induces resonant noise.
+      </li>
+    </ul>
+
+    <blockquote>
+      <p><strong>Operational Architecture Note:</strong> The 20-minute Hann window is the experimental methodology utilized in the Sandia research study for long-term multi-month offline baseline comparison. It is <strong>not</strong> a mandatory setting for the InfraSocket edge platform. On the Raspberry Pi 5 edge computer, real-time anomaly screening uses rolling windows of 2048 samples (~20.48 seconds at 100 Hz or ~40.96 seconds at 50 Hz with 50% overlap) to maintain low-latency detection, while multi-minute Welch PSD averaging is used during background calibration runs and offline validation testing.</p>
+    </blockquote>
     <h2 id="spectrogram">Spectrogram</h2>
     <p>A spectrogram is a time-frequency representation created by computing FFTs on successive
       overlapping windows:</p>

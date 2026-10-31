@@ -41,6 +41,15 @@ export default function Page13ResearchExistingSolutions() {
       <li><strong>Setra, Honeywell, Validyne:</strong> Industrial differential pressure sensors
         adaptable for infrasound</li>
     </ul>
+    <h3 id="temporary-deployment-wind-filters">Temporary Deployment Wind Filters (Published Research)</h3>
+    <p>
+      While permanent CTBTO IMS stations deploy massive, rigid pipe arrays (18–70 m diameter) that require extensive civil infrastructure, temporary campaigns demand rapid, transportable wind noise reduction systems. A landmark study by <strong>Sandia National Laboratories (Albert, Pankow, &amp; Berg, 2021; SAND2021-10136)</strong> evaluated common temporary filters:
+    </p>
+    <ul>
+      <li><strong>Porous Garden Soaker Hoses:</strong> Inexpensive and rapid to deploy (~30 m aperture), achieving 2–15 dB noise reduction across 0.01–20 Hz, but shown in acoustic literature (Howard et al., 2007) to alter signal amplitude and frequency content depending on arrival azimuth and incidence angle.</li>
+      <li><strong>Metal Mesh Domes:</strong> Hemispherical ~1 m permeable wire mesh domes achieving 2–7 dB noise reduction while preserving transient waveform fidelity, but limited by transport weight (~50 lbs).</li>
+      <li><strong>Inverted Buckets (Anecdotal Field Practice):</strong> Evaluated and strongly discouraged; collapses multi-hole averaging into a single cable aperture, causing zero noise reduction below 1 Hz and noise amplification above 1–3 Hz.</li>
+    </ul>
     <h2 id="low-cost-diy-efforts">Low-Cost / DIY Efforts</h2>
     <p>Several individuals and groups have explored low-cost infrasound sensing:</p>
     <ul>

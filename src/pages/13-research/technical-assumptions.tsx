@@ -78,9 +78,9 @@ export default function Page13ResearchTechnicalAssumptions() {
         </tr>
         <tr>
           <td>A-10</td>
-          <td>A prototype-scale manifold (1–5 m) provides measurable noise reduction</td>
-          <td>Core hardware assumption</td>
-          <td>Measure with and without manifold</td>
+          <td>A prototype-scale manifold (1–5 m) or porous filter provides measurable noise reduction while preserving signal fidelity</td>
+          <td>Noise reduction must not introduce uncharacterized signal attenuation or azimuthal distortion (Albert et al., 2021)</td>
+          <td>Comparative co-located testing measuring both PSD noise reduction (dB) and acoustic signal preservation across wind intervals</td>
         </tr>
         <tr>
           <td>A-11</td>

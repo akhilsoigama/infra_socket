@@ -49,12 +49,35 @@ export default function Page13ResearchReferences() {
     <h3 id="wind-noise-reduction">Wind-Noise Reduction</h3>
     <ol start={4}>
       <li>
+        <p><strong>Albert, S., Pankow, K., and Berg, E.</strong> <em>Comparison of Infrasound Wind Noise Reduction Systems for Use in Temporary Deployments</em>. Sandia National Laboratories, Technical Report SAND2021-10136, August 2021.</p>
+        <ul>
+          <li>DOI: <a href="https://doi.org/10.2172/1814075" target="_blank" rel="noopener noreferrer">10.2172/1814075</a></li>
+          <li>OSTI Identifier: <a href="https://www.osti.gov/biblio/1814075" target="_blank" rel="noopener noreferrer">1814075 (U.S. Dept. of Energy)</a></li>
+          <li>Local Workspace Copy: <code>docs/references/sandia_testing_lab.pdf</code></li>
+          <li><em>Empirical evaluation of porous hose filters, 1 m metal mesh wind domes, and shroud configurations across wind speed intervals (0.01–20 Hz) using co-located Hyperion IFS-3000 microbarometers.</em></li>
+        </ul>
+      </li>
+      <li>
         <p><strong>Walker, K. T., and Hedlin, M. A. H.</strong> "A Review of Wind-Noise Reduction
           Methodologies." <em>Infrasound Monitoring for Atmospheric Studies</em>, Springer, 2010,
           pp. 141–182.</p>
         <ul>
           <li><em>Comprehensive review of spatial-filtering and other wind-noise reduction
               techniques.</em></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Raspet, R., Abbott, J.-P., Webster, J., Yu, J., Talmadge, C., Alberts II, K., Collier, S., and Noble, J.</strong> "New Systems for Wind Noise Reduction for Infrasonic Measurements." <em>Infrasound Monitoring for Atmospheric Studies</em>, Springer, 2019, pp. 91–123.</p>
+        <ul>
+          <li>DOI: 10.1007/978-3-319-75140-5_3</li>
+          <li><em>Investigation of porous wind domes and stagnation vs. intrinsic atmospheric pressure fluctuations.</em></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Howard, W., Dillon, K., and Shields, F.</strong> "Acoustical properties of porous hose wind noise filters." <em>Journal of the Acoustical Society of America</em>, Vol. 122, No. 5, 2007, p. 2985.</p>
+        <ul>
+          <li>DOI: 10.1121/1.2942654</li>
+          <li><em>Acoustic characterization demonstrating frequency and azimuthal signal distortion introduced by porous garden soaker hose filters.</em></li>
         </ul>
       </li>
       <li>
@@ -68,7 +91,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="microbarometer-design">Microbarometer Design</h3>
-    <ol start={6}>
+    <ol start={9}>
       <li><strong>Ponceau, D., and Bosca, L.</strong> "Low-Noise Broadband Microbarometers."
         <em>Infrasound Monitoring for Atmospheric Studies</em>, Springer, 2010, pp. 119–140.<ul>
           <li><em>Design and performance of research-grade microbarometers including the MB3.</em>
@@ -77,7 +100,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="signal-processing">Signal Processing</h3>
-    <ol start={7}>
+    <ol start={10}>
       <li>
         <p><strong>Oppenheim, A. V., and Schafer, R. W.</strong> <em>Discrete-Time Signal
             Processing</em>, 3rd Edition, Pearson, 2010.</p>
@@ -96,7 +119,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="anomaly-detection-and-isolation-forest">Anomaly Detection and Isolation Forest</h3>
-    <ol start={9}>
+    <ol start={12}>
       <li>
         <p><strong>Liu, F. T., Ting, K. M., and Zhou, Z.-H.</strong> "Isolation Forest."
           <em>Proceedings of the 2008 Eighth IEEE International Conference on Data Mining
@@ -118,7 +141,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="public-data-sources">Public Data Sources</h3>
-    <ol start={11}>
+    <ol start={14}>
       <li>
         <p><strong>EarthScope Consortium (formerly IRIS).</strong> "Data Services."</p>
         <ul>
@@ -154,7 +177,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="software-libraries">Software Libraries</h3>
-    <ol start={15}>
+    <ol start={18}>
       <li>
         <p><strong>Pedregosa, F., et al.</strong> "Scikit-learn: Machine Learning in Python."
           <em>Journal of Machine Learning Research</em>, Vol. 12, 2011, pp. 2825–2830.
@@ -182,7 +205,7 @@ export default function Page13ResearchReferences() {
       </li>
     </ol>
     <h3 id="standards-and-organizations">Standards and Organizations</h3>
-    <ol start={18}>
+    <ol start={21}>
       <li>
         <p><strong>CTBTO Preparatory Commission.</strong> Vienna, Austria.</p>
         <ul>

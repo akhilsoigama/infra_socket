@@ -23,10 +23,10 @@ export default function Page04SignalProcessingNoiseReduction() {
       </thead>
       <tbody>
         <tr>
-          <td>Wind turbulence</td>
-          <td>Spatially incoherent pressure fluctuations</td>
-          <td>Broadband, dominant below a few Hz</td>
-          <td>Spatial-averaging manifold (hardware)</td>
+          <td>Wind turbulence (Stagnation &amp; Intrinsic)</td>
+          <td>Stagnation pressure (&frac12;&rho;v&sup2; against structure) and intrinsic atmospheric turbulence (turbulence-turbulence and turbulence-shear interactions)</td>
+          <td>Broadband, dominant below 1–3 Hz (follows &minus;5/3 power law)</td>
+          <td>Pneumatic spatial-averaging manifold / porous filter (hardware)</td>
         </tr>
         <tr>
           <td>Electronic noise (thermal)</td>
@@ -83,18 +83,20 @@ export default function Page04SignalProcessingNoiseReduction() {
     <p>If a separate noise reference is available (e.g., a second sensor without a manifold), adaptive
       filtering can estimate and subtract the noise component from the signal. This technique can
       provide superior noise reduction but requires additional hardware.</p>
-    <h2 id="noise-floor-characterization">Noise Floor Characterization</h2>
-    <p>The noise floor is the level of noise present when no infrasound signal is applied. It defines
-      the minimum detectable signal.</p>
-    <p>Measuring the noise floor:</p>
+    <h2 id="noise-floor-characterization">Noise Floor Characterization &amp; PSD Estimation</h2>
+    <p>The noise floor is the baseline power spectral density present when no infrasound signal is applied or under ambient background conditions. It defines the minimum detectable signal (MDS).</p>
+    <p>Measuring and comparing the noise floor across hardware configurations:</p>
     <ol>
-      <li>Seal or cap the sensor in a quiet environment</li>
-      <li>Record data for an extended period (30+ minutes)</li>
-      <li>Compute the power spectral density (PSD) of the recorded data</li>
-      <li>The PSD represents the noise floor as a function of frequency</li>
+      <li><strong>Sealed Sensor Self-Noise:</strong> Cap sensor inlet ports in a temperature-stabilized chamber to record pure transducer and ADC electronic self-noise.</li>
+      <li><strong>Atmospheric Background PSD:</strong> Deploy sensors in situ with and without pneumatic filters (e.g., bare vs. spatial manifold) and record continuous pressure.</li>
+      <li><strong>Welch PSD Computation:</strong> Estimate the power spectral density using Welch's averaged periodogram method with a <strong>Hann window</strong> and <strong>50% overlap</strong> (as exemplified in the 20-minute Hann window methodology of Albert et al., 2021).</li>
+      <li><strong>Wind-Speed Binning:</strong> Partition PSD curves by local anemometer intervals (e.g., 0–0.5 m/s, 1–1.5 m/s, etc.) to evaluate noise suppression across varying turbulent wind regimes.</li>
+      <li><strong>Baseline Subtraction:</strong> Compute frequency-dependent noise attenuation: <span className="font-mono">&Delta;dB(f) = PSD_bare(f) &minus; PSD_filter(f)</span>.</li>
     </ol>
-    <p>The noise floor typically increases at lower frequencies (due to 1/f noise and thermal drift),
-      making very-low-frequency detection inherently more challenging.</p>
+    <p>The noise floor typically increases at lower frequencies (due to 1/f noise, thermal drift, and boundary layer turbulence), making sub-0.1 Hz detection challenging.</p>
+    <blockquote>
+      <p><strong>Acoustic Fidelity Caution:</strong> Minimizing background PSD power is only half the engineering challenge. As demonstrated in published research (Albert et al., 2021; Howard et al., 2007), high-attenuation filters like porous hoses can alter signal amplitude and phase. System validation requires measuring both noise floor suppression and transient waveform preservation simultaneously.</p>
+    </blockquote>
     <h2 id="signal-to-noise-ratio-snr-">Signal-to-Noise Ratio (SNR)</h2>
     <pre><code>SNR = Signal Power / Noise Power{"\n"}{"\n"}SNR (dB) = 10 × log10(Signal Power / Noise Power){"\n"}</code></pre>
     <p>A signal is detectable when SNR &gt; 1 (or &gt; 0 dB). For reliable detection with low false

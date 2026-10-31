@@ -92,6 +92,82 @@ export default function Page09CalibrationValidationValidationMethodology() {
         </tr>
       </tbody>
     </table>
+
+    <h2 id="proposed-wind-noise-validation-plan">Proposed Comparative Experimental Validation Plan (Wind-Noise Reduction)</h2>
+    <p>
+      Informed by the co-located sensor methodology established by <strong>Sandia National Laboratories (Albert, Pankow, &amp; Berg, 2021; SAND2021-10136)</strong>, InfraSocket outlines a rigorous comparative experimental validation plan to evaluate pneumatic wind noise filters. This plan establishes empirical protocols to quantify both noise attenuation and signal preservation before finalizing any inlet hardware.
+    </p>
+
+    <blockquote>
+      <p><strong>Status: PROPOSED VALIDATION PLAN.</strong> The tests detailed below are engineering protocols planned for execution. No experimental results, attenuation numbers, or response curves are fabricated. Results will be published on the <Link to="/09-calibration-validation/experimental-results">Experimental Results</Link> page once physically conducted.</p>
+    </blockquote>
+
+    <h3 id="test-configurations">Test Configurations Under Evaluation</h3>
+    <ol>
+      <li><strong>Bare Sensor Baseline Reference:</strong> Amphenol DLVR sensor connected to atmospheric port with standard protective shroud (no external spatial manifold) to establish baseline environmental and turbulence noise.</li>
+      <li><strong>InfraSocket 4-Port Manifold:</strong> Symmetrical 4-port spatial averaging manifold (1–2 m radial arms) with discrete perimeter inlets.</li>
+      <li><strong>Porous Hose Configuration:</strong> 4-port central hub connected to flexible porous soaker hose segments (evaluating spatial line-averaging).</li>
+      <li><strong>Metal/Fabric Mesh Dome Configuration (Optional/Roadmap):</strong> Enclosing sensor in permeable wire mesh or synthetic fabric dome if a physical prototype unit is available.</li>
+    </ol>
+
+    <h3 id="experimental-test-matrix">Comparative Experimental Test Protocols</h3>
+    <ul>
+      <li><strong>Bare Sensor Baseline Measurement:</strong> Continuous co-located recording to establish unmitigated boundary layer turbulence across diurnal cycles.</li>
+      <li><strong>Wind-Condition Binned PSD Comparison:</strong> Synchronized ultrasonic or cup anemometer wind speed logging resampled to match PSD intervals. Spectral power is binned into standardized velocity brackets (0–0.5, 1–1.5, 2–2.5, 3–3.5, 4–4.5, 5–5.5+ m/s) to isolate wind-induced dynamic noise from ambient acoustics.</li>
+      <li><strong>Welch Spectral Estimation:</strong> Welch PSD estimation using Hann windowing and 50% overlap. Reference benchmark runs evaluate extended windows (multi-minute averages), compared against rolling edge windowing (2048 samples at 100 Hz).</li>
+      <li><strong>Signal Amplitude &amp; Waveform Preservation:</strong> Controlled acoustic test signals (e.g., low-frequency subwoofer sweep or calibrated repeatable pressure pulse) to evaluate whether the pneumatic filter alters transient peak amplitude, impulse rise time, or RMS energy.</li>
+      <li><strong>Frequency-Response Comparison (Transfer Function):</strong> Ratio of filtered spectrum to bare sensor spectrum across 0.01–20 Hz to detect passband attenuation, artificial amplification, or acoustic tube resonances.</li>
+      <li><strong>Repeatability Testing:</strong> Repeated test runs across multiple days, atmospheric temperatures (0–40°C), and varying wind directions to verify measurement consistency.</li>
+      <li><strong>Environmental Durability Assessment:</strong> Long-term outdoor exposure (weeks to months) to assess pore clogging from precipitation, dust/silt accumulation, UV embrittlement, and biological/animal interference.</li>
+    </ul>
+
+    <h3 id="evaluation-parameters">Evaluation Parameters Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Purpose &amp; Method</th>
+          <th>Validation Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mean PSD</strong></td>
+          <td>Compare background spectral power across frequency bins (Pa²/Hz)</td>
+          <td>Quantify baseline noise floor under quiet vs. turbulent conditions</td>
+        </tr>
+        <tr>
+          <td><strong>Noise reduction (dB)</strong></td>
+          <td>Quantify relative decibel noise reduction: <span className="font-mono">10 log10(PSD_bare / PSD_filter)</span></td>
+          <td>Measure frequency-dependent attenuation across 0.01–20 Hz</td>
+        </tr>
+        <tr>
+          <td><strong>Signal amplitude</strong></td>
+          <td>Evaluate waveform preservation using controlled acoustic reference pulses</td>
+          <td>Verify that noise reduction does not attenuate target infrasound amplitude</td>
+        </tr>
+        <tr>
+          <td><strong>Frequency response</strong></td>
+          <td>Identify passband attenuation, high-frequency rolloff, or resonant amplification</td>
+          <td>Flat transfer function (&plusmn;3 dB) across stated operating band</td>
+        </tr>
+        <tr>
+          <td><strong>SNR</strong></td>
+          <td>Assess useful signal quality: <span className="font-mono">10 log10(P_signal / P_noise)</span></td>
+          <td>Demonstrate measurable SNR gain under moderate wind (&gt; 3 m/s)</td>
+        </tr>
+        <tr>
+          <td><strong>Repeatability</strong></td>
+          <td>Evaluate consistency across repeated trials, wind directions, and diurnal cycles</td>
+          <td>Statistical variance across trials &lt; 1.5 dB</td>
+        </tr>
+        <tr>
+          <td><strong>Environmental stability</strong></td>
+          <td>Assess long-term physical suitability against rain, UV, and physical aging</td>
+          <td>Zero pore clogging or response degradation after multi-week exposure</td>
+        </tr>
+      </tbody>
+    </table>
     <h2 id="limitations-of-validation">Limitations of Validation</h2>
     <ul>
       <li>Without a reference instrument, absolute accuracy cannot be verified</li>

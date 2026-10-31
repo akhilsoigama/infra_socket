@@ -65,9 +65,9 @@ export default function Page01OverviewScopeAndLimitations() {
 
   const limitations = [
     {
-      title: 'Wind Turbulence Interference',
-      desc: 'While the 4-port spatial averaging manifold attenuates uncorrelated micro-turbulences, severe atmospheric wind shear (> 25 km/h) can overwhelm sub-Pascal acoustic signals.',
-      tag: 'Acoustic / Environment'
+      title: 'Wind Turbulence & Filter Trade-offs',
+      desc: 'While pneumatic spatial averaging attenuates uncorrelated boundary-layer eddies, research (Sandia SAND2021-10136) demonstrates that aggressive porous filters risk altering signal amplitude and phase. Furthermore, crude single-port shrouds (such as buckets) amplify noise above 1–3 Hz.',
+      tag: 'Acoustic / Fluid Dynamics'
     },
     {
       title: 'Diurnal Thermal Equilibrium',

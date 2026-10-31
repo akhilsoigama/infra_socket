@@ -46,9 +46,14 @@ export default function Page09CalibrationValidationCalibrationPlan() {
           <td>Quantify output per unit pressure</td>
         </tr>
         <tr>
+          <td>Wind-noise reduction comparative test</td>
+          <td><Link to="/09-calibration-validation/validation-methodology#proposed-wind-noise-validation-plan">validation-methodology.md</Link></td>
+          <td>Comparative PSD evaluation against bare sensor baseline across wind speed intervals</td>
+        </tr>
+        <tr>
           <td>Validation methodology</td>
           <td><Link to="/09-calibration-validation/validation-methodology">validation-methodology.md</Link></td>
-          <td>Overall validation approach</td>
+          <td>Overall validation approach &amp; test matrix</td>
         </tr>
       </tbody>
     </table>
