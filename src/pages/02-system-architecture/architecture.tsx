@@ -431,7 +431,13 @@ export default function Page02SystemArchitectureArchitecture() {
           </div>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-xs overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}A["Atmospheric Pressure\n(0.01–20 Hz)"] --&gt; B["Wind-Noise Manifold\n(Spatial Averaging)"]{"\n"}{"    "}B --&gt;|Port A| C["DLVR-F50D Sensor"]{"\n"}{"    "}B --&gt;|Port B Leak| D["Reference Chamber\n(Controlled Restriction)"]{"\n"}{"    "}D --&gt;|Port B| C{"\n"}{"    "}C --&gt;|I2C Digital| E["Raspberry Pi 5\n(Sample Timing &amp; DSP)"]{"\n"}{"    "}E --&gt;|USB Stream| F["Desktop Telemetry App\n(Electron + React)"]{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart LR
+    A["Atmospheric Pressure<br/>0.01-20 Hz"] --> B["Wind-Noise Manifold<br/>Spatial Averaging"]
+    B -->|Port A Atmosphere| C["DLVR-F50D Sensor"]
+    B -->|Port B Capillary| D["Reference Chamber<br/>Controlled Restriction"]
+    D -->|Port B Reference| C
+    C -->|I2C Digital Stream| E["Raspberry Pi 5<br/>Sample Timing and DSP"]
+    E -->|USB / Network Stream| F["Desktop Telemetry App<br/>PyQtGraph 60 FPS"]`}</code></pre>
           </div>
         </section>
 

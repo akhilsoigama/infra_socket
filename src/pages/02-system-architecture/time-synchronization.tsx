@@ -65,7 +65,10 @@ export default function Page02SystemArchitectureTimeSynchronization() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}DLVR["Amphenol DLVR Sensor\n(Continuous Pressure)"] --&gt;|I2C Bus Polling| RPI["Raspberry Pi 5\n(CLOCK_MONOTONIC_RAW)"]{"\n"}{"    "}RTC["Hardware RTC / Chrony NTP"] --&gt;|UTC Alignment| RPI{"\n"}{"    "}RPI --&gt;|Framed Sample: timestamp_utc, raw_counts, temp| SD["Local Storage\nand Real-Time Telemetry"]{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart LR
+    DLVR["Amphenol DLVR Sensor<br/>Continuous Pressure"] -->|I2C Bus Polling| RPI["Raspberry Pi 5<br/>CLOCK_MONOTONIC_RAW"]
+    RTC["Hardware RTC / Chrony NTP"] -->|UTC Alignment| RPI
+    RPI -->|Framed Sample Stream| SD["Local Storage<br/>and Real-Time Telemetry"]`}</code></pre>
           </div>
         </section>
 

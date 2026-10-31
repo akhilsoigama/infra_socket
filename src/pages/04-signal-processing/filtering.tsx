@@ -40,7 +40,12 @@ export default function Page04SignalProcessingFiltering() {
     <h3 id="3-band-pass-filter-bpf-">3. Band-Pass Filter (BPF)</h3>
     <p><strong>Purpose:</strong> Combines high-pass and low-pass filtering into a single operation,
       passing only the 0.01–20 Hz (TARGET - Pending experimental validation) range.</p>
-    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}subgraph PASS["Band-Pass Response"]{"\n"}{"        "}direction LR{"\n"}{"        "}REJECT_LOW["❌ Reject\n&lt; 0.01 Hz"] --&gt; PASS_BAND["fa:fa-check{"  "}Pass\n0.01–20 Hz"] --&gt; REJECT_HIGH["❌ Reject\n&gt; 20 Hz"]{"\n"}{"    "}end{"\n"}</code></pre>
+    <pre><code className="language-mermaid">{`flowchart LR
+    subgraph PASS["Band-Pass Response"]
+        direction LR
+        REJECT_LOW["Reject Low<br/>Below 0.01 Hz"] --> PASS_BAND["Pass Band<br/>0.01 - 20 Hz"]
+        PASS_BAND --> REJECT_HIGH["Reject High<br/>Above 20 Hz"]
+    end`}</code></pre>
     <h2 id="filter-design-parameters">Filter Design Parameters</h2>
     <table>
       <thead>

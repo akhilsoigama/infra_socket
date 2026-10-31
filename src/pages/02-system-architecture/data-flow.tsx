@@ -49,7 +49,34 @@ export default function Page02SystemArchitectureDataFlow() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}A["Atmospheric Pressure Wave\n(0.01 – 20 Hz)"] --&gt;|Spatial Averaging| B["4-Port Wind Manifold"]{"\n"}{"\n"}{"    "}B --&gt;|Differential Pneumatic Paths| C["Amphenol DLVR-F50D\nDigital MEMS Sensor"]{"\n"}{"    "}REF["Reference Chamber\n(Capillary Leak)"] --&gt;|Port B Restriction| C{"\n"}{"\n"}{"    "}C --&gt;|"Digital Pressure (I²C Bus @ 100 Hz)\n14/16-bit Integer Words"| D["Raspberry Pi 5\nEdge DAQ Service"]{"\n"}{"    "}TEMP["MCP9808 Digital Temp (I²C)"] --&gt;|Reference Temp| D{"\n"}{"\n"}{"    "}D --&gt;|Raw Timestamped Records| E["Local microSD\nRing Buffer (SQLite)"]{"\n"}{"    "}D --&gt;|Digital Count Stream| F["DC Baseline Detrending\n&amp; Polynomial Drift Offset"]{"\n"}{"\n"}{"    "}F --&gt;|Zero-Mean Pressure Signal| G["4th-Order Butterworth\nBandpass Filter (0.01–20 Hz)"]{"\n"}{"\n"}{"    "}G --&gt;|Filtered Time-Series| H["Sliding Window Buffer\n(e.g. 10–30s)"]{"\n"}{"\n"}{"    "}H --&gt;|Windowed Frames| I["Fast Fourier Transform\n(FFT &amp; Welch PSD)"]{"\n"}{"    "}H --&gt;|Statistical Extraction| J["Feature Vector Extraction\n(RMS, Centroid, Energy, Peak)"]{"\n"}{"\n"}{"    "}I --&gt;|Spectral Density Array| K["STFT Waterfall Spectrogram"]{"\n"}{"    "}J --&gt;|Normalized Vector| L["Isolation Forest\nAnomaly Scoring Engine"]{"\n"}{"\n"}{"    "}L --&gt;|Score &gt; Threshold?| M{"Alert Decision"}{"\n"}{"    "}M --&gt;|Yes| N["Trigger Anomaly Flag"]{"\n"}{"    "}M --&gt;|No| O["Baseline Normal"]{"\n"}{"\n"}{"    "}G &amp; I &amp; K &amp; N --&gt;|USB / LAN Protocol| P["InfraSocket Desktop Console\n(PyQtGraph 60 FPS Visualizer)"]{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart TD
+    A["Atmospheric Pressure Wave<br/>0.01 - 20 Hz"] -->|Spatial Averaging| B["4-Port Wind Manifold"]
+    B -->|Differential Pneumatic Paths| C["Amphenol DLVR-F50D<br/>Digital MEMS Sensor"]
+    REF["Reference Chamber<br/>Capillary Leak"] -->|Port B Reference| C
+
+    C -->|Digital Pressure Stream| D["Raspberry Pi 5<br/>Edge DAQ Service"]
+    TEMP["MCP9808 Digital Temp"] -->|Reference Temp| D
+
+    D -->|Raw Timestamped Records| E["Local microSD<br/>Ring Buffer - SQLite"]
+    D -->|Digital Count Stream| F["DC Baseline Detrending<br/>and Drift Offset"]
+
+    F -->|Zero-Mean Signal| G["4th-Order Butterworth<br/>Bandpass 0.01-20 Hz"]
+    G -->|Filtered Samples| H["Sliding Window Buffer<br/>10-30s Windows"]
+
+    H -->|Windowed Frames| I["Fast Fourier Transform<br/>FFT and Welch PSD"]
+    H -->|Statistical Extraction| J["Feature Vector Extraction<br/>RMS, Centroid, Energy"]
+
+    I -->|Spectral Density Array| K["STFT Waterfall Spectrogram"]
+    J -->|Normalized Vector| L["Isolation Forest<br/>Anomaly Scorer"]
+
+    L -->|Score > Threshold?| M{"Alert Decision"}
+    M -->|Yes| N["Trigger Anomaly Flag"]
+    M -->|No| O["Baseline Normal State"]
+
+    G -->|Filtered Telemetry| P["InfraSocket Desktop Console<br/>PyQtGraph 60 FPS"]
+    I -->|Live PSD Stream| P
+    K -->|Spectrogram Matrix| P
+    N -->|Anomaly Events| P`}</code></pre>
           </div>
         </section>
 

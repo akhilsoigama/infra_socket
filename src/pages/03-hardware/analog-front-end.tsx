@@ -74,9 +74,16 @@ export default function Page03HardwareAnalogFrontEnd() {
             Integrated Transducer Signal Conditioning Block
           </h2>
 
-          <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}subgraph SENSOR_DIE["Amphenol DLVR-F50D Integrated Silicon Package"]{"\n"}{"        "}PNEU["Differential\nPressure Input\n(Port A vs B)"] --&gt; DIAPH["Micromachined\nSilicon Diaphragm"]{"\n"}{"        "}DIAPH --&gt;|Piezoresistive\nBridge| ASIC_AMP["Internal Precision\nInstrument Amplifier"]{"\n"}{"        "}TEMP_DIE["Internal Thermal\nReference Sensor"] --&gt;|Temp Correction| ASIC_AMP{"\n"}{"        "}ASIC_AMP --&gt; ON_CHIP_ADC["Integrated 14/16-bit\nSigma-Delta ADC"]{"\n"}{"        "}ON_CHIP_ADC --&gt; I2C_CORE["I²C Serial Engine\n(SDA / SCL @ 3.3V)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}I2C_CORE --&gt;|Digital Frame (100 Hz)| RPI["Raspberry Pi 5\n(Digital Filtering in Software)"]{"\n"}</code></pre>
-          </div>
+            <pre><code className="language-mermaid">{`flowchart LR
+    subgraph SENSOR_DIE["Amphenol DLVR-F50D Integrated Silicon Package"]
+        PNEU["Differential Pressure Input<br/>Port A vs B"] --> DIAPH["Micromachined<br/>Silicon Diaphragm"]
+        DIAPH -->|Piezoresistive Bridge| ASIC_AMP["Internal Precision<br/>Instrument Amplifier"]
+        TEMP_DIE["Internal Thermal<br/>Reference Sensor"] -->|Temp Correction| ASIC_AMP
+        ASIC_AMP --> ON_CHIP_ADC["Integrated 14/16-bit<br/>Sigma-Delta ADC"]
+        ON_CHIP_ADC --> I2C_CORE["I2C Serial Engine<br/>SDA / SCL at 3.3V"]
+    end
+
+    I2C_CORE -->|Digital Frame 100 Hz| RPI["Raspberry Pi 5<br/>Digital Filtering in Software"]`}</code></pre>
         </section>
 
         {/* 4 ASIC Conditioning Functions */}

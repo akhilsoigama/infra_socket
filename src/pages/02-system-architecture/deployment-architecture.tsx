@@ -63,7 +63,27 @@ export default function Page02SystemArchitectureDeploymentArchitecture() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph FIELD_NODE["Field Station Enclosure (Autonomous Outdoor Node)"]{"\n"}{"        "}WIND["4-Port Spatial Averaging Manifold"] --&gt; SENS["Amphenol DLVR-F50D Sensor"]{"\n"}{"        "}REF["Thermally Insulated Reference Chamber"] --&gt;|Capillary Leak| SENS{"\n"}{"        "}TEMP["MCP9808 Digital Temperature Sensor"]{"\n"}{"        "}BAT["12V LiFePO4 Battery + DC-DC"] --&gt;|Power| SENS &amp; TEMP{"\n"}{"        "}BAT --&gt;|5V / 5A| RPI["Raspberry Pi 5 (Edge SBC)"]{"\n"}{"        "}SENS &amp; TEMP --&gt;|Direct I²C Bus (SDA/SCL @ 3.3V)| RPI{"\n"}{"        "}RPI --&gt;|Continuous Append| SD["Local microSD Ring Buffer"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph TETHER["Local Telemetry (Operator Workstation)"]{"\n"}{"        "}RPI --&gt;|USB 3.0 / Gigabit LAN / Wi-Fi| DESK["InfraSocket Desktop Application\n(PyQtGraph 60 FPS Visualizer)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph MULTI_NODE["Central Research Server (Optional Scale-Out)"]{"\n"}{"        "}RPI --&gt;|Store-and-Forward Telemetry| CENTRAL["Central Laboratory Server\n(TimescaleDB / PostgreSQL)"]{"\n"}{"        "}CENTRAL --&gt; WEB_DASH["Centralized Multi-Node Fleet Dashboard"]{"\n"}{"    "}end{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart TD
+    subgraph FIELD_NODE["Field Station Enclosure - Autonomous Outdoor Node"]
+        WIND["4-Port Spatial Averaging Manifold"] --> SENS["Amphenol DLVR-F50D Sensor"]
+        REF["Thermally Insulated Reference Chamber"] -->|Capillary Leak| SENS
+        TEMP["MCP9808 Digital Temperature Sensor"]
+        BAT["12V LiFePO4 Battery + DC-DC"] -->|Clean 3.3V Power| SENS
+        BAT -->|Clean 3.3V Power| TEMP
+        BAT -->|5V / 5A Rail| RPI["Raspberry Pi 5 Edge SBC"]
+        SENS -->|Direct I2C Bus - 3.3V| RPI
+        TEMP -->|Direct I2C Bus - 3.3V| RPI
+        RPI -->|Continuous Append| SD["Local microSD Ring Buffer"]
+    end
+
+    subgraph TETHER["Local Telemetry - Operator Workstation"]
+        RPI -->|USB 3.0 / Gigabit LAN / Wi-Fi| DESK["InfraSocket Desktop Application<br/>PyQtGraph 60 FPS Visualizer"]
+    end
+
+    subgraph MULTI_NODE["Central Research Server - Fleet Scale-Out"]
+        RPI -->|Store-and-Forward Telemetry| CENTRAL["Central Laboratory Server<br/>TimescaleDB / PostgreSQL"]
+        CENTRAL --> WEB_DASH["Centralized Multi-Node Fleet Dashboard"]
+    end`}</code></pre>
           </div>
         </section>
 

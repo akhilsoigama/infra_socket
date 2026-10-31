@@ -76,7 +76,39 @@ export default function Page02SystemArchitectureComponentInteraction() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">sequenceDiagram{"\n"}{"    "}participant ATM as Atmosphere (0.01–20 Hz){"\n"}{"    "}participant WNR as 4-Port Manifold{"\n"}{"    "}participant DLVR as DLVR-F50D Sensor (I²C){"\n"}{"    "}participant MCP as MCP9808 Temp (I²C){"\n"}{"    "}participant RPI as Raspberry Pi 5 (Edge SBC){"\n"}{"    "}participant SD as microSD (Ring Buffer){"\n"}{"    "}participant DSP as Python DSP &amp; AI{"\n"}{"    "}participant GUI as Desktop GUI (PyQtGraph){"\n"}{"\n"}{"    "}ATM-&gt;&gt;WNR: Atmospheric pressure fluctuation arrives{"\n"}{"    "}WNR-&gt;&gt;DLVR: Spatially averaged differential pressure{"\n"}{"    "}Note over DLVR: Internal Silicon Diaphragm + On-Die ASIC ADC{"\n"}{"    "}loop Every 10 ms (100 Hz Continuous Loop){"\n"}{"        "}RPI-&gt;&gt;DLVR: I²C Read Command (SDA/SCL){"\n"}{"        "}DLVR--&gt;&gt;RPI: 14/16-bit Calibrated Digital Pressure Counts{"\n"}{"        "}RPI-&gt;&gt;SD: Append raw record (timestamp, raw_counts){"\n"}{"        "}RPI-&gt;&gt;DSP: Push sample to DSP circular buffer{"\n"}{"    "}end{"\n"}{"\n"}{"    "}loop Every 1 Second{"\n"}{"        "}RPI-&gt;&gt;MCP: I²C Read Temperature{"\n"}{"        "}MCP--&gt;&gt;RPI: Temperature (°C, ±0.25°C precision){"\n"}{"        "}RPI-&gt;&gt;SD: Log thermal reference{"\n"}{"    "}end{"\n"}{"\n"}{"    "}loop Every Sliding Window (e.g. 10–30s){"\n"}{"        "}DSP-&gt;&gt;DSP: Detrend + 4th-order Butterworth (0.01–20 Hz){"\n"}{"        "}DSP-&gt;&gt;DSP: Compute FFT + Welch PSD + STFT Spectrogram{"\n"}{"        "}DSP-&gt;&gt;DSP: Extract feature vector &amp; Isolation Forest inference{"\n"}{"        "}DSP-&gt;&gt;GUI: Stream filtered waveform + PSD + anomaly score (60 FPS){"\n"}{"    "}end{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`sequenceDiagram
+    participant ATM as Atmosphere
+    participant WNR as 4-Port Manifold
+    participant DLVR as DLVR-F50D Sensor
+    participant MCP as MCP9808 Temp
+    participant RPI as Raspberry Pi 5
+    participant SD as microSD Buffer
+    participant DSP as Python DSP Core
+    participant GUI as Desktop Visualizer
+
+    ATM->>WNR: Atmospheric pressure wave arrives
+    WNR->>DLVR: Spatially averaged differential pressure
+    Note over DLVR: Silicon Diaphragm + On-Chip ASIC ADC
+
+    loop Every 10 ms (100 Hz Continuous Loop)
+        RPI->>DLVR: I2C Read Command
+        DLVR-->>RPI: 14-bit Calibrated Digital Pressure
+        RPI->>SD: Append raw sample to ring buffer
+        RPI->>DSP: Push sample to DSP queue
+    end
+
+    loop Every 1 Second
+        RPI->>MCP: I2C Read Temperature
+        MCP-->>RPI: Ambient Temperature (0.25 C precision)
+        RPI->>SD: Log thermal drift record
+    end
+
+    loop Every Sliding Window (10-30s)
+        DSP->>DSP: 4th-Order Butterworth Filter (0.01-20 Hz)
+        DSP->>DSP: Compute Welch PSD and Spectrogram
+        DSP->>DSP: Isolation Forest Anomaly Inference
+        DSP->>GUI: Stream filtered waveform and anomaly score (60 FPS)
+    end`}</code></pre>
           </div>
         </section>
 

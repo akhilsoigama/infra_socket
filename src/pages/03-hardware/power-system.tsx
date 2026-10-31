@@ -70,7 +70,9 @@ export default function Page03HardwarePowerSystem() {
             are approximate ranges.</p>
           <h2 id="supporting-subsystems">SUPPORTING SUBSYSTEMS</h2>
           <h3 id="a-power-subsystem">A. POWER SUBSYSTEM</h3>
-          <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}BATT["12V LiFePO4 Battery"] --&gt; PROT["Protected Power Input"]{"\n"}{"    "}PROT --&gt; DCDC["DC-DC Regulation\n(includes local decoupling)"]{"\n"}</code></pre>
+          <pre><code className="language-mermaid">{`flowchart LR
+    BATT["12V LiFePO4 Battery"] --> PROT["Protected Power Input"]
+    PROT --> DCDC["DC-DC Regulation<br/>includes local decoupling"]`}</code></pre>
 
           <div className="not-prose my-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
@@ -81,7 +83,19 @@ export default function Page03HardwarePowerSystem() {
           </div>
 
           <h2 id="power-architecture">Power Architecture</h2>
-          <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}BATT["12V LiFePO4 Battery\n(or Mains Supply)"] --&gt; PROT["Protected Power Input\n(Reverse Polarity & Surge Protection)"]{"\n"}{"    "}PROT --&gt; DCDC["DC-DC Regulation\n(with Local Decoupling)"]{"\n"}{"    "}DCDC --&gt; VREG_A["Linear Voltage Regulator (Analog)\n(Ultra-low noise LDO)"]{"\n"}{"    "}DCDC --&gt; VREG_D["Voltage Regulator (Digital)\n(3.3V / 5V)"]{"\n"}{"\n"}{"    "}VREG_A --&gt; |"Clean analog power"| SENSOR["Pressure Sensor"]{"\n"}{"    "}VREG_A --&gt; |"Clean analog power"| AMP["Amplifier"]{"\n"}{"    "}VREG_A --&gt; |"Clean analog power"| ADC_A["ADC (Analog Supply)"]{"\n"}{"\n"}{"    "}VREG_D --&gt; |"Digital power"| MCU["Raspberry Pi 5 / Node"]{"\n"}{"    "}VREG_D --&gt; |"Digital power"| ADC_D["ADC (Digital Supply)"]{"\n"}{"    "}VREG_D --&gt; |"Digital power"| TEMP["Temp Sensor"]{"\n"}</code></pre>
+          <pre><code className="language-mermaid">{`flowchart TD
+    BATT["12V LiFePO4 Battery<br/>or Mains Supply"] --> PROT["Protected Power Input<br/>Reverse Polarity and Surge Protection"]
+    PROT --> DCDC["DC-DC Regulation<br/>with Local Decoupling"]
+    DCDC --> VREG_A["Linear Voltage Regulator Analog<br/>Ultra-low noise LDO"]
+    DCDC --> VREG_D["Voltage Regulator Digital<br/>3.3V / 5V"]
+
+    VREG_A -->|Clean analog power| SENSOR["Pressure Sensor"]
+    VREG_A -->|Clean analog power| AMP["Amplifier"]
+    VREG_A -->|Clean analog power| ADC_A["ADC Analog Supply"]
+
+    VREG_D -->|Digital power| MCU["Raspberry Pi 5 / Node"]
+    VREG_D -->|Digital power| ADC_D["ADC Digital Supply"]
+    VREG_D -->|Digital power| TEMP["Temp Sensor"]`}</code></pre>
           <h2 id="design-principles">Design Principles</h2>
           <h3 id="separate-analog-and-digital-power">Separate Analog and Digital Power</h3>
           <p>Digital circuits (microcontrollers, communication interfaces) generate high-frequency switching

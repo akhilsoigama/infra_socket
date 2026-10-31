@@ -92,7 +92,41 @@ export default function Page02SystemArchitectureHardwareArchitecture() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph PNEU["Pneumatic Interface"]{"\n"}{"        "}WIND["Wind-Noise Reduction\n4-Port Manifold"] --&gt;|Direct Atmosphere| PORT_A["Port A (Atmosphere)"]{"\n"}{"        "}REF_CHAM["Reference Chamber\n(Thermally Insulated)"] --&gt;|Controlled Restriction| PORT_B["Port B (Reference)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph SENSOR_BLOCK["Direct Digital Sensor (DLVR-F50D)"]{"\n"}{"        "}PORT_A &amp; PORT_B --&gt; MEMS["Micromachined Silicon\nDiaphragm"]{"\n"}{"        "}MEMS --&gt; ASIC["On-Chip ASIC\n(Internal Conditioning + ΔΣ ADC)"]{"\n"}{"        "}ASIC --&gt; I2C_PORT["I²C Interface\n(SDA / SCL @ 3.3V)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph AUX_SENSORS["Auxiliary Environmental"]{"\n"}{"        "}MCP["MCP9808 Temperature\n(Chamber Monitoring)"] --&gt;|I²C Bus (0x18)| I2C_BUS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}I2C_PORT --&gt; I2C_BUS["Shared I²C Bus (3.3V)"]{"\n"}{"\n"}{"    "}subgraph COMPUTE["Edge Processing (Raspberry Pi 5)"]{"\n"}{"        "}I2C_BUS --&gt; GPIO["RPi 5 I²C Hardware Bus"]{"\n"}{"        "}GPIO --&gt; DAQ["100 Hz Sample Readout\n&amp; Sample Timing"]{"\n"}{"        "}DAQ --&gt; SD["microSD Ring Buffer\n(Local Resilience)"]{"\n"}{"        "}DAQ --&gt; DSP["Python DSP Core\n(Butterworth + FFT + PSD)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph POWER["Isolated DC Power"]{"\n"}{"        "}BAT["12V LiFePO4 Battery"] --&gt; DCDC["DC-DC Buck Regulators"]{"\n"}{"        "}DCDC --&gt;|5.1V / 5A| COMPUTE{"\n"}{"        "}DCDC --&gt;|Clean Regulated 3.3V| SENSOR_BLOCK{"\n"}{"        "}DCDC --&gt;|Clean Regulated 3.3V| AUX_SENSORS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}DSP --&gt;|USB / LAN / Wi-Fi| DESKTOP["InfraSocket Desktop Console\n(PyQtGraph / 60 FPS)"]{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart TD
+    subgraph PNEU["Pneumatic Interface"]
+        WIND["Wind-Noise Reduction<br/>4-Port Manifold"] -->|Direct Atmosphere| PORT_A["Port A - Atmosphere"]
+        REF_CHAM["Reference Chamber<br/>Thermally Insulated"] -->|Controlled Restriction| PORT_B["Port B - Reference"]
+    end
+
+    subgraph SENSOR_BLOCK["Direct Digital Sensor - DLVR-F50D"]
+        PORT_A --> MEMS["Micromachined Silicon<br/>Diaphragm"]
+        PORT_B --> MEMS
+        MEMS --> ASIC["On-Chip ASIC<br/>Internal Conditioning and ADC"]
+        ASIC --> I2C_PORT["I2C Core Interface<br/>SDA / SCL at 3.3V"]
+    end
+
+    subgraph AUX_SENSORS["Auxiliary Environmental"]
+        MCP["MCP9808 Temperature<br/>Chamber Drift Tracking"]
+    end
+
+    I2C_PORT --> I2C_BUS["Shared I2C Bus - 3.3V"]
+    MCP -->|I2C Address 0x18| I2C_BUS
+
+    subgraph COMPUTE["Edge Processing - Raspberry Pi 5"]
+        I2C_BUS --> GPIO["RPi 5 I2C Hardware Bus"]
+        GPIO --> DAQ["100 Hz Sample Readout<br/>and Sample Timing"]
+        DAQ --> SD["microSD Ring Buffer<br/>Local Resilience"]
+        DAQ --> DSP["Python DSP Core<br/>Butterworth, FFT, and PSD"]
+    end
+
+    subgraph POWER["Isolated DC Power Delivery"]
+        BAT["12V LiFePO4 Battery"] --> DCDC["DC-DC Buck Regulators"]
+        DCDC -->|5.1V / 5A Rail| GPIO
+        DCDC -->|Clean 3.3V Rail| ASIC
+        DCDC -->|Clean 3.3V Rail| MCP
+    end
+
+    DSP -->|USB / LAN / Wi-Fi| DESKTOP["InfraSocket Desktop Console<br/>PyQtGraph 60 FPS"]`}</code></pre>
           </div>
         </section>
 

@@ -99,7 +99,29 @@ export default function Page02SystemArchitectureSystemOverview() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph L1["Layer 1: Physical Sensing &amp; Pneumatics"]{"\n"}{"        "}WNR["4-Port Spatial Averaging Manifold"] --&gt; SENS["Amphenol DLVR-F50D Sensor"]{"\n"}{"        "}REF["Thermally Insulated Reference Chamber"] --&gt;|Capillary Leak| SENS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L2["Layer 2: Direct Digital Sensor Bus (I²C)"]{"\n"}{"        "}SENS --&gt;|Digital Pressure (I²C SDA/SCL)| I2C_BUS["Hardware I²C Bus (3.3V)"]{"\n"}{"        "}TEMP["MCP9808 Digital Temperature"] --&gt;|Temperature (I²C)| I2C_BUS{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L3["Layer 3: Edge Processing &amp; DSP (Raspberry Pi 5)"]{"\n"}{"        "}I2C_BUS --&gt; DAQ["100 Hz Acquisition Loop"]{"\n"}{"        "}DAQ --&gt; DSP["Butterworth Bandpass (0.01–20 Hz) + FFT / PSD"]{"\n"}{"        "}DSP --&gt; ML["Unsupervised Isolation Forest Anomaly Scoring"]{"\n"}{"        "}DAQ --&gt; RING["Local microSD Ring Buffer (SQLite / CSV)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph L4["Layer 4: Telemetry &amp; Desktop GUI"]{"\n"}{"        "}DSP &amp; ML --&gt;|USB / LAN Telemetry| GUI["InfraSocket Desktop Console (PyQtGraph)"]{"\n"}{"        "}GUI --&gt; PLOTS["60 FPS Waveform + Live PSD + Spectrogram"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}L1 ==&gt; L2{"\n"}{"    "}L2 ==&gt; L3{"\n"}{"    "}L3 ==&gt; L4{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart TD
+    subgraph L1["Layer 1: Physical Sensing and Pneumatics"]
+        WNR["4-Port Spatial Averaging Manifold"] --> SENS["Amphenol DLVR-F50D Sensor"]
+        REF["Thermally Insulated Reference Chamber"] -->|Capillary Leak| SENS
+    end
+
+    subgraph L2["Layer 2: Direct Digital Sensor Bus - I2C"]
+        SENS -->|Digital Pressure Data| I2C_BUS["Hardware I2C Bus - 3.3V"]
+        TEMP["MCP9808 Digital Temperature"] -->|Temperature Telemetry| I2C_BUS
+    end
+
+    subgraph L3["Layer 3: Edge Processing and DSP - Raspberry Pi 5"]
+        I2C_BUS --> DAQ["100 Hz Acquisition Loop"]
+        DAQ --> DSP["Butterworth Bandpass 0.01-20 Hz and Welch PSD"]
+        DSP --> ML["Unsupervised Isolation Forest Anomaly Scoring"]
+        DAQ --> RING["Local microSD Ring Buffer - SQLite / CSV"]
+    end
+
+    subgraph L4["Layer 4: Telemetry and Desktop GUI"]
+        DSP -->|USB / LAN Telemetry| GUI["InfraSocket Desktop Console - PyQtGraph"]
+        ML -->|Anomaly Scores| GUI
+        GUI --> PLOTS["60 FPS Waveform + Live PSD + Spectrogram"]
+    end`}</code></pre>
           </div>
         </section>
 

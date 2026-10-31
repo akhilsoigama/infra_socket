@@ -77,7 +77,36 @@ export default function Page03HardwareHardwareOverview() {
           </h2>
 
           <div className="bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/80 shadow-sm overflow-x-auto">
-            <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}subgraph ATMOSPHERE["Atmospheric Interface"]{"\n"}{"        "}WIND["4-Port Wind Manifold\n(Spatial Averaging)"] --&gt;|Direct Atmosphere| PORT_A["Port A (Atmosphere)"]{"\n"}{"        "}REF["Reference Chamber\n(Thermally Insulated)"] --&gt;|Capillary Leak| PORT_B["Port B (Reference)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph TRANSDUCER["Digital Differential Sensor"]{"\n"}{"        "}PORT_A &amp; PORT_B --&gt; SENSOR["Amphenol DLVR-F50D\n(Silicon Diaphragm + On-Chip ASIC ADC)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph AUX["Auxiliary Monitoring"]{"\n"}{"        "}TEMP["MCP9808 Digital Temp\n(±0.25°C Chamber Sensor)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph EDGE_COMPUTE["Edge SBC (Raspberry Pi 5)"]{"\n"}{"        "}SENSOR --&gt;|Digital I²C (SDA/SCL @ 3.3V)| RPI["Raspberry Pi 5\n100 Hz Continuous Readout"]{"\n"}{"        "}TEMP --&gt;|Digital I²C (Shared Bus)| RPI{"\n"}{"        "}RPI --&gt; SD["microSD Ring Buffer\n(Local Storage)"]{"\n"}{"        "}RPI --&gt; DSP["Python Real-Time DSP\n(0.01–20 Hz Butterworth)"]{"\n"}{"    "}end{"\n"}{"\n"}{"    "}subgraph POWER_BLOCK["Power Delivery"]{"\n"}{"        "}BAT["12V LiFePO4 Battery"] --&gt; DCDC["Low-Noise DC-DC Regulators"]{"\n"}{"        "}DCDC --&gt;|5.1V / 5A| EDGE_COMPUTE{"\n"}{"        "}DCDC --&gt;|Regulated 3.3V| TRANSDUCER{"\n"}{"        "}DCDC --&gt;|Regulated 3.3V| AUX{"\n"}{"    "}end{"\n"}{"\n"}{"    "}DSP --&gt;|USB / Ethernet Telemetry| DESKTOP["InfraSocket Desktop Console\n(PyQtGraph 60 FPS)"]{"\n"}</code></pre>
+            <pre><code className="language-mermaid">{`flowchart TD
+    subgraph ATMOSPHERE["Atmospheric Interface"]
+        WIND["4-Port Wind Manifold<br/>Spatial Averaging"] -->|Direct Atmosphere| PORT_A["Port A - Atmosphere"]
+        REF["Reference Chamber<br/>Thermally Insulated"] -->|Capillary Leak| PORT_B["Port B - Reference"]
+    end
+
+    subgraph TRANSDUCER["Digital Differential Sensor"]
+        PORT_A --> SENSOR["Amphenol DLVR-F50D<br/>Silicon Diaphragm + On-Chip ASIC ADC"]
+        PORT_B --> SENSOR
+    end
+
+    subgraph AUX["Auxiliary Monitoring"]
+        TEMP["MCP9808 Digital Temp<br/>0.25 C Precision Sensor"]
+    end
+
+    subgraph EDGE_COMPUTE["Edge SBC - Raspberry Pi 5"]
+        SENSOR -->|Digital I2C Data| RPI["Raspberry Pi 5<br/>100 Hz Continuous Readout"]
+        TEMP -->|Digital I2C Data| RPI
+        RPI --> SD["microSD Ring Buffer<br/>Local Storage"]
+        RPI --> DSP["Python Real-Time DSP<br/>0.01-20 Hz Butterworth"]
+    end
+
+    subgraph POWER_BLOCK["Power Delivery"]
+        BAT["12V LiFePO4 Battery"] --> DCDC["Low-Noise DC-DC Regulators"]
+        DCDC -->|5.1V / 5A Rail| RPI
+        DCDC -->|Clean 3.3V Rail| SENSOR
+        DCDC -->|Clean 3.3V Rail| TEMP
+    end
+
+    DSP -->|USB / Ethernet Telemetry| DESKTOP["InfraSocket Desktop Console<br/>PyQtGraph 60 FPS"]`}</code></pre>
           </div>
         </section>
 

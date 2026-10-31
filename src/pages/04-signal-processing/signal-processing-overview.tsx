@@ -22,8 +22,21 @@ export default function Page04SignalProcessingSignalProcessingOverview() {
         reproducible outputs. The AI component (Isolation Forest) comes after signal processing and
         operates on the extracted features.</p>
     </blockquote>
-    <h2 id="signal-processing-pipeline">Signal Processing Pipeline</h2>
-    <pre><code className="language-mermaid">flowchart TD{"\n"}{"    "}RAW["📥 Raw ADC Samples\n(Timestamped integers)"] --&gt; DC["🔧 DC Offset Removal\n(Subtract mean)"]{"\n"}{"    "}DC --&gt; BPF["📐 Band-Pass Filter\n(0.01–20 Hz)"]{"\n"}{"    "}BPF --&gt; NR["🔇 Noise Reduction\n(Adaptive, optional)"]{"\n"}{"    "}NR --&gt; WIN["🪟 Windowing\n(Hanning/Hamming)"]{"\n"}{"    "}WIN --&gt; FFT["fa:fa-microchip{"  "}FFT\n(Time → Frequency domain)"]{"\n"}{"    "}FFT --&gt; SPEC["🖼️ Spectrogram\n(Time-Frequency map)"]{"\n"}{"    "}BPF --&gt; FEAT["fa:fa-microchip{"  "}Feature Extraction"]{"\n"}{"    "}FFT --&gt; FEAT{"\n"}{"    "}SPEC --&gt; FEAT{"\n"}{"    "}FEAT --&gt; AI["fa:fa-brain{"  "}→ AI Anomaly Detection\n(Isolation Forest)"]{"\n"}{"\n"}{"    "}style RAW fill:#e3f2fd{"\n"}{"    "}style FEAT fill:#fff9c4{"\n"}{"    "}style AI fill:#fce4ec{"\n"}</code></pre>
+    <pre><code className="language-mermaid">{`flowchart TD
+    RAW["Raw ADC Samples<br/>Timestamped integers"] --> DC["DC Offset Removal<br/>Subtract mean"]
+    DC --> BPF["Band-Pass Filter<br/>0.01-20 Hz"]
+    BPF --> NR["Noise Reduction<br/>Adaptive, optional"]
+    NR --> WIN["Windowing<br/>Hann Window"]
+    WIN --> FFT["FFT Analysis<br/>Time to Frequency domain"]
+    FFT --> SPEC["Spectrogram<br/>Time-Frequency map"]
+    BPF --> FEAT["Feature Extraction<br/>RMS, Centroid, Energy"]
+    FFT --> FEAT
+    SPEC --> FEAT
+    FEAT --> AI["AI Anomaly Detection<br/>Isolation Forest"]
+
+    style RAW fill:#e3f2fd,stroke:#90caf9
+    style FEAT fill:#fff9c4,stroke:#fff59d
+    style AI fill:#fce4ec,stroke:#f48fb1`}</code></pre>
     <h2 id="pipeline-stages-summary">Pipeline Stages Summary</h2>
     <table>
       <thead>

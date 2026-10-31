@@ -46,8 +46,16 @@ export default function Page03HardwareReferenceChamber() {
         This relation is a model; the actual cutoff and full transfer function must be experimentally
         characterized for the physical assembly.</p>
     </blockquote>
-    <h2 id="conceptual-diagram">Conceptual Diagram</h2>
-    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}ATM_FAST["Atmosphere\n(Faster pressure variations)"] --&gt;|"Direct path\n(manifold)"| PORT_A["Sensor Port A"]{"\n"}{"\n"}{"    "}ATM_SLOW["Atmosphere\n(Slow: Weather\n&lt; 0.001 Hz)"] --&gt;|"Through capillary\n(slow equalization)"| CHAMBER["Reference\nChamber\n(Sealed Volume)"]{"\n"}{"    "}CHAMBER --&gt; PORT_B["Sensor Port B"]{"\n"}{"\n"}{"    "}PORT_A --&gt; SENSOR["Differential\nSensor"]{"\n"}{"    "}PORT_B --&gt; SENSOR{"\n"}{"\n"}{"    "}SENSOR --&gt; |"Output:\nFrequency-dependent\ndifferential response"| OUT["Signal"]{"\n"}</code></pre>
+    <pre><code className="language-mermaid">{`flowchart LR
+    ATM_FAST["Atmosphere<br/>Acoustic Infrasound Waves"] -->|Direct path manifold| PORT_A["Sensor Port A"]
+
+    ATM_SLOW["Atmosphere<br/>Barometric Weather Drift"] -->|Through capillary leak| CHAMBER["Reference Chamber<br/>Sealed Volume"]
+    CHAMBER --> PORT_B["Sensor Port B"]
+
+    PORT_A --> SENSOR["Differential Pressure Sensor<br/>DLVR-F50D"]
+    PORT_B --> SENSOR
+
+    SENSOR -->|Frequency-dependent differential response| OUT["Infrasound Output Signal"]`}</code></pre>
     <h2 id="design-parameters">Design Parameters</h2>
     <h3 id="chamber-volume">Chamber Volume</h3>
     <ul>

@@ -40,8 +40,14 @@ export default function Page03HardwareDifferentialPressureSystem() {
         equalizes with the atmosphere through a capillary leak, the differential pressure represents
         only the faster pressure variations — exactly the infrasound signal we want to capture.</p>
     </blockquote>
-    <h2 id="system-diagram">System Diagram</h2>
-    <pre><code className="language-mermaid">flowchart LR{"\n"}{"    "}ATM["Atmosphere\n(P_atm + P_infrasound)"] --&gt;|"Via manifold"| PORT_A["Port A\n(Atmospheric Side)"]{"\n"}{"    "}PORT_A --&gt; SENSOR["Differential\nPressure Sensor\n(Diaphragm)"]{"\n"}{"    "}REFCHAM["Reference Chamber\n(P_ref ≈ P_atm_mean)"] --&gt; PORT_B["Port B\n(Reference Side)"]{"\n"}{"    "}PORT_B --&gt; SENSOR{"\n"}{"    "}CAP["Capillary\nLeak"] --- REFCHAM{"\n"}{"    "}CAP --- ATM2["Atmosphere"]{"\n"}{"    "}SENSOR --&gt;|"Output ∝\nP_A − P_B"| OUTPUT["Electrical\nSignal"]{"\n"}</code></pre>
+    <pre><code className="language-mermaid">{`flowchart LR
+    ATM["Atmosphere<br/>P_atm + P_infrasound"] -->|Via manifold| PORT_A["Port A<br/>Atmospheric Side"]
+    PORT_A --> SENSOR["Differential Pressure Sensor<br/>Silicon Diaphragm"]
+    REFCHAM["Reference Chamber<br/>P_ref = Mean Atmosphere"] --> PORT_B["Port B<br/>Reference Side"]
+    PORT_B --> SENSOR
+    CAP["Capillary Leak"] --- REFCHAM
+    CAP --- ATM2["Atmosphere"]
+    SENSOR -->|Output proportional to delta P| OUTPUT["Digital Electrical Signal"]`}</code></pre>
     <h2 id="why-differential-measurement-is-essential">Why Differential Measurement Is Essential</h2>
     <h3 id="problem-barometric-pressure-is-enormous">Problem: Barometric Pressure is Enormous</h3>
     <p>Standard atmospheric pressure is approximately 101,325 Pa (1013.25 hPa). An infrasound signal
